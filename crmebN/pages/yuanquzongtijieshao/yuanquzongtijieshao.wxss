@@ -1,0 +1,5 @@
+/* pages/yuanquzongtijieshao/yuanquzongtijieshao.wxss */
+
+.justify-between {
+  justify-content: space-between;
+}

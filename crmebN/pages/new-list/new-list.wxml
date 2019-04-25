@@ -1,0 +1,49 @@
+<view id="wrap">
+<!--游园指南标题加图标返回-->
+<view class="wrap_title bg-white">
+  <view class="cu-custom" style="height:{{CustomBar}}px;">
+    <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+      <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
+        <text class='icon-iconfontback' style="font-size:20px"></text>  <text class='text-xxl text-bold'>游园指南</text>
+      </navigator>
+    </view>
+  </view>
+</view>
+<!--轮播-->
+<view class="wrap_swiper" style="position:relative;top:0;left:0;margin-top:{{StatusBar}}px;">
+      <swiper class="screen-swiper" bindchange="swiperChange" circular="true" autoplay="true" interval="5000" duration="500" current="0">
+        <swiper-item wx:for="{{bannerList}}" wx:key>
+            <image src="{{item.image_input}}"></image>
+        </swiper-item>
+      </swiper>
+      <!--重置小圆点的样式  -->
+      <view class="dots">  
+          <block wx:for="{{bannerList.length}}" wx:key>  
+              <view class="dot{{index == currentSwiper ? ' active' : ''}}"></view>  
+          </block>  
+      </view>  
+</view>
+<!--游园指南列表-->
+<view class="wrap_list_data margin-top-sm">
+<block wx:for="{{newList}}" wx:key>
+    <navigator class="none" url="../yuanquzongtijieshao/yuanquzongtijieshao?id={{item.id}}" open-type="navigate" hover-class="none">
+          <view class="cu-list-two menu" style="">
+                  <view class="cu-item {{menuArrow?'arrow':''}}" > 
+                        <view class="cu-avatar-group">
+                              <image class="cu-avatar xxl" src="{{item.image_input}}"></image>
+                        </view>
+                        <view class='content'>
+                            <view>
+                              <view class='text-xl text-bold'>{{item.author}}</view>
+                              <view class='text-grey my_text_2 padding-top-xs'>{{item.synopsis}}</view>
+                            </view>
+                        </view>
+                  </view>
+        </view>  
+    </navigator>
+</block>
+</view>      
+
+</view>
+
+

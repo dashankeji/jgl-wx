@@ -1,0 +1,89 @@
+{
+  "pages": [
+    "pages/loading/loading",
+    "pages/load/load",
+    "pages/login-status/login-status",
+    "pages/payment/payment",
+    "pages/home/home",
+    "pages/new-con/new-con",
+    "pages/index/index",
+    "pages/refunding/refunding",
+    "pages/coupon-status/coupon-status",
+    "pages/addaddress/addaddress",
+    "pages/product-countdown/index",
+    "pages/refund-page/refund-page",
+    "pages/refund-order/refund-order",
+    "pages/cut-one/cut-one",
+    "pages/spread/spread",
+    "pages/promotion-order/promotion-order",
+    "pages/coupon/coupon",
+    "pages/product-con/index",
+    "pages/product-pinke/index",
+    "pages/comment-con/comment-con",
+    "pages/orderForm/orderForm",
+    "pages/orders-list/orders-list",
+    "pages/comment/comment",
+    "pages/foo-tan/foo-tan",
+    "pages/buycar/buycar",
+    "pages/mycut/mycut",
+    "pages/join-pink/index",
+    "pages/user/user",
+    "pages/integral-con/integral-con",
+    "pages/orders-con/orders-con",
+    "pages/order-confirm/order-confirm",
+    "pages/address/address",
+    "pages/feree/feree",
+    "pages/feree-two/feree-two",
+    "pages/cash/cash",
+    "pages/logistics/logistics",
+    "pages/extension/extension",
+    "pages/unshop/unshop",
+    "pages/main/main",
+    "pages/collect/collect",
+    "pages/home-search/home-search",
+    "pages/productSort/productSort",
+    "pages/pink-list/index",
+    "pages/miao-list/miao-list",
+    "pages/new-list/new-list",
+    "pages/promotion-card/promotion-card",
+    "pages/miaosha/miaosha",
+    "pages/pintuan/pintuan"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#fff",
+    "navigationStyle": "custom",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "backgroundColor": "#FFFFFF",
+    "color": "#999",
+    "selectedColor": "#f39800",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/1_03.png",
+        "selectedIconPath": "images/5_03.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/productSort/productSort",
+        "iconPath": "images/2_03.png",
+        "selectedIconPath": "images/6_03.png",
+        "text": "产品销售"
+      },
+      {
+        "pagePath": "pages/buycar/buycar",
+        "iconPath": "images/3_03.png",
+        "selectedIconPath": "images/7_03.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "iconPath": "images/4_03.png",
+        "selectedIconPath": "images/8_03.png",
+        "text": "我的"
+      }
+    ]
+  }
+}

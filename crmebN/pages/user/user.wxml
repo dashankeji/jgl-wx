@@ -1,0 +1,91 @@
+<view id="wrap">
+<!--个人中心标题加图标返回-->
+<view class="cu-custom" style="height:{{CustomBar}}px;">
+  <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">  
+         <text class='text-xxl text-bold margin-left-sm'>个人中心</text>
+  </view>
+</view>
+<!--距离顶层距离过渡-->
+<view style="margin-top:{{StatusBar}}px;"></view>
+<!--个人中心图片加订单状态-->
+<view style="position:relative;top:0;left:0;padding-bottom:30px;">
+      <view class="wrap_swiper">
+                <swiper class="screen-swiper" indicator-dots="true"                                                     circular="true" autoplay="true" interval="5000" duration="500" current="0">
+                        <swiper-item wx:for="{{bannerImgData}}" wx:key>
+                                <image src="{{item.image}}" mode='scaleToFill'></image>
+                        </swiper-item>
+                </swiper>
+      </view>
+       <view class="flex justify-between" style="width:90%;position:absolute;top:30px;left:15px;border-radius:5px;">
+            <view class="text-white flex align-center">
+                 <image src="{{userinfo.avatar}}" mode='aspectFill' style="width:160rpx;height:160rpx;border-radius:50%"></image>
+                 <view class="text-white">
+                    <view class="text-xl margin-left-sm">{{userinfo.nickname}}</view>
+                   <!-- <view>积分：{{userinfo.integral}}</view> -->
+                 </view>
+            </view>
+             <view class="text-white text-xxl flex align-center">
+                 <text class="icon-right"></text>
+            </view>
+      </view>
+      <view style="width:90%;position:absolute;bottom:-54rpx;left:5%;background-color:#fff;border-radius:5px;padding:15px 0;">
+            <view class="grid col-5 text-center">
+                <block wx:for="{{ListTitleData[0]}}" wx:key>
+                    <view>
+                        <navigator hover-class="none" url='{{item.link}}'>
+                            <view style="background-image:url({{item.imgUrl}});width:50rpx;height:50rpx;background-size:100% 100%;margin:0 auto"></view>
+                            <view style="font-size:23rpx;margin-top:10rpx">{{item.title}}</view>
+                        </navigator>
+                    </view>
+                </block>
+            </view>
+      </view>
+</view>
+<view style="margin-top:80rpx"></view>
+<view class="cu-list menu">
+        <view class="cu-item {{menuArrow?'arrow':''}}" bindtap='shouhuodizhiClick'> 
+          <view class="content">
+              <image class="image-css" src="../../images/1703.png" mode='aspectFill'></image>
+              <text class=''>收货地址</text>
+          </view>
+          <view class='action'>
+              <text class='icon-right'></text>
+          </view> 
+        </view>
+         <view class="cu-item {{menuArrow?'arrow':''}}" bindtap='quanbudingdanClick'> 
+          <view class="content">
+               <image class="image-css" src="../../images/1744.png" mode='aspectFill'></image>
+              <text class=''>全部订单</text>
+          </view>
+          <view class='action'>
+              <text class='icon-right'></text>
+          </view> 
+        </view>
+</view>
+<!--第二种列表形式，每个有两个列表-->
+<view class="cu-list menu">
+        <view class="cu-item {{menuArrow?'arrow':''}}" bindtap='collects'> 
+          <view class="content">
+              <image class="image-css" src="../../images/1747.png" mode='aspectFill'></image>
+              <text class=''>我的收藏</text>
+          </view>
+          <view class='action'>
+              <text class='icon-right text-grey'></text>
+          </view> 
+        </view>
+        <button open-type="contact" class="cu-item">
+              <view class="content text-left">
+                    <image class="image-css" src="../../images/1751.png" mode='aspectFill'></image>
+                   <text class=''>在线客服</text>
+              </view>
+              <view class='action'>
+                  <text class='icon-right text-grey'></text>
+              </view> 
+        </button>
+</view>
+
+</view>
+
+
+
+

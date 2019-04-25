@@ -1,0 +1,30 @@
+<!-- <view class="header-ul flex"> -->
+    <!-- <block wx:for="{{headerArray}}">
+        <view data-idx='{{index}}' class='header-li {{_active==index?"active":""}}' bindtap='headertap'>{{item}}</view>
+    </block> -->
+<!-- </view> -->
+<view class="wrap_title bg-white">
+      <view class="cu-custom" style="height:{{CustomBar}}px;">
+        <view class="cu-bar fixed" style="height:{{CustomBar}}px;">
+          <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
+            <text class='icon-iconfontback' style="font-size:20px"></text>  <text class='text-xxl text-bold'>优惠券</text>
+          </navigator>
+        </view>
+      </view>
+</view>
+<view class='coupon-ul'>
+    <block wx:for="{{couponArray}}">
+        <view class='coupon-li flex {{item.is_use?"coupon-use":""}}' bindtap='getCouponUser' data-id="{{item.id}}">
+            <view class='coupon-text {{item.is_use?"use-text":""}}'>
+               <view class='coupon-term'>满{{item.use_min_price}}元使用</view>
+               <!-- <view class='coupon-time'>{{item.add_time}}至{{item.end_time}}使用</view> -->
+            </view>
+            <view class='coupon-text2'>
+                <view class='coupon-money'>￥<text class='coupon-num'>{{item.coupon_price}}</text></view>
+                <view class='coupon-but use-but' wx:if="{{item.is_use}}">已领取</view>
+                <view class='coupon-but ' wx:else>{{userstatus}}</view>
+            </view>
+        </view>
+    </block>
+</view>
+<view class='loading flex'><text class='loadingpic iconfont icon-jiazaizhong' hidden='{{loadinghidden}}'></text><text>{{title}}</text></view>

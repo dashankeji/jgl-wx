@@ -1,0 +1,106 @@
+<!--标题-->
+<view class="wrap_title" style="height:{{CustomBar}}px;line-height:{{CustomBar}}px;">
+    <view class='text-xxl padding'>
+        <text class='text-black text-bold'>金龟岭休闲农庄欢迎您</text>
+    </view>
+</view>
+<!--搜索-->
+<view class="wrap_search">
+    <navigator class="none" url="/pages/home-search/home-search" open-type="navigate" hover-class="none">
+        <view class="cu-bar search">
+                  <view class='search-form round'>
+                          <text class="icon-sousuo"></text>
+                          <input type="text" class="text-xl" placeholder="搜索" confirm-type="search"></input>
+                  </view>
+        </view>
+    </navigator>
+</view>
+<!--轮播-->
+<view class="wrap_swiper" style="position:relative;top:0;left:0;">
+      <swiper class="screen-swiper" bindchange="swiperChange" circular="true" autoplay="true" interval="5000" duration="500" current="0">
+        <swiper-item wx:for="{{imgUrls}}" wx:key>
+           <image src="{{item.pic}}" mode='scaleToFill'></image>
+        </swiper-item>
+      </swiper>
+      <!--重置小圆点的样式  -->
+      <view class="dots">   
+            <block wx:for="{{imgUrls.length}}" wx:key>     
+                    <view class="dot{{index == currentSwiper ? ' active' : ''}}"></view>             
+            </block>  
+      </view>  
+</view>
+<!--导航-->
+<view class="wrap_nav">
+    <view class="flex justify-between" style="padding:50rpx 50rpx 30rpx">
+        <view class='text-center' wx:for="{{menus}}" wx:key="{{index}}">
+            <navigator class="none" url="{{item.url}}" open-type="navigate" hover-class="none">
+                    <view class="" style="width:120rpx;height:120rpx;background-image:url({{item.pic}});background-size:100% 100%"></view>
+                    <view class='text-black text-bold' style="display:block;margin-top:15rpx">{{item.name}}</view>
+            </navigator>
+        </view>
+    </view>
+</view>
+
+<!--休闲娱乐-->
+<view class="wrap_recreationEntertainment">
+    <view class='text-xl padding text-center'>
+          <text class='text-black text-bold'>休/闲/娱/乐</text>
+    </view>
+    <view class="flex justify-between" style="padding:0rpx 30rpx">
+       <view style="width:49%">
+          <navigator class="none" url="../yuanquzongtijieshao/yuanquzongtijieshao?id={{newList[0].stock}}" open-type="navigate" hover-class="none">
+                <view class="wrap_imageOne" style="background-image:url({{newList[0].image}});background-size:100% 100%"></view>
+          </navigator>   
+       </view>
+       
+      <view style="width:49%">
+          <navigator class="none" url="../yuanquzongtijieshao/yuanquzongtijieshao?id={{newList[1].stock}}" open-type="navigate" hover-class="none">
+                 <view class="wrap_image wrap_image-maTop" style="background-image:url({{newList[1].image}});background-size:100% 100%"></view>
+          </navigator>
+          <navigator class="none" url="../yuanquzongtijieshao/yuanquzongtijieshao?id={{newList[2].stock}}" open-type="navigate" hover-class="none" style='margin-top:9rpx'>
+                 <view class="wrap_image wrap_image-maTop" style="background-image:url({{newList[2].image}});background-size:100% 100%"></view>
+          </navigator>
+          </view>
+    </view>
+    <view class="flex justify-between margin-top-xs" style="padding:0rpx 30rpx">
+        <view style="width:49%">
+            <navigator class="none" url="../yuanquzongtijieshao/yuanquzongtijieshao?id={{newList[3].stock}}" open-type="navigate" hover-class="none">
+                <view class="wrap_image wrap_image-maTop" style="background-image:url({{newList[3].image}});background-size:100% 100%"></view>
+            </navigator>
+            <navigator class="none" url="../yuanquzongtijieshao/yuanquzongtijieshao?id={{newList[4].stock}}" open-type="navigate" hover-class="none" style='margin-top:9rpx'>
+                <view class="wrap_image wrap_image-maTop" style="background-image:url({{newList[4].image}});background-size:100% 100%"></view>
+            </navigator>
+        </view>
+        <view style="width:49%">          
+            <navigator class="none" url="../yuanquzongtijieshao/yuanquzongtijieshao?id={{newList[5].stock}}" open-type="navigate" hover-class="none">
+              <view class="wrap_imageOne" style="background-image:url({{newList[5].image}});background-size:100% 100%"></view>
+            </navigator>
+        </view>
+    </view>
+</view>
+
+<!--应季商品-->
+<view class="wrap_seasonalMerchandise">
+    <view class='text-xl padding text-center'>
+          <text class='text-black text-bold'>应/季/商/品</text>
+    </view>
+    <view class="flex justify-between" style="padding:20rpx;flex-wrap: wrap">
+              <view class=" margin-bottom-sm" style="width:49%;box-shadow:0 0 5rpx #ccc;" wx:for="{{hotList}}"  wx:key>
+                  <navigator class="none" url="/pages/product-con/index?id={{item.id}}" open-type="navigate" hover-class="none">
+                      <view class="wrap_imageTwo" style="background-image:url({{item.image}});background-size:100% 100%;"></view>
+                      <view class='text-lg my_text_1 margin-top-xs margin-left-sm'>
+                          <text class='text-black text-bold'>{{item.store_name}}</text>
+                      </view>
+                      <view class='text-df my_text_2 margin-top-xs margin-left-sm'>
+                          <text class='text-gray'>{{item.store_info}}</text>
+                      </view>
+                        <view class="flex margin-top-xs margin-left-sm" style='margin-bottom:15rpx'>
+                            <view class='basis-df text-xl text-end'>
+                                  <text class='text-red text-bold'>￥{{item.price}}</text>
+                            </view>
+                      </view>
+                  </navigator>
+              </view>
+    </view>
+</view>
+

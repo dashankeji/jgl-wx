@@ -1,0 +1,71 @@
+<!--pages/home-search/index.wxml-->
+<view class="wrap_title bg-white">
+  <view class="cu-custom" style="height:{{CustomBar}}px;">
+    <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+      <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
+        <text class='icon-iconfontback' style="font-size:20px"></text>  <text class='text-xxl text-bold'>搜索</text>
+      </navigator>
+    </view>
+  </view>
+</view>
+<!--搜索-->
+<view style="margin-top:{{StatusBar}}px;">
+    <view class="cu-bar search bg-white">
+        <view class='search-form round'>
+          <text class="icon-search"></text>
+          <input type="text" placeholder="搜索商品" confirm-type="search" bindblur="bindkeyblur" ></input>
+        </view>
+        <view class='action'>
+          <button class='cu-btn bg-grey shadow-blur round' bindtap='searchClick'>搜索</button>
+        </view>
+      </view>
+</view>
+<!--下拉菜单-->
+<view class="page">
+    <view class="nav-son" >
+        <view style="flex:0.5">综合</view>
+        <view class="my_text_1" bindtap='listPrice' style="flex:1;text-align:center">{{PriceCF}}<text class="icon-bottom"></text></view>
+        <view class="my_text_1" bindtap="listAll" style="flex:1;text-align:right">{{ProductCF}}<text class="icon-bottom"></text></view>
+    </view>
+ 
+    <view class="temp {{pxopen ? 'slidown' : ''}}">
+        <block wx:for="{{content}}"   wx:key>
+             <block wx:if="{{item.cate_name}}">
+                  <view class="{{ActiveIndex == index  ? 'text-red' : ''}}" data-id="{{item.id}}" data-value="{{item.cate_name}}" bindtap='ActiveClick' data-index="{{index}}">
+                        {{item.cate_name}}
+                  </view>
+             </block>
+             <block wx:else>
+                  <view class="{{PriceIndex == index  ? 'text-red' : ''}}" bindtap='PriceClick' data-type="{{item.type}}" data-index="{{index}}" data-value="{{item.value}}">
+                        {{item.value}}
+                  </view>
+             </block>
+        </block>
+    </view>
+</view>
+
+<!--喔喔-->
+<view class="wrap_seasonalMerchandise padding-top bg-white">
+
+    <view class="flex solid-bottom justify-between" style="padding:20rpx;flex-wrap: wrap">
+              <view class=" margin-bottom-sm" style="width:49%;box-shadow:0 0 5rpx #ccc;" wx:for="{{shoppingData}}"  wx:key>
+                  <navigator class="none" url="/pages/product-con/index?id={{item.id}}" open-type="navigate" hover-class="none">
+                      <view class="wrap_imageOne" style="background-image:url({{item.image}});background-size:100% 100%"></view>
+                      <view class='text-lg my_text_1 margin-top-xs'>
+                          <text class='text-black text-bold'>{{item.store_name}}</text>
+                      </view>
+                      <view class='text-df my_text_2 margin-top-xs'>
+                          <text class='text-grey'>{{item.store_info}}</text>
+                      </view>
+                        <view class="flex margin-top-xs">
+                            <view class='basis-df text-xl text-end'>
+                                  <text class='text-red text-bold'>￥{{item.price}}</text>
+                            </view>
+                            <view class='basis-df text-xl text-right'>
+                                  <text class='icon-iconfontmore text-black text-bold'></text>
+                            </view>
+                      </view>
+                  </navigator>
+              </view>
+    </view>
+</view>

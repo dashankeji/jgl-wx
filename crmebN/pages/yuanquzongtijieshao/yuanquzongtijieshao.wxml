@@ -1,0 +1,3 @@
+<import src ="../yuanquzongtijieshaoTemplate/yuanquzongtijieshaoTemplate.wxml"/>
+
+<template is="content" data="{{CustomBar: CustomBar, StatusBar: StatusBar, backNavTitle: backNavTitle, Title: Title, bgImagesUrl: bgImagesUrl, desc: desc, oneImagesList: oneImagesList,  positionImgJson: positionImgJson }}" />

@@ -1,0 +1,54 @@
+ <view id="wrap">
+<!--我的收藏标题加图标返回-->
+ <view class="wrap_title bg-white solid-bottom padding-bottom">
+      <view class="cu-custom" style="height:{{CustomBar}}px;">
+        <view class="cu-bar fixed" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+          <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
+            <text class='icon-iconfontback' style="font-size:20px"></text>  <text class='text-xxl text-bold'>我的收藏</text>
+          </navigator>
+        </view>
+      </view>
+</view>
+
+<!--收藏列表-->
+<view>
+    <block wx:if="{{batchManagementFlag}}">
+        <view class="flex justify-end" style="padding:30rpx 20rpx">
+            <view class="text-orange" style="padding:10rpx 40rpx;border:1px solid orange;border-radius:5px" bindtap='batchManagementClick'>批量管理</view>
+        </view>
+    </block>
+    <block wx:else>
+         <view class="flex justify-between padding text-red">
+                <text class="text-xxl icon-yuandianda {{allCheckFlag ? 'text-gray' : 'text-yellow'}}" bindtap="allCheckClcik">
+                           <text class="text-bold text-xl text-black"> 全选</text>
+                </text>
+               <view class="">
+                   <text bindtap='allDeleteShoppingClick'>删除</text>
+                   <text style="margin-left:20rpx" bindtap='completeClick'>完成</text>
+               </view>
+         </view>
+    </block>
+    <block wx:for="{{ShoppingData.data}}" wx:key="{{index}}">
+          <view class="cu-list-two menu bg-white">
+                <view class="cu-item">
+                   <block wx:if="{{!batchManagementFlag}}">
+                     <view class="flex align-center" style='margin-right:10rpx'><text class="text-xxl icon-yuandianda {{allCheckNum[index] ? 'text-yellow' : 'text-gray'}}" bindtap="singleCheckClick" data-index="{{index}}"></text></view>
+                   </block>
+                                            <view class="cu-avatar xl" style="background-image:url({{item.image}})"></view>
+                                            <view class='content padding-left'>
+                                                  <view class="text-xl" style="width:70%;overflow:hidden">{{item.store_name}}</view>
+                                                  <view class="text-sm text-grey margin-top-xs" style="width:70%;overflow:hidden">{{allShoppingShouCangres[index]}}人收藏</view>
+                                            </view>
+                                            <view style="position:absolute;right:25rpx;top:35rpx;">
+                                                  <view class='text-grey'>{{item.price}}</view>
+                                            </view>
+                                            <view style="position:absolute;right:25rpx;bottom:40rpx;">
+                                                  <text class='text-red' data-id="{{item.pid}}" bindtap="deleteShoppingClick">取消收藏</text>
+                                            </view>
+                </view>                      
+          </view>
+    </block>
+</view>
+
+
+</view>

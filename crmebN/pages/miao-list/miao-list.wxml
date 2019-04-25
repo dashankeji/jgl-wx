@@ -1,0 +1,108 @@
+<view id="wrap">
+<!--餐饮标题加图标返回-->
+<view class="wrap_title bg-white">
+    <view class="cu-custom" style="height:{{CustomBar}}px;">
+      <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+        <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
+          <text class='icon-iconfontback' style="font-size:20px"></text>  <text class='text-xxl text-bold'>餐饮</text>
+        </navigator>
+      </view>
+    </view>
+</view>
+<!--店家店名-->
+<view class="padding solid-top text-center text-xl text-bold bg-white" style="margin-top:{{StatusBar}}px;">{{Title}}</view>
+<!--轮播-->
+<view class="wrap_swiper" style="position:relative;top:0;left:0;">
+      <swiper class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" bindchange="swiperChange" circular="true" autoplay="true" interval="5000" duration="500" current="0">
+        <swiper-item wx:for="{{imgUrls}}" wx:key>
+          <image src="{{item.image}}" mode='aspectFill'></image>
+        </swiper-item>
+      </swiper>
+      <!--重置小圆点的样式  -->
+      <view class="dots">  
+          <block wx:for="{{imgUrls.length}}" wx:key>  
+              <view class="dot{{index == currentSwiper ? ' active' : ''}}"></view>  
+          </block>  
+      </view>  
+</view>
+<!--菜单和店家切换-->
+<view class="flex flex-wrap bg-white">
+      <view class='basis-sm padding radius text-center text-xl {{tabSelectCssFlag[0]?"tahSelectCss":""}}' bindtap='tabClickMenu'>菜单</view>
+      <view class='' style="width:8%;padding:3% 4%">
+             <view style="height:100%;border-left:1px solid black"></view>
+      </view>
+      <view class='basis-sm padding radius text-center text-xl {{tabSelectCssFlag[1]?"tahSelectCss":""}}' bindtap='tabClickShopOwner'>店家</view>
+</view>
+<!--菜单和店家导航信息-->
+<block wx:if="{{tabSelectCssFlag[0]}}">
+      <view class="margin-top" style="">
+          <view class="flex flex-wrap bg-grey-two light">
+                <view class='basis-lg-two radius text-xl bg-white cu-load'>
+                      <scroll-view
+                                scroll-y
+                                bindscrolltoupper="upper"
+                                bindscrolltolower="lower"
+                                bindscroll="scroll"
+                                scroll-top="{{scrollTop}}"
+                              >
+                                  <view class="cu-list-two text-left menu">
+                                        <view class="cu-item {{menuArrow?'arrow':''}}" wx:for="{{menuSwitcnDate[menuSwitcnDateIndex]}}" wx:key> 
+                                              <view class="cu-avatar-group">
+                                                    <view class="cu-avatar xl" style="background-image:url({{item.image}});"></view>
+                                              </view>
+                                              <view class='content' style='display:flex;align-items:center'>
+                                                    <view style="width:80%">
+                                                          <view class='text-xl my_text_1'>{{item.store_name}}</view>
+                                                          <!--<view class='text-grey my_text_2'>{{item.store_info}}</view>-->
+                                                    </view>
+                                              </view>
+                                        </view>
+                                  </view>
+                                  <block wx:if="{{hidden}}">
+                                      <view class='loading flex'><icon class='iconfont icon-jiazaizhong loadingpic'></icon>加载中</view>
+                                  </block>
+                                  <block wx:else>
+                                        <view class='loading flex'>已显示完毕</view>
+                                  </block>
+                      </scroll-view>
+                </view>
+      </view>
+      </view>
+</block>
+<block wx:else>
+       <view class="margin-top margin-bottom">
+              <view class="padding bg-white">
+                   {{address.content}}
+              </view>
+       </view>
+       <view class="cu-list menu">
+            <view class="cu-item {{menuArrow?'arrow':''}}">
+                  <view class='content'>
+                    <text class='icon-iconfontboda text-green'></text>
+                    <text class='text-grey'>预留电话</text>
+                  </view>
+                  <view class='action'>
+                    <text class='text-grey text-sm'> {{address.phone}}</text>
+                  </view>
+            </view>
+            <view class="cu-item {{menuArrow?'arrow':''}}">
+                  <view class='content'>
+                    <text class='icon-iconfontdizhi-copy text-green'></text>
+                    <text class='text-grey'>地址</text>
+                  </view>
+                  <view class='action'>
+                    <text class='text-grey text-sm'> {{address.address}}</text>
+                  </view>
+            </view>
+            <view class="cu-item {{menuArrow?'arrow':''}}">
+                  <view class='content'>
+                    <text class='icon-shijian text-green'></text>
+                    <text class='text-grey'>营业时间</text>
+                  </view>
+                  <view class='action'>
+                    <text class='text-grey text-sm'> {{address.business_hours}}</text>
+                  </view>
+            </view>
+       </view>
+</block>
+</view>

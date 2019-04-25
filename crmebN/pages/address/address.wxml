@@ -1,0 +1,52 @@
+<!--<view class="header"></view>-->
+<view class="wrap_title bg-white">
+    <view class="cu-custom" style="height:{{CustomBar}}px;">
+      <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+        <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
+          <text class='icon-iconfontback' style="font-size:20px"></text>  <text class='text-xxl text-bold'>收货地址</text>
+        </navigator>
+      </view>
+    </view>
+</view>
+<!--<view class='system-address' bindtap='addAddress'>新增地址</view>
+<view class='weixin-address' bindtap='getWxAddress'>微信地址</view>-->
+<!--收货人信息-->
+<view class="top">                            
+      <block wx:for="{{addressArray}}" wx:key="{{index}}">
+            <view class="cu-list-two menu">
+                  <view class="cu-item"><!--activetap方法是设为默认地址-->
+                                              <view class="flex align-center"><text class="text-xl icon-yixuan {{_num==item.id?'text-yellow':'text-gray'}}"  bindtap='activetap' data-idx='{{item.id}}'></text></view>
+                                              <view class='content padding-left text-xl'>
+                                                    <view class="" style="width:60%;overflow:hidden">
+                                                        <text>{{item.real_name}}</text>  
+                                                          <text class="margin-left">{{item.phone}}</text>
+                                                    </view>
+                                                    <view class="text-grey" style="width:60%;overflow:hidden">
+                                                        {{item.province}}{{item.city}} , {{item.district}} , {{item.detail}}
+                                                    </view>
+                                              </view>
+                                      
+                                              <block wx:if="{{editAddressFlag}}">
+                                                  <view style="position:absolute;right:35rpx;bottom:50rpx;">
+                                                      <text class='icon-comment text-xl text-gray' bindtap='editAddressShow'></text>
+                                                  </view>
+                                              </block>
+                                              <block wx:else>
+                                                  <view style="position:absolute;right:20rpx;bottom:20rpx;">
+                                                      <text class='edit' data-id="{{item.id}}" bindtap='editAddress'>编辑</text>
+                                                      <text class='del' data-id="{{item.id}}" bindtap='delAddress'>删除</text>
+                                                  </view>
+                                              </block>
+                  </view>                      
+            </view>
+      </block>
+</view>
+<!--新增地址-->
+<view>
+     <view class="cu-list-two menu bg-white">
+           <view class="cu-item text-lg" bindtap='addAddress'>
+                 <text class="icon-jia text-xl text-green"></text>
+                 <view class="padding-left text-bold">新增地址</view>
+           </view>
+     </view>
+</view>
