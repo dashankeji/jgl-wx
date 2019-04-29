@@ -41,7 +41,7 @@
 }
 
 .screen-swiper {
-  min-height: 375rpx;
+  min-height: 320rpx;
 }
 
 .screen-swiper image {

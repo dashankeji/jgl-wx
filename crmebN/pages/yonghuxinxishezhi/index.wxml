@@ -1,0 +1,44 @@
+<!--pages/yonghuxinxishezhi/index.wxml-->
+<view class="bg-white">
+<view class="wrap_title">
+    <view class="cu-custom " style="height:{{CustomBar}}px;">
+      <view class="cu-bar fixed bg-white solid-bottom" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+        <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
+          <text class='icon-iconfontback' style="font-size:20px"></text>  <text class='text-xxl text-bold'>基本资料</text>
+        </navigator>
+      </view>
+    </view>
+</view>
+
+<form bindsubmit="formSubmit" bindreset="formReset">
+<view class="wrap_search" style="margin-top:{{StatusBar}}px">
+        <view class="cu-bar search solid-bottom padding">
+                  <text class="text-lgs text-bold">用户名称</text>
+                  <view class='search-form round' style="background-color:#fff;border:1px solid #ccc;padding-left:20rpx">
+                          <input type="text" name="username" class="text-xl" placeholder="请输入昵称" confirm-type="确定"  value="{{username}}"></input>
+                  </view>
+        </view>
+        <view class="cu-bar search solid-bottom padding">
+                  <text class="text-lgs text-bold">出生日期</text>
+                   <view class='search-form round' style="background-color:#fff;border:1px solid #ccc;padding-left:20rpx">
+                          <input type="text" name="date" class="text-xl" placeholder="{{date}}" confirm-type="确定" value="{{date=='请输入出生日期'? '' : date}}"></input>
+                  </view>
+        </view>
+        <view class="cu-bar search solid-bottom padding">
+                  <text class="text-lgs text-bold">联系电话</text>
+                 <view class='search-form round' style="background-color:#fff;border:1px solid #ccc;padding-left:20rpx">
+                          <input type="text" name="phone" class="text-xl" placeholder="{{phone}}" confirm-type="确定"  value="{{phone=='请输入联系电话'? '' : phone}}"></input>
+                  </view>
+        </view>
+</view>
+<view class="padding-top-xl" style="background-color:#f7f7f7">
+    <button form-type="submit" class="text-center bg-orange text-white text-xl" style="width:90%;margin:0 auto;border-radius:10px" formType="submit">保存              </button>
+</view>
+<view class="padding-top-sm" style="background-color:#f7f7f7">
+        <button form-type="reset" class="text-center bg-grey light text-white text-xl" style="width:90%;margin:0 auto;border-radius:10px">重置</button>
+</view>
+</form>
+
+</view>
+
+

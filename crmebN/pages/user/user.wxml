@@ -10,7 +10,7 @@
 <!--个人中心图片加订单状态-->
 <view style="position:relative;top:0;left:0;padding-bottom:30px;">
       <view class="wrap_swiper">
-                <swiper class="screen-swiper" indicator-dots="true"                                                     circular="true" autoplay="true" interval="5000" duration="500" current="0">
+                <swiper class="screen-swiper" circular="true" autoplay="true" interval="5000" duration="500">
                         <swiper-item wx:for="{{bannerImgData}}" wx:key>
                                 <image src="{{item.image}}" mode='scaleToFill'></image>
                         </swiper-item>
@@ -25,7 +25,9 @@
                  </view>
             </view>
              <view class="text-white text-xxl flex align-center">
-                 <text class="icon-right"></text>
+               <navigator hover-class="none" url='../yonghuxinxishezhi/index?username={{userinfo.nickname}}&phone={{userinfo.fill_in_phone}}&date={{userinfo.fill_in_date}}'>
+                  <text class="icon-right text-xxl"></text>
+               </navigator> 
             </view>
       </view>
       <view style="width:90%;position:absolute;bottom:-54rpx;left:5%;background-color:#fff;border-radius:5px;padding:15px 0;">

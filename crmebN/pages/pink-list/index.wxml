@@ -12,7 +12,7 @@
 <view class="wrap_swiper" style="position:relative;top:0;left:0;margin-top:{{StatusBar}}px;">
       <swiper class="screen-swiper" bindchange="swiperChange" circular="true" autoplay="true" interval="5000" duration="500" current="0">
         <swiper-item wx:for="{{bannerImgData}}" wx:key>
-           <image src="{{item.image}}" mode='aspectFill'></image>
+           <image src="{{item.image}}" mode='scaleToFill'></image>
         </swiper-item>
       </swiper>
       <!--重置小圆点的样式  -->
@@ -35,10 +35,12 @@
 <!--导航栏点击对应数据-->
 <view class="wrap_nav_data" style="padding-bottom:94rpx">
       <view class="cu-list-two menu">
-            <view class="cu-item {{menuArrow?'arrow':''}}" wx:for="{{TabDate[TabCur]}}" wx:key> 
-                  <view class="cu-avatar-group">
-                        <view class="cu-avatar xl" style="background-image:url({{item.image}});"></view>
-                  </view>
+            <view class="cu-item {{menuArrow?'arrow':''}}" wx:for="{{TabDate[TabCur]}}" wx:key>
+                  <navigator class="none" url="/pages/product-con/index?id={{item.id}}" open-type="navigate" hover-class="none">
+                      <view class="cu-avatar-group">
+                            <view class="cu-avatar xl" style="background-image:url({{item.image}});"></view>
+                      </view>
+                  </navigator>
                   <view class='content' style='position:relative;top:0;left:0'>
                       <view style="width:80%">
                           <view class='text-xl my_text_1'>{{item.store_name}}</view>

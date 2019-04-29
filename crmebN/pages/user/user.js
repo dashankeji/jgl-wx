@@ -134,6 +134,7 @@ Page({
       method: 'POST',
       header: header,
       success: function (res) {
+        if (res.data.data.fill_in_nickname != '请输入昵称') res.data.data.nickname = res.data.data.fill_in_nickname;
         that.setData({
           userinfo: res.data.data,
           orderStatusNum: res.data.data.orderStatusNum
@@ -157,6 +158,7 @@ Page({
       method: 'POST',
       header: header,
       success: function (res) {
+        if (res.data.data.fill_in_nickname != '请输入昵称') res.data.data.nickname = res.data.data.fill_in_nickname;
         that.setData({
           userinfo: res.data.data
         })

@@ -3,3 +3,6 @@
 .justify-between {
   justify-content: space-between;
 }
+.fu-margin-top{
+  margin-top: -10rpx;
+}

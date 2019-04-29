@@ -1,0 +1,10 @@
+/* pages/yonghuxinxishezhi/index.wxss */
+
+.justify-between {
+  justify-content: space-between;
+}
+
+
+.round {
+  border-radius: 5000rpx;
+}

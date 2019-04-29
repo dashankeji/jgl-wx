@@ -10,7 +10,8 @@
 <view class="wrap_swiper" style="position:relative;top:0;left:0;">
       <swiper class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" bindchange="swiperChange" circular="true" autoplay="true" interval="5000" duration="500" current="0">
         <swiper-item wx:for="{{storeInfo.slider_image}}" wx:key>
-          <image src="{{url}}{{item}}" mode="center"></image>
+          <!--<image src="{{url}}{{item}}" mode="aspectFill"></image>-->
+          <view style='background-image:url({{url}}{{item}});width:100%;height:100%;background-size:cover;background-position:center;box-shadow: 0 0 5rpx #ccc;'> </view>
         </swiper-item>
       </swiper>
       <!--重置小圆点的样式  -->
@@ -75,9 +76,9 @@
                 <view class='content'>
                   <text class='text-grey text-xl'>评论</text>
                 </view>
-                <view class='action'>
+              <!--  <view class='action'>
                    发表<text class='text-grey text-xl icon-comment'></text>
-                </view>
+                </view> -->
             </view>
       </view>
       <view class="cu-list-two menu">    
@@ -93,6 +94,15 @@
                         </view>    
                         <view class='start star{{reply.star}}'></view>
                         <view class='text-grey'>{{reply.comment}}</view>
+                        <view class="text-grey" wx:if="{{reply.merchant_reply_content}}">
+                            <view class='txt-msg'>
+                                回复:  {{reply.merchant_reply_content}}
+                            </view>
+                            <view class='time-bar flex justify-between'>
+                                <view style="margin-bottom:0">回复时间:</view>
+                                <view>{{reply.merchant_reply_time}}</view>
+                            </view>
+                        </view>
                       </view>
                   </view>
             </view>

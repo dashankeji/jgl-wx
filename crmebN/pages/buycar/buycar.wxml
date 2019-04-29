@@ -20,7 +20,10 @@
             <checkbox value="{{index}}" checked="{{item.checked}}" />
           </label>
         </view>
-        <view class='picture'><image src='{{url}}{{item.productInfo.image}}'></image></view>
+        <view class='picture'>
+            <!--<image src='{{url}}{{item.productInfo.image}}'></image>-->
+            <view style='background-image:url({{url}}{{item.productInfo.image}});width:206rpx;height:206rpx;background-size:cover;background-position:center'> </view>
+        </view>
         <view class='pro-info flex'>
            <view class="flex" style="justify-content:space-between">
               <view class='pro-title'>{{item.productInfo.store_name}}</view> 

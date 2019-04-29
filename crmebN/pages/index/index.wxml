@@ -23,7 +23,7 @@
         </swiper-item>
       </swiper>
       <!--重置小圆点的样式  -->
-      <view class="dots">   
+      <view class="dots" style='margin-left: -{{ 7.5 * imgUrls.length-1 + 12}}rpx;'>   
             <block wx:for="{{imgUrls.length}}" wx:key>     
                     <view class="dot{{index == currentSwiper ? ' active' : ''}}"></view>             
             </block>  

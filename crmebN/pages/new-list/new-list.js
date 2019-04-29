@@ -25,7 +25,49 @@ Page({
       currentSwiper: e.detail.current
     })
   },
-
+  ClassificationListReqID: function (arr, arrName) {    //获取分类id
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i].cate_name == arrName[0] && arrName.length == 1) {
+        return arr[i].id;
+      }
+      if (arr[i].cate_name == arrName[0] && arr[i].child) {
+        arrName.splice(0, 1);
+        return this.ClassificationListReqID(arr[i].child, arrName);
+      }
+    }
+    return -1;
+  },
+  ClassificationListReq: function () {    //获取所有分类
+    var header = {
+      'content-type': 'application/x-www-form-urlencoded',
+    };
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/routine/auth_api/get_product_category?uid=' + app.globalData.uid,
+      method: 'POST',
+      header: header,
+      success: function (res) {
+        var id = that.ClassificationListReqID(res.data.data,['首页','游园指南','轮播']);
+        that.bannerList(id);
+      }
+    });
+  },
+  bannerList: function(id){
+    var that = this;
+    var header = {
+      'content-type': 'application/x-www-form-urlencoded',
+    };
+    wx.request({
+      url: app.globalData.url + '/routine/auth_api/indexXiaoben?uid=' + app.globalData.uid + '&cate_id=' + id,
+      method: 'GET',
+      header: header,
+      success: function (res) {
+        that.setData({
+          bannerList: res.data.data.all
+        });
+      }
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -33,8 +75,9 @@ Page({
     app.setBarColor();
     app.setUserInfo();
     this.getNewList();
-    this.getArticleBanner();
-    this.getArticleHot();
+    //this.getArticleBanner();
+    //this.getArticleHot();
+    this.ClassificationListReq();
   },
 
   /**

@@ -33,7 +33,8 @@
           <block  wx:for="{{item.cartInfo}}">
                <view class='pro-item flex'>
                 <view class='wrapper flex'>
-                  <image src='{{url}}{{item.productInfo.image}}'></image>
+                  <!--<image src='{{url}}{{item.productInfo.image}}'></image>-->
+                  <view style='background-image:url({{url}}{{item.productInfo.image}});width:150rpx;height:150rpx;background-size:cover;background-position:center;box-shadow: 0 0 5rpx #ccc;'> </view>
                   <view class='item-info flex'>
                       <view style="flex:1">
                           <view class='title'>{{item.productInfo.store_name}}</view>
