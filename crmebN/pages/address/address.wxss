@@ -36,7 +36,8 @@ page{
   display: flex;
   min-height: 100rpx;
   background: #fff;
-  padding: 40rpx 30rpx;
+  padding: 0rpx 30rpx;
+  align-items: center;
 }
 
 .cu-list-two.menu>.cu-item::after {

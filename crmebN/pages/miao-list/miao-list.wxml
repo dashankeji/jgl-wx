@@ -27,11 +27,11 @@
 </view>
 <!--菜单和店家切换-->
 <view class="flex flex-wrap bg-white">
-      <view class='basis-sm padding radius text-center text-xl {{tabSelectCssFlag[0]?"tahSelectCss":""}}' bindtap='tabClickMenu'>菜单</view>
+      <view class='basis-sm padding radius text-center text-xl {{tabSelectCssFlag[0]?"text-orange":""}}' bindtap='tabClickMenu'>菜单</view>
       <view class='' style="width:8%;padding:3% 4%">
              <view style="height:100%;border-left:1px solid black"></view>
       </view>
-      <view class='basis-sm padding radius text-center text-xl {{tabSelectCssFlag[1]?"tahSelectCss":""}}' bindtap='tabClickShopOwner'>店家</view>
+      <view class='basis-sm padding radius text-center text-xl {{tabSelectCssFlag[1]?"text-orange":""}}' bindtap='tabClickShopOwner'>店家</view>
 </view>
 <!--菜单和店家导航信息-->
 <block wx:if="{{tabSelectCssFlag[0]}}">

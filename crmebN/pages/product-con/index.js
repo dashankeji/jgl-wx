@@ -53,6 +53,22 @@ Page({
           0: [
           ]}
     },
+    onLaunch: function (options) {
+    
+     /* wx.showToast({
+        title: options,
+        icon: 'none',
+        duration: 1000
+      });
+
+      var where_from_scene_id = decodeURIComponent(options.query.scene)*/
+    },
+    shangPinCodeClick: function () {
+      wx.navigateTo({
+        url: '/pages/shangPinCode/index?id=' + this.data.storeInfo.id + '&imgUrl=' + this.data.storeInfo.slider_image[0] + '&store_name=' + this.data.storeInfo.store_name + '&price=' + this.data.storeInfo.price + '&ot_price=' + this.data.storeInfo.ot_price
+      });
+      // console.log(this.data.storeInfo.slider_image[0]);
+    },
     swiperChange: function (e) {    //轮播监听变化事件
       this.setData({
         currentSwiper: e.detail.current
@@ -103,13 +119,24 @@ Page({
     onLoad: function (options) {
         // console.log(options);
         // return ;
-        app.globalData.openPages = '/pages/product-con/index?id=' + options.id;
+        var store_id = 0;
+        if(options.id){
+          store_id = options.id;
+        }else{
+          store_id = decodeURIComponent(options.scene);
+        }
+
+        /*当前页面因为没有用户信息跳转到获取用户信息时，当获取完后，获取用户信息页面会判断是否有app.globalData.openPages这个值，
+          有的话就跳转到设置的页面*/
+        app.globalData.openPages = '/pages/product-con/index?id=' + store_id; 
+ 
         app.setBarColor();
         var that = this;
+
         app.setUserInfo();
         that.getCartCount();
         that.setData({
-            id: options.id
+          id: store_id
         })
         var header = {
             'content-type': 'application/x-www-form-urlencoded',
@@ -882,7 +909,8 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+      
+      
     },
 
     /**

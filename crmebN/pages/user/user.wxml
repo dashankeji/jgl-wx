@@ -85,6 +85,17 @@
               </view> 
         </button>
 </view>
+<view class="cu-list menu">
+        <view class="cu-item {{menuArrow?'arrow':''}}" bindtap='wodeerweimaClick'> 
+          <view class="content">
+              <image class="image-css" src="../../images/172_04.png" mode='aspectFill'></image>
+              <text class=''>我的二维码</text>
+          </view>
+          <view class='action'>
+              <text class='icon-right'></text>
+          </view> 
+        </view>
+</view>
 
 </view>
 

@@ -48,16 +48,14 @@ Page({
     sorter: [],
     productid: '',
     CartCount: '',
-    shoppingMessage: {                       //商品标识信息
-      id: 0,                                //商品标识id
-      name: '',                             //商品名字
-      img: '',                              //商品图片
-      price: 0,                             //商品金额
-      num: 0,                               //商品数量
-    },
+    shoppingMessage: [],                   //全局保存有多少个商品的数量是不为0的  
     status: 0,                             //请求添加到购物车时为2
     GB_ClassificationListReqData: [],      //全局保存所有分类数据
-    GB_Index: -1,                           //全局保存上次商品的index下标
+    GB_Index: -1,                          //全局保存上次商品的index下标
+    SettlementShoppingMessage: {           //全局保存所有需要购买商品加起来的数量和金额  
+      num: 0,
+      price: 0
+    }
   },
   swiperChange: function (e) {    //轮播监听变化事件
     this.setData({
@@ -75,6 +73,7 @@ Page({
     if (that.data.GbCateId == cateId) {
       return;
     } else {
+      that.data.shoppingMessage = [];
       that.data.offset = 1;
       that.data.TabDate = {};
     }
@@ -101,65 +100,99 @@ Page({
     });
     that.setData({
       hidden: true,
-      TabCur: cateId
+      TabCur: cateId,
+      PriceDisabled: true,
+      SettlementShoppingMessage: { num: 0, price: 0 }
     });
   },
   PriceReduceClick(e) { //商品--
     var that = this;
     var index = e.currentTarget.dataset.index;
     var id = e.currentTarget.dataset.id;
-    if (e.currentTarget.dataset.name != that.data.shoppingMessage['name'] && that.data.GB_Index != -1) {
-      that.data.TabDate[that.data.GbCateId][that.data.GB_Index].care_num = 0
+    var img = e.currentTarget.dataset.img;
+    var name = e.currentTarget.dataset.name;
+
+    /* if (e.currentTarget.dataset.name != that.data.shoppingMessage['name'] && that.data.GB_Index != -1) {
+       that.data.TabDate[that.data.GbCateId][that.data.GB_Index].care_num = 0
+     }*/
+
+    if (that.data.shoppingMessage[index] == undefined) {
+      return;
+    };
+
+    that.data.shoppingMessage[index]['num'] = e.currentTarget.dataset.num;
+
+    if (--that.data.shoppingMessage[index].num == 0) {
+      that.data.SettlementShoppingMessage.num--;
+      that.data.SettlementShoppingMessage.price = that.data.SettlementShoppingMessage.price - parseFloat(e.currentTarget.dataset.price);
+      that.data.SettlementShoppingMessage.price = that.data.SettlementShoppingMessage.price.toFixed(2) - 0;
     }
-    that.data.GB_Index = index;
 
-    that.data.shoppingMessage['num'] = e.currentTarget.dataset.num;
-    var num = --that.data.shoppingMessage.num;
-
+    var num = that.data.shoppingMessage[index].num;
     if (num <= 0) {
       num = 0;
     }
 
     that.data.TabDate[that.data.GbCateId][index].care_num = num;
-    that.data.shoppingMessage.num = num;
-    that.data.shoppingMessage.price = (parseFloat(e.currentTarget.dataset.price) * num).toFixed(2);
-    // console.log(e.currentTarget.dataset.name, that.data.shoppingMessage['name']);
-    that.data.shoppingMessage['id'] = id;
-    that.data.shoppingMessage['img'] = e.currentTarget.dataset.img;
-    that.data.shoppingMessage['name'] = e.currentTarget.dataset.name;
-
     if (num == 0) {
-      that.data.shoppingMessage = {
-        id: 0,                                //商品标识id
-        name: '',                             //商品名字
-        img: '',                              //商品图片
-        price: 0,                             //商品金额
-        num: 0,
-      };
-      that.setData({
-        status: -1,
-        PriceDisabled: true,
-        TabDate: that.data.TabDate,
-        shoppingMessage: that.data.shoppingMessage
-      })
+
+      that.data.shoppingMessage.index = null;
+      if (that.data.shoppingMessage.length == 0) {
+
+        that.setData({
+          status: -1,
+          PriceDisabled: true,
+          TabDate: that.data.TabDate,
+          shoppingMessage: that.data.shoppingMessage,
+          SettlementShoppingMessage: {
+            num: 0,
+            price: 0
+          }
+        });
+        return;
+      }
     } else {
-      that.setData({
-        shoppingMessage: that.data.shoppingMessage,
-        status: 2,
-        PriceDisabled: false,
-        TabDate: that.data.TabDate
-      });
-    }
+
+      that.data.SettlementShoppingMessage.num--;
+      that.data.SettlementShoppingMessage.price = that.data.SettlementShoppingMessage.price - parseFloat(e.currentTarget.dataset.price);
+      that.data.SettlementShoppingMessage.price = that.data.SettlementShoppingMessage.price.toFixed(2) - 0;
+
+      that.data.shoppingMessage[index].num = num;
+      that.data.shoppingMessage[index].price = (parseFloat(e.currentTarget.dataset.price) * num).toFixed(2);
+
+      // console.log(e.currentTarget.dataset.name, that.data.shoppingMessage['name']);
+      that.data.shoppingMessage[index]['id'] = id;
+      that.data.shoppingMessage[index]['img'] = img;
+      that.data.shoppingMessage[index]['name'] = name;
+    };
+    that.setData({
+      shoppingMessage: that.data.shoppingMessage,
+      status: 2,
+      PriceDisabled: false,
+      TabDate: that.data.TabDate,
+      SettlementShoppingMessage: that.data.SettlementShoppingMessage
+    });
+    //console.log(that.data.shoppingMessage, that.data.SettlementShoppingMessage);
   },
   PriceAddClick(e) {      //商品add
     var that = this;
-    that.data.shoppingMessage['num'] = e.currentTarget.dataset.num;
-    if (e.currentTarget.dataset.name != that.data.shoppingMessage['name'] && that.data.GB_Index != -1) {
-      that.data.TabDate[that.data.GbCateId][that.data.GB_Index].care_num = 0
-    }
-    that.data.GB_Index = e.currentTarget.dataset.index;
+    var index = e.currentTarget.dataset.index;
+    var id = e.currentTarget.dataset.id;
+    var img = e.currentTarget.dataset.img;
+    var name = e.currentTarget.dataset.name;
 
-    if (e.currentTarget.dataset.stock && that.data.shoppingMessage['num'] >= parseFloat(e.currentTarget.dataset.stock)) {   //库存
+    if (that.data.shoppingMessage[index] == undefined) {
+      that.data.shoppingMessage[index] = {
+        id: 0,
+        name: '',
+        img: '',
+        price: 0,
+        num: 0,
+      };
+    };
+    that.data.shoppingMessage[index]['num'] = e.currentTarget.dataset.num;
+
+    if (e.currentTarget.dataset.stock && that.data.shoppingMessage[index]['num'] >= parseFloat(e.currentTarget.dataset.stock)) {   //库存
       wx.showToast({
         title: '超过最大库存量了',
         icon: 'none',
@@ -167,22 +200,28 @@ Page({
       });
       return;
     };
-    that.data.shoppingMessage.num++;
 
-    that.data.TabDate[that.data.GbCateId][e.currentTarget.dataset.index].care_num = that.data.shoppingMessage.num;
+    that.data.shoppingMessage[index].num++;
+    that.data.TabDate[that.data.GbCateId][e.currentTarget.dataset.index].care_num = that.data.shoppingMessage[index].num;
+    that.data.shoppingMessage[index].price = (parseFloat(e.currentTarget.dataset.price) * that.data.shoppingMessage[index].num).toFixed(2);
 
-    that.data.shoppingMessage.price = (parseFloat(e.currentTarget.dataset.price) * that.data.shoppingMessage.num).toFixed(2);
+    that.data.SettlementShoppingMessage.num++;
+    that.data.SettlementShoppingMessage.price = that.data.SettlementShoppingMessage.price + parseFloat(e.currentTarget.dataset.price);
+    that.data.SettlementShoppingMessage.price = that.data.SettlementShoppingMessage.price.toFixed(2) - 0;
+
     // console.log(e.currentTarget.dataset.name, that.data.shoppingMessage['name']);
-    that.data.shoppingMessage['id'] = e.currentTarget.dataset.id;
-    that.data.shoppingMessage['img'] = e.currentTarget.dataset.img;
-    that.data.shoppingMessage['name'] = e.currentTarget.dataset.name;
+    that.data.shoppingMessage[index]['id'] = id;
+    that.data.shoppingMessage[index]['img'] = img;
+    that.data.shoppingMessage[index]['name'] = name;
 
     that.setData({
       shoppingMessage: that.data.shoppingMessage,
       status: 2,
       PriceDisabled: false,
-      TabDate: that.data.TabDate
+      TabDate: that.data.TabDate,
+      SettlementShoppingMessage: that.data.SettlementShoppingMessage
     });
+    console.log(that.data.shoppingMessage, that.data.SettlementShoppingMessage);
   },
   addFun: function () {
     var args = arguments,//获取所有的参数
@@ -210,6 +249,8 @@ Page({
     return sum / m;
   },
   PriceDisabled() {       //结算Flag
+    console.log(this.data.shoppingMessage);
+    return;
     var that = this;
     if (false) {
       wx.showToast({
@@ -370,7 +411,7 @@ Page({
       header: header,
       success: function (res) {
 
-        var child = that.ClassificationListReqChild(res.data.data, ['产品销售', '数据分类']);
+        var child = that.ClassificationListReqChild(res.data.data, ['首页']);
         that.bannerImgDataReq(res.data.data);
 
         if (child != -1 && child.length > 0) {
@@ -408,11 +449,11 @@ Page({
   },
   onReachBottom: function () {
     var that = this;
-    var limit = 8;
+    var limit = 0;
 
     if (that.data.hidden) return;
-    var offset = that.data.offset++ * limit;
-    
+    ++that.data.offset;
+    limit = that.data.offset * 8;
     that.setData({
       hidden: true,
     });
@@ -421,7 +462,7 @@ Page({
       'content-type': 'application/x-www-form-urlencoded',
     };
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/indexXiaoben?uid=' + app.globalData.uid + '&cate_id=' + that.data.GbCateId + '&offset=' + offset + '&limit=' + limit,
+      url: app.globalData.url + '/routine/auth_api/indexXiaoben?uid=' + app.globalData.uid + '&cate_id=' + that.data.GbCateId + '&offset=' + (limit - 8) + '&limit=' + limit,
       method: 'GET',
       header: header,
       success: function (res) {

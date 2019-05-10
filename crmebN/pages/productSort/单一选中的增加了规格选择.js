@@ -48,7 +48,7 @@ Page({
     sorter: [],
     productid: '',
     CartCount: '',
-    shoppingMessage: {                    
+    shoppingMessage: {
     },
     status: 0,                             //请求添加到购物车时为2
     GB_ClassificationListReqData: [],      //全局保存所有分类数据
@@ -70,7 +70,7 @@ Page({
       status: 0,
       GbCateId: -1,
       TabCur: 0,
-      GB_Index: -1, 
+      GB_Index: -1,
       SettlementShoppingMessage: {           //全局保存所有需要购买商品加起来的数量和金额  
         num: 0,
         price: 0
@@ -120,7 +120,7 @@ Page({
     });
   },
   PriceReduceClick(e) { //商品--
-  
+
     var that = this;
     var index = e.currentTarget.dataset.index;
     var id = e.currentTarget.dataset.id;
@@ -128,7 +128,7 @@ Page({
     var name = e.currentTarget.dataset.name;
     var GbCateId = that.data.GbCateId;
 
-   // console.log(e.currentTarget.dataset.price)
+    // console.log(e.currentTarget.dataset.price)
 
     if (that.data.shoppingMessage[GbCateId] == undefined) {
       that.data.shoppingMessage[GbCateId] = [];
@@ -156,13 +156,13 @@ Page({
 
       that.data.shoppingMessage[GbCateId][index] = null;
       var flag = true;
-      
+
       for (var i in that.data.shoppingMessage) {
-        for(var j = 0;j<that.data.shoppingMessage[i].length;j++){
+        for (var j = 0; j < that.data.shoppingMessage[i].length; j++) {
           if (that.data.shoppingMessage[i][j]) {
             flag = false;
             break;
-          };       
+          };
         };
       };
       if (flag) {
@@ -199,7 +199,7 @@ Page({
     });
   },
   PriceAddClick(e) {      //商品add
-    
+
     var that = this;
     var index = e.currentTarget.dataset.index;
     var id = e.currentTarget.dataset.id;
@@ -219,7 +219,7 @@ Page({
       that.data.shoppingMessage[GbCateId][index]['img'] = img;
       that.data.shoppingMessage[GbCateId][index]['name'] = name;
       that.data.shoppingMessage[GbCateId][index]['unique'] = '';
-      
+
     };
     that.data.shoppingMessage[GbCateId][index]['num'] = e.currentTarget.dataset.num;
 
@@ -357,7 +357,7 @@ Page({
         var strValue = productValue[index]['suk'];
         var arrValue = strValue.split(",");
         if (that.in_array_two(arrValue, arrAttrName)) {
-          
+
           var num = that.data.shoppingMessage[that.data.GbCateId][that.data.GB_Index].num;
           that.data.SettlementShoppingMessage.num = that.data.SettlementShoppingMessage.num - num + 1
 
@@ -411,41 +411,41 @@ Page({
     });
   },
   showModelbg: function (e) {
-    var index = 0 ;
+    var index = 0;
     index = e ? e.currentTarget.dataset.index : this.data.GB_Index;
 
     this.setData({
       prostatus: true,
-      GB_Index:  index,
+      GB_Index: index,
       productAttr: this.data.TabDate[this.data.GbCateId][index].productAttr,
       productValue: this.data.TabDate[this.data.GbCateId][index].productValue,
     })
   },
   PriceDisabled() {       //结算Flag
     var that = this;
-    
+
     var shoppingMessageData = that.data.shoppingMessage;
 
-    for (var j in shoppingMessageData){
-       
-        for (var i in shoppingMessageData[j]) {
+    for (var j in shoppingMessageData) {
 
-          if (that.data.shoppingMessage[j][i] && that.data.shoppingMessage[j][i].id) {
-            if (that.data.TabDate[j][i].productAttr.length > 0 && that.data.shoppingMessage[j][i].unique == '') {
+      for (var i in shoppingMessageData[j]) {
 
-              wx.showToast({
-                title: '请选择' + that.data.shoppingMessage[j][i].name + '属性',
-                icon: 'none',
-                duration: 2000,
-              });
-              return;
-            };
+        if (that.data.shoppingMessage[j][i] && that.data.shoppingMessage[j][i].id) {
+          if (that.data.TabDate[j][i].productAttr.length > 0 && that.data.shoppingMessage[j][i].unique == '') {
+
+            wx.showToast({
+              title: '请选择' + that.data.shoppingMessage[j][i].name + '属性',
+              icon: 'none',
+              duration: 2000,
+            });
+            return;
           };
         };
+      };
 
     };
 
-  
+
     var header = {
       'content-type': 'application/json',  //application/json
     };
@@ -458,8 +458,8 @@ Page({
       header: header,
       success: function (res) {
         for (var j in res.data.data) {
-      
-          if (res.data.data[j].code != 200){
+
+          if (res.data.data[j].code != 200) {
             wx.showToast({
               title: '添加' + res.data.data[j].cart + '购物车失败',
               icon: 'success',
@@ -568,7 +568,7 @@ Page({
 
     if (that.data.hidden) return;
     if (!that.data.offset[that.data.GbCateId]) that.data.offset[that.data.GbCateId] = 1;
-    
+
     var offset = that.data.offset[that.data.GbCateId]++ * limit;
 
     that.setData({

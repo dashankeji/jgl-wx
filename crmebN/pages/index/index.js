@@ -26,7 +26,9 @@ Page({
     likeList:[],
     offset: 0,
     title: "玩命加载中...",
-    hidden: false
+    hidden: false,
+    cateIdOne: -1,
+    cateIdTwo: -2
   },
   swiperChange: function (e) {    //轮播监听变化事件
     this.setData({
@@ -58,16 +60,17 @@ Page({
     //that.getIndexInfo();
     that.ClassificationListReq();
   },
-  getIndexInfo:function(cateIdOne,cateIdTwo){
+  getIndexInfo: function (cateIdOne, cateIdTwo, cateIdThree){
     var cateIdOne = cateIdOne ||  -1;
     var cateIdTwo = cateIdTwo || -1;
+    var cateIdThree = cateIdThree || -2;
 
     var header = {
       'content-type': 'application/x-www-form-urlencoded',
     };
     var that = this;
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/index?uid=' + app.globalData.uid + '&cateId_one=' + cateIdOne + '&cateId_two=' + cateIdTwo,
+      url: app.globalData.url + '/routine/auth_api/index?uid=' + app.globalData.uid + '&cateId_one=' + cateIdOne + '&cateId_two=' + cateIdTwo + '&cateId_Three=' + cateIdThree,
       method: 'POST',
       header: header,
       success: function (res) {
@@ -115,45 +118,52 @@ Page({
       method: 'POST',
       header: header,
       success: function (res) {
-        var seasonalGoodsCateId, leisureRecreationCateId;
+        var seasonalGoodsCateId, leisureRecreationCateId, seasonalGoodsTwoCateId;
 
             leisureRecreationCateId = that.ClassificationListReqID(res.data.data, ['首页', '休闲娱乐']);
-            seasonalGoodsCateId = that.ClassificationListReqID(res.data.data, ['首页', '应季商品']);
-
-        that.getIndexInfo(leisureRecreationCateId, seasonalGoodsCateId);
+            seasonalGoodsCateId = that.ClassificationListReqID(res.data.data, ['产品销售', '数据分类', '应季蔬菜']);
+            seasonalGoodsTwoCateId = that.ClassificationListReqID(res.data.data, ['产品销售', '数据分类', '应季水果']);
+            that.getIndexInfo(leisureRecreationCateId, seasonalGoodsCateId, seasonalGoodsTwoCateId);
+            
+            that.data.cateIdOne = seasonalGoodsCateId;
+            that.data.cateIdTwo = seasonalGoodsTwoCateId;
       }
     });
   },
   onReachBottom: function (p) {
-    /*var that = this;
-    var limit = 20;
+    var that = this;
     var offset = that.data.offset;
     if (!offset) offset = 1;
-    var startpage = limit * offset;
+
+    var limit =  10;
+    var startpage = 10 * offset;
+
     var header = {
       'content-type': 'application/x-www-form-urlencoded',
     };
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/get_hot_product?uid=' + app.globalData.uid,
+      url: app.globalData.url + '/routine/auth_api/yingJiShangPingOffset?uid=' + app.globalData.uid + '&cateId_one=' + that.data.cateIdOne + '&cateId_two=' + that.data.cateIdTwo,
       data: { limit: limit, offset: startpage },
       method: 'POST',
       header: header,
       success: function (res) {
         var len = res.data.data.length;
         for (var i = 0; i < len; i++) {
-          that.data.likeList.push(res.data.data[i])
-        }
+          that.data.hotList.push(res.data.data[i])
+        };
         that.setData({
           offset: offset + 1,
-          likeList: that.data.likeList
+          hotList: that.data.hotList
         });
         if (len < limit) {
-          that.setData({
-            title: "数据已经加载完成",
-            hidden: true
+          wx.showToast({
+            title: '数据已经加载到尽头了',
+            icon: 'none',
+            duration: 2000
           });
           return false;
         }
+
       },
       fail: function (res) {
         console.log('submit fail');
@@ -161,7 +171,7 @@ Page({
       complete: function (res) {
         console.log('submit complete');
       }
-    })*/
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -164,7 +164,15 @@ Page({
         })
       }
     });
-  },  
+  },
+   /**
+   * 生命周期函数--我的二维码
+   */
+  wodeerweimaClick:function(){
+      wx.navigateTo({
+        url: '/pages/promotion-card/promotion-card'
+      })
+  },
    /**
    * 生命周期函数--我的余额
    */

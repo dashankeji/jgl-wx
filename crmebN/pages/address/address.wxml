@@ -44,9 +44,9 @@
 <!--新增地址-->
 <view>
      <view class="cu-list-two menu bg-white">
-           <view class="cu-item text-lg" bindtap='addAddress'>
-                 <text class="icon-jia text-xl text-green"></text>
-                 <view class="padding-left text-bold">新增地址</view>
+           <view class="cu-item" bindtap='addAddress'>
+                 <view class="icon-jia text-xl text-green"></view>
+                 <view class="padding-left text-bold text-lg">新增地址</view>
            </view>
      </view>
 </view>

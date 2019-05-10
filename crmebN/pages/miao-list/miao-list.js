@@ -134,11 +134,11 @@ Page({
   },
   onReachBottom: function () {
     var that = this;
-    var limit = 0;
+    var limit = 8;
 
     if (that.data.hidden) return;
-    ++that.data.offset;
-    limit = that.data.offset * 8;
+
+    var offset = that.data.offset++ * limit;
 
     that.setData({
       hidden: true,
@@ -148,7 +148,7 @@ Page({
       'content-type': 'application/x-www-form-urlencoded',
     };
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/indexXiaoben?uid=' + app.globalData.uid + '&cate_id=' + that.data.GbCateId + '&offset=' + (limit - 8) + '&limit=' + limit,
+      url: app.globalData.url + '/routine/auth_api/indexXiaoben?uid=' + app.globalData.uid + '&cate_id=' + that.data.GbCateId + '&offset=' + offset + '&limit=' + limit,
       method: 'GET',
       header: header,
       success: function (res) {
