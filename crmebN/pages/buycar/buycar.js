@@ -457,6 +457,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.setData({
+      isAttrInfo: 'attrInfo',
+      itemAttrInfo: '',
+      foothidden: false,
+      countmoney: "",
+      cartNum: "",
+      isAllSelect: false,
+      minusStatus: 'disabled',
+      cartList: [],
+      cartInvalid: [],
+      cartIdsStr: ''
+    });
     this.carnum();
     this.countmoney();
     this.getList();

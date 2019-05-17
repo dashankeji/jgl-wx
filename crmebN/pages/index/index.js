@@ -9,6 +9,7 @@ Page({
   data: {
     CustomBar: app.globalData.CustomBar,
     currentSwiper: 0,   //轮播焦点
+    currentSwiperTwo: 0, //商品轮播焦点
     url: app.globalData.urlImages,
     imgUrls:[],
     lovely:[],
@@ -28,12 +29,30 @@ Page({
     title: "玩命加载中...",
     hidden: false,
     cateIdOne: -1,
-    cateIdTwo: -2
+    cateIdTwo: -2,
+    shoppingBanner: [],
+    /**
+     * 走马灯
+     */
+    text: '这是一条会滚动的文字滚来滚去的文字跑马灯，哈哈哈哈哈哈哈哈',
+    marqueePace: .5, //滚动速度
+    marqueeDistance: 0, //初始滚动距离
+    marqueeDistance2: 0,
+    marquee2copy_status: false,
+    marquee2_margin: 60,
+    size: 14,
+    orientation: 'left', //滚动方向
+    intervalTwo: 20 // 时间间隔
   },
   swiperChange: function (e) {    //轮播监听变化事件
     this.setData({
       currentSwiper: e.detail.current
     })
+  },
+  swiperChangeTwo: function (e) {    //商品轮播轮播监听变化事件
+    this.setData({
+      currentSwiperTwo: e.detail.current
+    });
   },
   goUrl:function(e){
     if (e.currentTarget.dataset.url != '#'){
@@ -42,9 +61,16 @@ Page({
       })
     }
   },
-  torday:function(e){
-    wx.switchTab({
-      url: '/pages/productSort/productSort'
+  getArticleBanner: function () {
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/routine/auth_api/get_article_banner?uid=' + app.globalData.uid + '&cid=2',
+      method: 'GET',
+      success: function (res) {
+        that.setData({
+          shoppingBanner: res.data.data
+        });
+      }
     });
   },
   /**
@@ -57,7 +83,7 @@ Page({
       app.globalData.spid = options.spid
     }
     app.setUserInfo();
-    //that.getIndexInfo();
+    that.getArticleBanner();
     that.ClassificationListReq();
   },
   getIndexInfo: function (cateIdOne, cateIdTwo, cateIdThree){
@@ -184,7 +210,32 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    /*let vm = this;
+    let length = vm.data.text.length * vm.data.size; //文字长度
+    let windowWidth = wx.getSystemInfoSync().windowWidth; // 屏幕宽度
+    vm.setData({
+      length: length,
+      windowWidth: windowWidth,
+      marquee2_margin: length < windowWidth ? windowWidth - length : vm.data.marquee2_margin //当文字长度小于屏幕长度时，需要增加补白
+    });
+    vm.run(); // 水平一行字滚动完了再按照原来的方向滚动*/
+  },
+  run: function () {
+    let vm = this;
+    let interval = setInterval(function () {
+     
+      if (vm.data.marqueeDistance > -vm.data.length) {
+        vm.setData({
+          marqueeDistance: vm.data.marqueeDistance - vm.data.marqueePace,
+        });
+      } else {
+        clearInterval(interval);
+        vm.setData({
+          marqueeDistance: vm.data.windowWidth
+        });
+        vm.run();
+      }
+    }, vm.data.intervalTwo);
   },
 
   /**

@@ -4,6 +4,23 @@
         <text class='text-black text-bold'>金龟岭休闲农庄欢迎您</text>
     </view>
 </view>
+
+ <video
+    id="myVideo"
+    src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400"
+    enable-danmu
+    danmu-btn
+    controls
+    style="width:100%"
+ ></video>
+
+<!--<view class='loop-text'>
+   <view class="marquee_text" style="{{orientation}}:{{marqueeDistance}}px;font-size: {{size}}px;">
+     {{text}}
+  </view>
+</view>-->
+
+
 <!--搜索-->
 <view class="wrap_search">
     <navigator class="none" url="/pages/home-search/home-search" open-type="navigate" hover-class="none">
@@ -31,6 +48,15 @@
 </view>
 <!--导航-->
 <view class="wrap_nav">
+   <view class="flex justify-between" style="padding:40rpx 0 20rpx 0rpx">
+        <view class='' wx:for="{{menus}}" wx:key="{{index}}" style="flex-basis:33.333333%">
+            <navigator class="none" url="{{item.url}}" open-type="navigate" hover-class="none">
+                    <view class='text-xl text-bold {{index == 0 ? "text-center solid-right" : ""}} {{index == 1 ? "text-center solid-right" : ""}} {{index == 2 ? "text-center" : ""}}' style="color:#ff950c;">{{item.name}}</view>
+            </navigator>
+        </view>
+   </view>
+</view>
+<!--<view class="wrap_nav">
     <view class="flex justify-between" style="padding:50rpx 50rpx 30rpx">
         <view class='text-center' wx:for="{{menus}}" wx:key="{{index}}">
             <navigator class="none" url="{{item.url}}" open-type="navigate" hover-class="none">
@@ -39,10 +65,25 @@
             </navigator>
         </view>
     </view>
-</view>
+</view>-->
 
 <!--休闲娱乐-->
 <view class="wrap_recreationEntertainment">
+    <view class='text-lgs text-center' style="padding:30rpx 30rpx 20rpx 30rpx;">
+          <text class='text-black'>休 / 闲 / 娱 / 乐</text>
+    </view>
+    <view class="flex justify-between" style="padding:0rpx 30rpx;flex-wrap: wrap">
+      <block wx:for="{{newList}}" wx:key>
+          <view style="width:49%;margin-top:10rpx">
+              <navigator class="none" url="../yuanquzongtijieshao/yuanquzongtijieshao?id={{item.stock}}" open-type="navigate" hover-class="none">
+                    <!--<view class="wrap_imageOne" style="background-image:url({{item.image}});background-size:100% 100%"></view>-->
+                    <image src="{{item.image}}" style="width:100%" mode="widthFix"></image>
+              </navigator>   
+          </view>
+      </block>
+    </view>
+</view>
+<!--<view class="wrap_recreationEntertainment">
     <view class='text-xl padding text-center'>
           <text class='text-black text-bold'>休/闲/娱/乐</text>
     </view>
@@ -77,12 +118,29 @@
             </navigator>
         </view>
     </view>
-</view>
+</view>-->
 
 <!--应季商品-->
 <view class="wrap_seasonalMerchandise">
-    <view class='text-xl padding text-center'>
-          <text class='text-black text-bold'>应/季/商/品</text>
+    <view class='text-lgs padding text-center'>
+          <text class='text-black'>应 / 季 / 商 / 品</text>
+    </view>
+    <!--商品轮播-->
+    <view class="wrap_swiper" style="position:relative;top:0;left:0;">
+          <swiper class="screen-swiper" bindchange="swiperChangeTwo" circular="true" autoplay="true" interval="5000" duration="500" current="0">
+            <swiper-item wx:for="{{shoppingBanner}}" wx:key>
+               <navigator url="../shoppingBannerList/shoppingBannerList?id={{item.id}}&shoppingPage=2" open-type="navigate" style="width:100%;height:100%;">
+                 <image src="{{item.image_input}}" mode='scaleToFill' style="width:100%;display:block;height:100%;margin:0"></image>
+                 <!--<image src="{{item.image_input}}" style="width:100%" mode="widthFix"></image>-->
+               </navigator>
+            </swiper-item>
+          </swiper>
+          <!--重置小圆点的样式  -->
+          <view class="dots-two" style=''>   
+                <block wx:for="{{shoppingBanner.length}}" wx:key>     
+                        <view class="dot{{index == currentSwiperTwo ? ' active' : ''}}"></view>             
+                </block>  
+          </view>  
     </view>
     <view class="flex justify-between" style="padding:20rpx;flex-wrap: wrap">
               <view class=" margin-bottom-sm" style="width:49%;box-shadow:0 0 5rpx #ccc;" wx:for="{{hotList}}"  wx:key>

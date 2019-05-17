@@ -40,7 +40,7 @@ Page({
     ficti: '',
     t: 1,
     sortyi: [],
-    offset: 1,
+    offset: {},
     title: "玩命加载中...",
     hidden: false,
     show: false,
@@ -48,16 +48,15 @@ Page({
     sorter: [],
     productid: '',
     CartCount: '',
-    shoppingMessage: {                       //商品标识信息
-      id: 0,                                //商品标识id
-      name: '',                             //商品名字
-      img: '',                              //商品图片
-      price: 0,                             //商品金额
-      num: 0,                               //商品数量
+    shoppingMessage: {
     },
     status: 0,                             //请求添加到购物车时为2
     GB_ClassificationListReqData: [],      //全局保存所有分类数据
-    GB_Index: -1,                           //全局保存上次商品的index下标
+    GB_Index: -1,                          //全局保存上次商品的index下标
+    SettlementShoppingMessage: {           //全局保存所有需要购买商品加起来的数量和金额  
+      num: 0,
+      price: 0
+    }
   },
   swiperChange: function (e) {    //轮播监听变化事件
     this.setData({
@@ -65,21 +64,38 @@ Page({
     })
   },
   onShow: function () {
-    this.tabSelect(null, this.data.TabCur);
-    //app.setUserInfo();
+    this.setData({
+      shoppingMessage: {},
+      prostatus: false,
+      PriceDisabled: true,
+      status: 0,
+      GbCateId: -1,
+      TabCur: 0,
+      GB_Index: -1,
+      SettlementShoppingMessage: {           //全局保存所有需要购买商品加起来的数量和金额  
+        num: 0,
+        price: 0
+      },
+      offset: {},
+      TabDate: {}
+    });
+    app.setUserInfo();
+    this.ClassificationListReq();
+
   },
   tabSelect(e, id) {               //导航点击事件
     var that = this;
 
     var cateId = e ? e.currentTarget.dataset.id : id;
-    if (that.data.GbCateId == cateId) {
-      return;
-    } else {
-      that.data.offset = 1;
-      that.data.TabDate = {};
-    }
 
-    that.data.GbCateId = cateId;
+    if (that.data.TabDate[cateId]) {
+      that.setData({
+        TabCur: cateId,
+        GbCateId: cateId
+      });
+      return;
+    };
+
     var header = {
       'content-type': 'application/x-www-form-urlencoded',
     };
@@ -101,65 +117,145 @@ Page({
     });
     that.setData({
       hidden: true,
-      TabCur: cateId
+      TabCur: cateId,
+      GbCateId: cateId
     });
   },
   PriceReduceClick(e) { //商品--
+
     var that = this;
     var index = e.currentTarget.dataset.index;
     var id = e.currentTarget.dataset.id;
-    if (e.currentTarget.dataset.name != that.data.shoppingMessage['name'] && that.data.GB_Index != -1) {
-      that.data.TabDate[that.data.GbCateId][that.data.GB_Index].care_num = 0
+    var img = e.currentTarget.dataset.img;
+    var name = e.currentTarget.dataset.name;
+    var GbCateId = that.data.GbCateId;
+
+    // console.log(e.currentTarget.dataset.price)
+
+    if (that.data.shoppingMessage[GbCateId] == undefined) {
+      that.data.shoppingMessage[GbCateId] = [];
     }
-    that.data.GB_Index = index;
 
-    that.data.shoppingMessage['num'] = e.currentTarget.dataset.num;
-    var num = --that.data.shoppingMessage.num;
+    if (that.data.shoppingMessage[GbCateId][index] == undefined) {
+      return;
+    };
 
+    that.data.shoppingMessage[GbCateId][index]['num'] = e.currentTarget.dataset.num;
+
+    if (--that.data.shoppingMessage[GbCateId][index].num == 0) {
+      that.data.SettlementShoppingMessage.num--;
+      that.data.SettlementShoppingMessage.price = that.data.SettlementShoppingMessage.price - parseFloat(e.currentTarget.dataset.price);
+      that.data.SettlementShoppingMessage.price = that.data.SettlementShoppingMessage.price.toFixed(2) - 0;
+    }
+
+    var num = that.data.shoppingMessage[GbCateId][index].num;
     if (num <= 0) {
       num = 0;
     }
 
-    that.data.TabDate[that.data.GbCateId][index].care_num = num;
-    that.data.shoppingMessage.num = num;
-    that.data.shoppingMessage.price = (parseFloat(e.currentTarget.dataset.price) * num).toFixed(2);
-    // console.log(e.currentTarget.dataset.name, that.data.shoppingMessage['name']);
-    that.data.shoppingMessage['id'] = id;
-    that.data.shoppingMessage['img'] = e.currentTarget.dataset.img;
-    that.data.shoppingMessage['name'] = e.currentTarget.dataset.name;
-
+    that.data.TabDate[GbCateId][index].care_num = num;
     if (num == 0) {
-      that.data.shoppingMessage = {
-        id: 0,                                //商品标识id
-        name: '',                             //商品名字
-        img: '',                              //商品图片
-        price: 0,                             //商品金额
-        num: 0,
+
+      that.data.shoppingMessage[GbCateId][index] = null;
+      var array = that.data.TabDate[GbCateId][index].productAttr;
+      for (var jj in array) {
+        for (var jjj in array[jj]['attr_values']) {
+          array[jj]['attr_value'][jjj].check = false;
+        }
       };
-      that.setData({
-        status: -1,
-        PriceDisabled: true,
-        TabDate: that.data.TabDate,
-        shoppingMessage: that.data.shoppingMessage
-      })
+      that.data.prostatus = false;
+
+      var flag = true;
+
+      for (var i in that.data.shoppingMessage) {
+        for (var j = 0; j < that.data.shoppingMessage[i].length; j++) {
+          if (that.data.shoppingMessage[i][j]) {
+            flag = false;
+            break;
+          };
+        };
+      };
+      if (flag) {
+
+        that.setData({
+          status: -1,
+          PriceDisabled: true,
+          prostatus: that.data.prostatus,
+          TabDate: that.data.TabDate,
+          shoppingMessage: that.data.shoppingMessage,
+          SettlementShoppingMessage: {
+            num: 0,
+            price: 0
+          }
+        });
+        return;
+      }
     } else {
-      that.setData({
-        shoppingMessage: that.data.shoppingMessage,
-        status: 2,
-        PriceDisabled: false,
-        TabDate: that.data.TabDate
-      });
-    }
+
+      that.data.SettlementShoppingMessage.num--;
+      that.data.SettlementShoppingMessage.price = that.data.SettlementShoppingMessage.price - parseFloat(e.currentTarget.dataset.price);
+      that.data.SettlementShoppingMessage.price = that.data.SettlementShoppingMessage.price.toFixed(2) - 0;
+
+      that.data.shoppingMessage[GbCateId][index].num = num;
+      that.data.shoppingMessage[GbCateId][index].price = (parseFloat(e.currentTarget.dataset.price) * num).toFixed(2);
+
+    };
+
+    that.setData({
+      shoppingMessage: that.data.shoppingMessage,
+      status: 2,
+      PriceDisabled: false,
+      prostatus: that.data.prostatus,
+      TabDate: that.data.TabDate,
+      SettlementShoppingMessage: that.data.SettlementShoppingMessage
+    });
   },
   PriceAddClick(e) {      //商品add
-    var that = this;
-    that.data.shoppingMessage['num'] = e.currentTarget.dataset.num;
-    if (e.currentTarget.dataset.name != that.data.shoppingMessage['name'] && that.data.GB_Index != -1) {
-      that.data.TabDate[that.data.GbCateId][that.data.GB_Index].care_num = 0
-    }
-    that.data.GB_Index = e.currentTarget.dataset.index;
 
-    if (e.currentTarget.dataset.stock && that.data.shoppingMessage['num'] >= parseFloat(e.currentTarget.dataset.stock)) {   //库存
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var id = e.currentTarget.dataset.id;
+    var img = e.currentTarget.dataset.img;
+    var name = e.currentTarget.dataset.name;
+    var GbCateId = that.data.GbCateId;
+    var price = e.currentTarget.dataset.price;
+
+    //console.log(price);
+    if (that.data.shoppingMessage[GbCateId] == undefined) {
+      that.data.shoppingMessage[GbCateId] = [];
+    }
+
+    if (that.data.shoppingMessage[GbCateId][index] == undefined) {
+      that.data.shoppingMessage[GbCateId][index] = {};
+      that.data.shoppingMessage[GbCateId][index]['id'] = id;
+      that.data.shoppingMessage[GbCateId][index]['img'] = img;
+      that.data.shoppingMessage[GbCateId][index]['name'] = name;
+      that.data.shoppingMessage[GbCateId][index]['unique'] = '';
+
+      that.data.shoppingMessage[GbCateId][index]['num'] = e.currentTarget.dataset.num;
+      that.data.shoppingMessage[GbCateId][index]['stock'] = e.currentTarget.dataset.stock;
+      that.data.shoppingMessage[GbCateId][index]['price'] = 0;
+
+    };
+
+    if (that.data.TabDate[GbCateId][index].productAttr.length > 0 && that.data.shoppingMessage[GbCateId][index].unique == '') {
+
+      wx.showToast({
+        title: '该商品有属性,请选择属性',
+        icon: 'none',
+        duration: 1000,
+      });
+      var price = "productSelect.price";
+      that.setData({
+        shoppingMessage: that.data.shoppingMessage,
+        [price]: 0,
+      });
+      return;
+    };
+
+    that.data.shoppingMessage[GbCateId][index]['num'] = e.currentTarget.dataset.num;
+
+    if (e.currentTarget.dataset.stock && that.data.shoppingMessage[GbCateId][index]['num'] >= parseFloat(e.currentTarget.dataset.stock)) {   //库存
       wx.showToast({
         title: '超过最大库存量了',
         icon: 'none',
@@ -167,22 +263,24 @@ Page({
       });
       return;
     };
-    that.data.shoppingMessage.num++;
 
-    that.data.TabDate[that.data.GbCateId][e.currentTarget.dataset.index].care_num = that.data.shoppingMessage.num;
+    that.data.shoppingMessage[GbCateId][index].num++;
+    that.data.TabDate[GbCateId][index].care_num = that.data.shoppingMessage[GbCateId][index].num;
+    that.data.shoppingMessage[GbCateId][index].price = (parseFloat(price) * that.data.shoppingMessage[GbCateId][index].num).toFixed(2);
 
-    that.data.shoppingMessage.price = (parseFloat(e.currentTarget.dataset.price) * that.data.shoppingMessage.num).toFixed(2);
-    // console.log(e.currentTarget.dataset.name, that.data.shoppingMessage['name']);
-    that.data.shoppingMessage['id'] = e.currentTarget.dataset.id;
-    that.data.shoppingMessage['img'] = e.currentTarget.dataset.img;
-    that.data.shoppingMessage['name'] = e.currentTarget.dataset.name;
+    that.data.SettlementShoppingMessage.num++;
+    that.data.SettlementShoppingMessage.price = that.data.SettlementShoppingMessage.price + parseFloat(price);
+    that.data.SettlementShoppingMessage.price = that.data.SettlementShoppingMessage.price.toFixed(2) - 0;
 
     that.setData({
       shoppingMessage: that.data.shoppingMessage,
       status: 2,
+      GB_Index: index,
       PriceDisabled: false,
-      TabDate: that.data.TabDate
+      TabDate: that.data.TabDate,
+      SettlementShoppingMessage: that.data.SettlementShoppingMessage
     });
+    //console.log(that.data.shoppingMessage,that.data.productAttr)
   },
   addFun: function () {
     var args = arguments,//获取所有的参数
@@ -209,117 +307,233 @@ Page({
     //返回结果
     return sum / m;
   },
-  PriceDisabled() {       //结算Flag
+  tapsize: function (e) {
     var that = this;
-    if (false) {
-      wx.showToast({
-        title: '库存不足' + that.data.num,
-        icon: 'none',
-        duration: 2000
-      })
-      that.setData({
-        num: that.data.productSelect.stock,
-      })
-    } else if (false) {
-      wx.showToast({
-        title: '请选择属性',
-        icon: 'none',
-        duration: 2000
-      })
-    } else {
-      if (that.data.status == 1) {
-        var attrValueData = [];
-        for (var i in that.data.productValue) {
-          if (that.data.productValue[i].unique == that.data.productSelect.unique) {
-            for (var j in that.data.productAttr) {
-              for (var k in that.data.productAttr[j].attr_values) {
-                var sukArr = that.data.productValue[i].suk.split(',');
-                if (that.in_array(that.data.productAttr[j].attr_values[k], sukArr)) {
-                  attrValueData.push(that.data.productAttr[j].attr_name + ':' + that.data.productAttr[j].attr_values[k]);
+    var productAttr = that.data.TabDate[that.data.GbCateId][that.data.GB_Index].productAttr;
+    var productValue = that.data.TabDate[that.data.GbCateId][that.data.GB_Index].productValue;
 
-                }
-              }
-            }
-
-          }
+    var key = e.currentTarget.dataset.key;
+    var attrValues = [];
+    var attrName = that.data.attrName;
+    var attrNameArr = attrName.split(",");
+    var array = productAttr;
+    for (var i in productAttr) {
+      for (var j in productAttr[i]['attr_values']) {
+        if (productAttr[i]['attr_values'][j] == key) {
+          attrValues = productAttr[i]['attr_values'];
         }
-        that.setData({
-          attr: '已选',
-          attrValue: attrValueData.join(','),
-          prostatus: false
-        })
-      } else if (that.data.status == 2) {
-        var header = {
-          'content-type': 'application/x-www-form-urlencoded',
-        };
-
-        wx.request({
-          url: app.globalData.url + '/routine/auth_api/set_cart?uid=' + app.globalData.uid,
-          method: 'GET',
-          data: {
-            productId: that.data.shoppingMessage.id,
-            cartNum: that.data.shoppingMessage.num,
-            uniqueId: ''
-          },
-          header: header,
-          success: function (res) {
-            if (res.data.code == 200) {
-              wx.showToast({
-                title: '添加购物车成功',
-                icon: 'success',
-                duration: 2000
-              })
-              wx.switchTab({
-                url: '../buycar/buycar'
-              });
-              /*that.setData({
-                  prostatus: false
-              })*/
-              // that.getCartCount();
-            } else {
-              wx.showToast({
-                title: res.data.msg,
-                icon: 'none',
-                duration: 2000
-              })
-            }
-          }
-        })
-      } else if (that.data.status == 3) {
-        var header = {
-          'content-type': 'application/x-www-form-urlencoded',
-        };
-        wx.request({
-          url: app.globalData.url + '/routine/auth_api/now_buy?uid=' + app.globalData.uid,
-          method: 'GET',
-          data: {
-            productId: that.data.id,
-            cartNum: that.data.num,
-            uniqueId: that.data.productSelect.unique
-          },
-          header: header,
-          success: function (res) {
-            if (res.data.code == 200) {
-              wx.navigateTo({ //跳转至指定页面并关闭其他打开的所有页面（这个最好用在返回至首页的的时候）
-                url: '/pages/order-confirm/order-confirm?id=' + res.data.data.cartId
-              })
-            } else {
-              wx.showToast({
-                title: res.data.msg,
-                icon: 'none',
-                duration: 2000
-              })
-            }
-          }
-        })
-      } else {
-        wx.showToast({
-          title: '请点击商品',
-          icon: 'success',
-          duration: 2000
-        });
       }
     }
+    for (var ii in attrNameArr) {
+      if (that.in_array(attrNameArr[ii], attrValues)) {
+        attrNameArr.splice(ii, 1);
+      }
+    }
+    attrName = attrNameArr.join(',');
+    if (attrName) var eName = e.currentTarget.dataset.key + ',' + attrName;
+    else var eName = e.currentTarget.dataset.key;
+    attrNameArr = eName.split(",");
+    var isBool = false;
+    var isattrNameArrLength = 0;
+    for (var an in attrNameArr) {
+      if (attrNameArr[an]) isattrNameArrLength = isattrNameArrLength + 1;
+    }
+    for (var b in productValue) {
+      var sukValue = productValue[b].suk.split(",");
+      if (sukValue.length == isattrNameArrLength) {
+        if (that.in_array_two(attrNameArr, sukValue)) {
+          isBool = true;
+        }
+      } else {
+        isBool = true;
+      }
+    }
+    if (!isBool) {
+      wx.showToast({
+        title: '属性不存在，请重新选择',
+        icon: 'none',
+        duration: 1500,
+      })
+    } else {
+      that.setData({
+        attrName: e.currentTarget.dataset.key + ',' + attrName
+      })
+      attrNameArr = that.data.attrName.split(",");
+      var attrNameArrSort = '';
+      for (var jj in productAttr) {
+        for (var jjj in productAttr[jj]['attr_values']) {
+          if (that.in_array(productAttr[jj]['attr_values'][jjj], attrNameArr)) {
+            attrNameArrSort += productAttr[jj]['attr_values'][jjj] + ',';
+          }
+        }
+      };
+      for (var jj in array) {
+        for (var jjj in array[jj]['attr_values']) {
+          if (that.in_array(array[jj]['attr_values'][jjj], attrNameArr)) {
+            array[jj]['attr_value'][jjj].check = true;
+          } else {
+            array[jj]['attr_value'][jjj].check = false;
+          }
+        }
+      };
+      that.setData({
+        productAttr: array
+      })
+      var attrNameArrSortArr = attrNameArrSort.split(",");
+      attrNameArrSortArr.pop();
+      that.setData({
+        attrName: attrNameArrSortArr.join(',')
+      })
+      var arrAttrName = that.data.attrName.split(",");
+      for (var index in productValue) {
+        var strValue = productValue[index]['suk'];
+        var arrValue = strValue.split(",");
+        if (that.in_array_two(arrValue, arrAttrName)) {
+
+          var num = that.data.shoppingMessage[that.data.GbCateId][that.data.GB_Index].num;
+          that.data.SettlementShoppingMessage.num = that.data.SettlementShoppingMessage.num - num + 1
+
+          that.data.SettlementShoppingMessage.price -= that.data.shoppingMessage[that.data.GbCateId][that.data.GB_Index].price;
+          that.data.SettlementShoppingMessage.price = that.data.SettlementShoppingMessage.price.toFixed(2) - 0;
+          that.data.SettlementShoppingMessage.price += parseFloat(productValue[index]['price']);
+          that.data.SettlementShoppingMessage.price = that.data.SettlementShoppingMessage.price.toFixed(2) - 0;
+
+          that.data.shoppingMessage[that.data.GbCateId][that.data.GB_Index].img = productValue[index]['image'];
+          that.data.shoppingMessage[that.data.GbCateId][that.data.GB_Index].price = productValue[index]['price'];
+          that.data.shoppingMessage[that.data.GbCateId][that.data.GB_Index].stock = productValue[index]['stock'];
+          that.data.shoppingMessage[that.data.GbCateId][that.data.GB_Index].unique = productValue[index]['unique'];
+          that.data.shoppingMessage[that.data.GbCateId][that.data.GB_Index].num = 1;
+
+          that.data.TabDate[that.data.GbCateId][that.data.GB_Index].care_num = 1;
+          that.data.TabDate[that.data.GbCateId][that.data.GB_Index].price = productValue[index]['price'];
+          that.data.TabDate[that.data.GbCateId][that.data.GB_Index].image = productValue[index]['image'];
+          that.data.TabDate[that.data.GbCateId][that.data.GB_Index].stock = productValue[index]['stock'];
+
+          var price = "productSelect.price";
+
+          that.setData({
+            shoppingMessage: that.data.shoppingMessage,
+            [price]: that.data.productValue[index]['price'],
+            TabDate: that.data.TabDate,
+            SettlementShoppingMessage: that.data.SettlementShoppingMessage
+          })
+        }
+      }
+    }
+  },
+  in_array_two: function (arr1, arr2) {
+    if (arr1.sort().toString() == arr2.sort().toString()) {
+      return true;
+    }
+    else {
+      return false;
+    }
+
+  },
+  in_array: function (str, arr) {
+    for (var f1 in arr) {
+      if (arr[f1] == str) {
+        return true;
+      }
+    }
+  },
+  modelbg: function (e) {
+    this.setData({
+      prostatus: false
+    });
+  },
+  showModelbg: function (e) {
+    var index = 0;
+    var that = this;
+    var GbCateId = that.data.GbCateId;
+    index = e ? e.currentTarget.dataset.index : that.data.GB_Index;
+
+    if (that.data.shoppingMessage[GbCateId] == undefined) {
+      that.data.shoppingMessage[GbCateId] = [];
+    }
+
+    if (that.data.shoppingMessage[GbCateId][index] == undefined) {
+      that.data.shoppingMessage[GbCateId][index] = {};
+
+      that.data.shoppingMessage[GbCateId][index]['id'] = that.data.TabDate[GbCateId][index]['id'];
+      that.data.shoppingMessage[GbCateId][index]['img'] = that.data.TabDate[GbCateId][index]['image'];
+      that.data.shoppingMessage[GbCateId][index]['name'] = that.data.TabDate[GbCateId][index]['store_name'];
+      that.data.shoppingMessage[GbCateId][index]['unique'] = '';
+      that.data.shoppingMessage[GbCateId][index]['num'] = that.data.TabDate[GbCateId][index]['care_num'];
+      that.data.shoppingMessage[GbCateId][index]['stock'] = that.data.TabDate[GbCateId][index]['stock'];
+      that.data.shoppingMessage[GbCateId][index]['price'] = 0;
+      var price = "productSelect.price";
+      that.setData({
+        shoppingMessage: that.data.shoppingMessage,
+        [price]: 0,
+      });
+    };
+
+    that.setData({
+      prostatus: true,
+      GB_Index: index,
+      productAttr: that.data.TabDate[GbCateId][index].productAttr,
+      productValue: that.data.TabDate[GbCateId][index].productValue,
+    })
+  },
+  PriceDisabled() {       //结算Flag
+    var that = this;
+
+    var shoppingMessageData = that.data.shoppingMessage;
+
+    for (var j in shoppingMessageData) {
+
+      for (var i in shoppingMessageData[j]) {
+
+        if (that.data.shoppingMessage[j][i] && that.data.shoppingMessage[j][i].num > 0) {
+
+          if (that.data.TabDate[j][i].productAttr.length > 0 && that.data.shoppingMessage[j][i].unique == '') {
+
+            wx.showToast({
+              title: '请选择' + that.data.shoppingMessage[j][i].name + '属性',
+              icon: 'none',
+              duration: 2000,
+            });
+            return;
+          };
+        } else {
+          that.data.shoppingMessage[j][i] = null;
+        };
+      };
+
+    };
+
+
+    var header = {
+      'content-type': 'application/json',  //application/json
+    };
+    var data = that.data.shoppingMessage;
+
+    wx.request({
+      url: app.globalData.url + '/routine/auth_api/set_cartJson?uid=' + app.globalData.uid,
+      method: 'POST',
+      data: JSON.stringify(data),
+      header: header,
+      success: function (res) {
+        for (var j in res.data.data) {
+
+          if (res.data.data[j].code != 200) {
+            wx.showToast({
+              title: '添加' + res.data.data[j].cart + '购物车失败',
+              icon: 'success',
+              duration: 1000
+            });
+          };
+        };
+        wx.switchTab({
+          url: '../buycar/buycar'
+        });
+      }
+    });
+
+  },
+  subBuy() {       //确定规格后关闭弹窗
+    this.modelbg();
   },
   setNumber: function (e) {
     var that = this;
@@ -411,8 +625,10 @@ Page({
     var limit = 8;
 
     if (that.data.hidden) return;
-    var offset = that.data.offset++ * limit;
-    
+    if (!that.data.offset[that.data.GbCateId]) that.data.offset[that.data.GbCateId] = 1;
+
+    var offset = that.data.offset[that.data.GbCateId]++ * limit;
+
     that.setData({
       hidden: true,
     });
@@ -426,19 +642,23 @@ Page({
       header: header,
       success: function (res) {
         if (res.data.data.all.length < 1) {
-          --that.data.offset;
+          --that.data.offset[that.data.GbCateId];
           wx.showToast({
             title: '没有更多的商品了',
             icon: 'none',
             duration: 2000
           })
         } else {
-          that.data.TabDate[that.data.GbCateId] = that.data.TabDate[that.data.GbCateId].concat(res.data.data.all);
+          var data = res.data.data.all;
+          for (var i = 0; i < data.length; i++) {
+            data[i].care_num = 0;
+          };
+          that.data.TabDate[that.data.GbCateId] = that.data.TabDate[that.data.GbCateId].concat(data);
         };
         that.setData({
           hidden: false,
           TabDate: that.data.TabDate
-        })
+        });
       }
     });
 

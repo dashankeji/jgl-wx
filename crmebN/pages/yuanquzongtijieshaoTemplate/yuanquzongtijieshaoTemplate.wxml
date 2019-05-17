@@ -32,3 +32,50 @@
 
 </view>
 </template>
+
+<template name="shoppingContent">
+<view id="wrap" class="bg-white">
+<!--园区总体介绍标题加图标返回-->
+<view class="wrap_title bg-white">
+  <view class="cu-custom" style="height:{{CustomBar}}px;">
+    <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+      <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
+        <text class='icon-iconfontback' style="font-size:20px"></text>  <text class='text-xxl text-bold'>{{backNavTitle}}</text>
+      </navigator>
+    </view>
+  </view>
+</view>
+<!--金龟岭各园区介绍-->
+<view class="padding solid-top text-center text-xxl text-bold bg-white" style="margin-top:{{StatusBar}}px;">{{Title}}</view>
+<!--背景图片-->
+<!--<view class="" style="background-image:url({{bgImagesUrl}});width:100%;height:500rpx;background-size:100% 100%"></view>-->
+<!--定位图片-->
+<view style="width:100%">
+    <view class="" style="width:90%;margin: 0 auto;">
+        <view style="width:100%;margin-bottom:30rpx">
+           <!--<block wx:for="{{oneImagesList}}" wx:if="{{ index < oneImagesList.length-1 }}" wx:key>
+              <view class="" style="background-image:url({{item}});width:100%;margin-bottom:20rpx;background-size:100% 100%"></view>
+             <image src="{{item}}" style="width:100%"></image>
+           </block>-->
+           <view>{{desc}}</view>
+        </view>
+        <block wx:for="{{positionImgJson}}" wx:key>
+            <block wx:for="{{positionImgJson[index]['img']}}" wx:key>
+                  <view class="" style="width:100%;margin-top:8rpx">
+                      <image src="{{item}}" style="width:100%"></image>
+                  </view>
+            </block>
+            <block wx:if="{{positionImgJson[index]['title'][0].length>1}}">
+                <view style="width:100%;margin:30rpx 0 25rpx 0;">
+                  <block wx:for="{{positionImgJson[index]['title']}}" wx:key>
+                    <view wx:if="{{item}}">{{item}}</view>
+                  </block>
+                </view>
+            </block>
+        </block>
+      
+    </view>
+</view>
+
+</view>
+</template>

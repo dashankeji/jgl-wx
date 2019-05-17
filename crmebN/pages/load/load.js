@@ -29,6 +29,7 @@ Page({
     userInfo.spid = app.globalData.spid;
     wx.login({
       success: function (res) {
+        console.log(res.code);
         if (res.code) {
           userInfo.code = res.code;
           wx.request({

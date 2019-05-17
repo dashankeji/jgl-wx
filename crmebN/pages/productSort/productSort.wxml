@@ -48,8 +48,8 @@
                           </view>
                           <view class="flex justify-between">
                               <view class='text-gray my_text_2' style="font-size:26rpx;width:80%">{{item.store_info}}</view>
-                              <block wx:if="{{item.productAttr.length > 0 && item.care_num > 0}}">
-                                   <view bindtap='showModelbg' data-index='{{index}}' style="background-color:red;color:#fff;border-radius:50%;">属性</view>
+                              <block wx:if="{{item.productAttr.length > 0}}">
+                                   <view bindtap='showModelbg' data-index='{{index}}' style="background-color:red;color:#fff;border-radius:50%;width:70rpx;height:50rpx;text-align:center">属性</view>
                               </block>
                           </view>
                       </view>

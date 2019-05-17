@@ -36,6 +36,14 @@
   flex: 1;
 }
 
+.pL-Text{
+  padding-left: 88rpx;
+}
+
+.pL-Num{
+  padding-left: 65rpx;
+}
+
 .justify-between {
   justify-content: space-between;
 }

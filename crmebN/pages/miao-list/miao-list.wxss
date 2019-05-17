@@ -2,6 +2,10 @@ page{
   background: #ccc
 }
 
+.justify-between {
+  justify-content: space-between;
+}
+
 /* ==================
           加载
  ==================== */

@@ -42,9 +42,16 @@
                       </view>
                   </navigator>
                   <view class='content' style='position:relative;top:0;left:0'>
-                      <view style="width:80%">
-                          <view class='text-xl my_text_1'>{{item.store_name}}</view>
-                          <view class='text-gray my_text_2' style="font-size:26rpx">{{item.store_info}}</view>
+                      <view style="width:100%">
+                          <view style='width:80%'>
+                              <view class='text-xl my_text_1'>{{item.store_name}}</view>
+                          </view>
+                          <view class="flex justify-between">
+                              <view class='text-gray my_text_2' style="font-size:26rpx;width:80%">{{item.store_info}}</view>
+                              <block wx:if="{{item.productAttr.length > 0}}">
+                                   <view bindtap='showModelbg' data-index='{{index}}' style="background-color:red;color:#fff;border-radius:50%;width:70rpx;height:50rpx;text-align:center">属性</view>
+                              </block>
+                          </view>
                       </view>
                       <view class='text-red' style='position:absolute;bottom:0;left:0;width:100%'>
                                                                                 <view class="flex justify-between">
@@ -69,13 +76,13 @@
 <!--当前页面数据金额统计-->
 <view class="wrap_dataPrice" style="position:fixed;bottom:0;left:0;background-color:black;width:100%;color:#fff;display:flex;text-align:center;line-height:50px;justify-content:space-between">
      <view style="width:40%;position:relative;">
-             <view class="my_text_1" style='width:91%;padding-left:75rpx'>{{ shoppingMessage['name'] != '' ? '￥' + shoppingMessage['price']  : '未选中商品' }}</view>
-              <view style="position:absolute;bottom:10px;left:20px;background: url({{shoppingMessage['img']}}) 100%/100%;width:120rpx;height:120rpx;border-radius:50%">
+             <view class="my_text_1 {{ SettlementShoppingMessage['num'] > 0 ? 'pL-Num'  : 'pL-Text' }}" style='width:91%;'>{{ SettlementShoppingMessage['num'] > 0 ? '￥' + SettlementShoppingMessage['price']  : '未选中商品' }}</view>
+
+              <image class="image-css" src="../../images/express_icon.jpg" mode='aspectFill' style="position:absolute;bottom:10px;left:30rpx;width:120rpx;height:120rpx;border-radius:50%"></image>
                    <!--<text style="position:absolute;top:-17rpx;left:78rpx;background-color:red;border-radius:50%;line-height:48rpx;height:55rpx;min-width:55rpx">0</text>-->
-              </view>
 
      </view>
-     <view style="font-size:20rpx">已选中 <text style="font-size:32rpx">{{shoppingMessage['num']}} </text>份</view>
+     <view style="font-size:20rpx">已选中 <text style="font-size:32rpx">{{SettlementShoppingMessage['num']}}  </text>份</view>
      <view style="background-color:#ccc;width:30%;">
           <button
               disabled="{{PriceDisabled}}"
@@ -89,3 +96,43 @@
 </view>
 
 </view>
+
+
+<view class="model-bg {{show==true ? 'show':''}} {{prostatus==true ? 'show':''}}" bindtap='modelbg'></view>  
+<view class="model-proinfo {{prostatus==true ? 'show':''}}">
+  <view style="position:absolute;right:10rpx;top:0;width:10%;text-align:right" bindtap='modelbg'>X</view>
+  <view class='hd-wrapper'>
+    <image src='{{url}}{{shoppingMessage[GbCateId][GB_Index]["img"]}}'></image>
+    <view class='txt-info'>
+      <view class='title'>{{shoppingMessage[GbCateId][GB_Index]['name']}}</view>
+      <view class='num flex'>
+          <view class='price'>￥{{shoppingMessage[GbCateId][GB_Index]['price']}}</view>
+      </view>
+    </view>
+  </view>
+  <view class='bd-wrapper'>
+  <block wx:for="{{productAttr}}">
+    <view class='parameter-item'>
+      <view class='title-bar'>{{item.attr_name}}</view>
+      <view class='item-wrapper'>
+        <block wx:for="{{item.attr_value}}" wx:for-item="items">
+          <view data-key="{{items.attr}}" class='item {{items.check?"sizecolor":""}}' bindtap='tapsize'>{{items.attr}}</view>
+        </block>
+      </view>
+    </view>
+    </block>
+  </view>
+  <view class='count-box flex'>
+    购买数量
+    <view class='count-wrappers flex'>
+      <text class='{{minusStatus}}' bindtap='PriceReduceClick'  data-id="{{shoppingMessage[GbCateId][GB_Index].id}}" data-name="{{shoppingMessage[GbCateId][GB_Index].name}}" data-img="{{shoppingMessage[GbCateId][GB_Index].img}}" data-price="{{productSelect.price}}" data-stock='{{shoppingMessage[GbCateId][GB_Index].stock}}' data-index='{{GB_Index}}' data-num='{{shoppingMessage[GbCateId][GB_Index].num}}'>-</text>
+      <text class='num'>{{shoppingMessage[GbCateId][GB_Index]["num"]}}</text>
+      <text class='add' bindtap='PriceAddClick' data-id="{{shoppingMessage[GbCateId][GB_Index].id}}" data-name="{{shoppingMessage[GbCateId][GB_Index].name}}" data-img="{{shoppingMessage[GbCateId][GB_Index].img}}" data-price="{{productSelect.price}}" data-stock='{{shoppingMessage[GbCateId][GB_Index].stock}}' data-index='{{GB_Index}}' data-num='{{shoppingMessage[GbCateId][GB_Index].num}}'>+</text>
+    </view>
+  </view>
+  <view style='height:100rpx;'></view>
+  <form bindsubmit="subBuy" report-submit='true'> 
+  <button class='foot-wrapper' form-type='submit'>确定</button>  
+    <!-- <view class='foot-wrapper' bindtap='subBuy'>确定</view> -->
+  </form>
+</view> 

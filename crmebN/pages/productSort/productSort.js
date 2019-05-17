@@ -67,6 +67,7 @@ Page({
     this.setData({
       shoppingMessage: {},
       prostatus: false,
+      PriceDisabled: true, 
       status: 0,
       GbCateId: -1,
       TabCur: 0,
@@ -75,6 +76,7 @@ Page({
         num: 0,
         price: 0
       },
+      offset: {},
       TabDate: {}
     });
     app.setUserInfo();
@@ -153,8 +155,16 @@ Page({
 
     that.data.TabDate[GbCateId][index].care_num = num;
     if (num == 0) {
-
+       
       that.data.shoppingMessage[GbCateId][index] = null;
+      var array = that.data.TabDate[GbCateId][index].productAttr;
+      for (var jj in array) {
+        for (var jjj in array[jj]['attr_values']) {
+            array[jj]['attr_value'][jjj].check = false;
+        }
+      };
+      that.data.prostatus = false;
+
       var flag = true;
       
       for (var i in that.data.shoppingMessage) {
@@ -170,6 +180,7 @@ Page({
         that.setData({
           status: -1,
           PriceDisabled: true,
+          prostatus: that.data.prostatus,
           TabDate: that.data.TabDate,
           shoppingMessage: that.data.shoppingMessage,
           SettlementShoppingMessage: {
@@ -194,6 +205,7 @@ Page({
       shoppingMessage: that.data.shoppingMessage,
       status: 2,
       PriceDisabled: false,
+      prostatus: that.data.prostatus,
       TabDate: that.data.TabDate,
       SettlementShoppingMessage: that.data.SettlementShoppingMessage
     });
@@ -219,8 +231,28 @@ Page({
       that.data.shoppingMessage[GbCateId][index]['img'] = img;
       that.data.shoppingMessage[GbCateId][index]['name'] = name;
       that.data.shoppingMessage[GbCateId][index]['unique'] = '';
+
+      that.data.shoppingMessage[GbCateId][index]['num'] = e.currentTarget.dataset.num;
+      that.data.shoppingMessage[GbCateId][index]['stock'] = e.currentTarget.dataset.stock;
+      that.data.shoppingMessage[GbCateId][index]['price'] = 0;
       
     };
+    
+    if (that.data.TabDate[GbCateId][index].productAttr.length > 0 && that.data.shoppingMessage[GbCateId][index].unique == '') {
+
+      wx.showToast({
+        title: '该商品有属性,请选择属性',
+        icon: 'none',
+        duration: 1000,
+      });
+      var price = "productSelect.price";
+      that.setData({
+        shoppingMessage: that.data.shoppingMessage,
+        [price]: 0,
+      });
+      return;
+    };
+
     that.data.shoppingMessage[GbCateId][index]['num'] = e.currentTarget.dataset.num;
 
     if (e.currentTarget.dataset.stock && that.data.shoppingMessage[GbCateId][index]['num'] >= parseFloat(e.currentTarget.dataset.stock)) {   //库存
@@ -334,7 +366,7 @@ Page({
             attrNameArrSort += productAttr[jj]['attr_values'][jjj] + ',';
           }
         }
-      }
+      };
       for (var jj in array) {
         for (var jjj in array[jj]['attr_values']) {
           if (that.in_array(array[jj]['attr_values'][jjj], attrNameArr)) {
@@ -412,13 +444,36 @@ Page({
   },
   showModelbg: function (e) {
     var index = 0 ;
-    index = e ? e.currentTarget.dataset.index : this.data.GB_Index;
+    var that = this;
+    var GbCateId = that.data.GbCateId;
+    index = e ? e.currentTarget.dataset.index : that.data.GB_Index;
 
-    this.setData({
+    if (that.data.shoppingMessage[GbCateId] == undefined) {
+      that.data.shoppingMessage[GbCateId] = [];
+    }
+
+    if (that.data.shoppingMessage[GbCateId][index] == undefined) {
+      that.data.shoppingMessage[GbCateId][index] = {};
+
+      that.data.shoppingMessage[GbCateId][index]['id'] = that.data.TabDate[GbCateId][index]['id'];
+      that.data.shoppingMessage[GbCateId][index]['img'] = that.data.TabDate[GbCateId][index]['image'];
+      that.data.shoppingMessage[GbCateId][index]['name'] = that.data.TabDate[GbCateId][index]['store_name'];
+      that.data.shoppingMessage[GbCateId][index]['unique'] = '';
+      that.data.shoppingMessage[GbCateId][index]['num'] = that.data.TabDate[GbCateId][index]['care_num'];
+      that.data.shoppingMessage[GbCateId][index]['stock'] = that.data.TabDate[GbCateId][index]['stock'];
+      that.data.shoppingMessage[GbCateId][index]['price'] = 0;
+      var price = "productSelect.price";
+      that.setData({
+        shoppingMessage: that.data.shoppingMessage,
+        [price]: 0,
+      });
+    };
+
+    that.setData({
       prostatus: true,
       GB_Index:  index,
-      productAttr: this.data.TabDate[this.data.GbCateId][index].productAttr,
-      productValue: this.data.TabDate[this.data.GbCateId][index].productValue,
+      productAttr: that.data.TabDate[GbCateId][index].productAttr,
+      productValue: that.data.TabDate[GbCateId][index].productValue,
     })
   },
   PriceDisabled() {       //结算Flag
@@ -430,7 +485,8 @@ Page({
        
         for (var i in shoppingMessageData[j]) {
 
-          if (that.data.shoppingMessage[j][i] && that.data.shoppingMessage[j][i].id) {
+          if (that.data.shoppingMessage[j][i] && that.data.shoppingMessage[j][i].num>0) {
+
             if (that.data.TabDate[j][i].productAttr.length > 0 && that.data.shoppingMessage[j][i].unique == '') {
 
               wx.showToast({
@@ -440,6 +496,8 @@ Page({
               });
               return;
             };
+          }else{
+            that.data.shoppingMessage[j][i] = null;
           };
         };
 
@@ -474,7 +532,7 @@ Page({
     });
 
   },
-  subBuy() {       //结算Flag
+  subBuy() {       //确定规格后关闭弹窗
     this.modelbg();
   },
   setNumber: function (e) {
@@ -591,12 +649,16 @@ Page({
             duration: 2000
           })
         } else {
-          that.data.TabDate[that.data.GbCateId] = that.data.TabDate[that.data.GbCateId].concat(res.data.data.all);
+          var data = res.data.data.all;
+          for (var i = 0; i < data.length; i++) {
+            data[i].care_num = 0;
+          };
+          that.data.TabDate[that.data.GbCateId] = that.data.TabDate[that.data.GbCateId].concat(data);
         };
         that.setData({
           hidden: false,
           TabDate: that.data.TabDate
-        })
+        });
       }
     });
 

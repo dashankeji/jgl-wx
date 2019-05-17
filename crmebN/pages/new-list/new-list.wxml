@@ -4,7 +4,7 @@
   <view class="cu-custom" style="height:{{CustomBar}}px;">
     <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
       <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
-        <text class='icon-iconfontback' style="font-size:20px"></text>  <text class='text-xxl text-bold'>游园指南</text>
+        <text class='icon-iconfontback' style="font-size:20px"></text>  <text class='text-xxl text-bold'>走入农场</text>
       </navigator>
     </view>
   </view>

@@ -123,7 +123,7 @@ Page({
       url: app.globalData.url + '/routine/auth_api/get_cid_article?uid=' + app.globalData.uid,
       method: 'GET',
       data: {
-        cid : 0,
+        cid : 1,
         first: that.data.first,
         limit: that.data.limit
       },

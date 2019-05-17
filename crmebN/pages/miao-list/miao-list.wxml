@@ -28,24 +28,15 @@
 <!--菜单和店家切换-->
 <view class="flex flex-wrap bg-white">
       <view class='basis-sm padding radius text-center text-xl {{tabSelectCssFlag[0]?"text-orange":""}}' bindtap='tabClickMenu'>菜单</view>
-      <view class='' style="width:8%;padding:3% 4%">
+      <view class='' style="width:1%;padding:3% 4%">
              <view style="height:100%;border-left:1px solid black"></view>
       </view>
       <view class='basis-sm padding radius text-center text-xl {{tabSelectCssFlag[1]?"text-orange":""}}' bindtap='tabClickShopOwner'>店家</view>
 </view>
 <!--菜单和店家导航信息-->
 <block wx:if="{{tabSelectCssFlag[0]}}">
-      <view class="margin-top" style="">
-          <view class="flex flex-wrap bg-grey-two light">
-                <view class='basis-lg-two radius text-xl bg-white cu-load'>
-                      <scroll-view
-                                scroll-y
-                                bindscrolltoupper="upper"
-                                bindscrolltolower="lower"
-                                bindscroll="scroll"
-                                scroll-top="{{scrollTop}}"
-                              >
-                                  <view class="cu-list-two text-left menu">
+      <view class="margin-top" style="background-color:#fff;padding:20rpx">
+                                  <!--<view class="cu-list-two text-left menu">
                                         <view class="cu-item {{menuArrow?'arrow':''}}" wx:for="{{menuSwitcnDate[menuSwitcnDateIndex]}}" wx:key> 
                                               <view class="cu-avatar-group">
                                                     <view class="cu-avatar xl" style="background-image:url({{item.image}});"></view>
@@ -54,9 +45,17 @@
                                                     <view style="width:80%">
                                                           <view class='text-xl my_text_1'>{{item.store_name}}</view>
                                                           <!--<view class='text-grey my_text_2'>{{item.store_info}}</view>-->
-                                                    </view>
+                                                    <!--</view>
                                               </view>
                                         </view>
+                                  </view>-->
+                                  <view class="flex justify-between" style='flex-wrap: wrap'>
+                                     <block wx:for="{{menuSwitcnDate[menuSwitcnDateIndex]}}" wx:key>
+                                          <view style='width:48%;padding:10rpx 0 30rpx 0'>
+                                              <image src="{{item.image}}" style="width:100%" mode="widthFix"></image>
+                                              <view>{{item.store_name}}</view>
+                                          </view>
+                                      </block>
                                   </view>
                                   <block wx:if="{{hidden}}">
                                       <view class='loading flex'><icon class='iconfont icon-jiazaizhong loadingpic'></icon>加载中</view>
@@ -64,9 +63,6 @@
                                   <block wx:else>
                                         <view class='loading flex'>已显示完毕</view>
                                   </block>
-                      </scroll-view>
-                </view>
-      </view>
       </view>
 </block>
 <block wx:else>
