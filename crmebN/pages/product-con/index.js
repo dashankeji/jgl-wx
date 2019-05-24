@@ -186,7 +186,7 @@ Page({
                         [unique]: ''
                     })
                   
-                    //that.likeDataFun();
+                    that.likeDataFun();
                     //WxParse.wxParse('description', 'html', that.data.description, that, 0);
                 }else{
                     wx.showToast({
@@ -199,7 +199,13 @@ Page({
                     },1200)
                 }
             }
-        })
+        });
+      wx.request({      //记录在足迹表
+        url: app.globalData.url + '/routine/auth_api/InterProductFootprint?uid=' + app.globalData.uid,
+        data: { product_id: options.id },
+        method: 'GET',
+        header: header
+      });
     },
   listenerActionSheet: function () {
         this.setData({
@@ -212,15 +218,17 @@ Page({
     };
     var that = this;
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/index?uid=' + app.globalData.uid,
+      url: app.globalData.url + '/routine/auth_api/getProductFootprint?uid=' + app.globalData.uid,
+      data: { limit: 8, offset: 0 },
       method: 'POST',
       header: header,
       success: function (res) {
+
         that.setData({
-          likeData: res.data.data.like
-        });
+          likeData: res.data.data
+        })
       }
-    })
+    });
   },
     // 保存海报图片
   savePosterPath: function () {

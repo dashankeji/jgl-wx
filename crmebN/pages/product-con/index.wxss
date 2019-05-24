@@ -2,6 +2,11 @@
   justify-content: space-between;
 }
 
+.wrap_imageTwo{
+  width: 350rpx;
+  height: 350rpx;
+}
+
 .cu-list-two.menu {
   display: block;
   overflow: hidden;
