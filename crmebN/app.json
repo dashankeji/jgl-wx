@@ -17,6 +17,7 @@
     "pages/promotion-order/promotion-order",
     "pages/coupon/coupon",
     "pages/product-con/index",
+    "pages/menu-product-con/index",
     "pages/product-pinke/index",
     "pages/comment-con/comment-con",
     "pages/orderForm/orderForm",

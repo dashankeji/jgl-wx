@@ -6,6 +6,7 @@ Page({
    */
   data: {
     CustomBar: app.globalData.CustomBar,
+    StatusBar: app.globalData.StatusBar,
     url: app.globalData.urlImages,
     nowstatus:"",
     orderlist:[],

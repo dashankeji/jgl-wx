@@ -6,3 +6,8 @@
 .fu-margin-top{
   margin-top: -10rpx;
 }
+
+.wxParse-img{
+  width: 100% !important;
+  margin: 5rpx 0 !important;
+}

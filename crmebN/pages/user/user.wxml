@@ -1,12 +1,8 @@
 <view id="wrap">
-<!--个人中心标题加图标返回-->
-<view class="cu-custom" style="height:{{CustomBar}}px;">
-  <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">  
-         <text class='text-xxl text-bold margin-left-sm'>个人中心</text>
-  </view>
-</view>
-<!--距离顶层距离过渡-->
-<view style="margin-top:{{StatusBar}}px;"></view>
+<!--标题-->
+<import src ="../GB_topHeader/index.wxml" />
+<template is="headContent" data="{{CustomBar: CustomBar, StatusBar: StatusBar, text: '个人中心', iconFlag: false }}" />
+
 <!--个人中心图片加订单状态-->
 <view style="position:relative;top:0;left:0;padding-bottom:30px;">
       <view class="wrap_swiper">
@@ -98,6 +94,8 @@
 </view>
 
 </view>
+
+<view style="margin-top:20rpx;margin-bottom:15rpx;text-align:center;width:100%">技术支持: <text style='font-weight:bold'>大山科技</text></view>
 
 
 

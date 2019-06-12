@@ -1,0 +1,29 @@
+<!--标题-->
+<import src ="../GB_topHeader/index.wxml" />
+<template is="headContent" data="{{CustomBar: CustomBar, StatusBar: StatusBar, text: '菜单详情', iconFlag: true }}" />
+<!--轮播-->
+<view class="wrap_swiper" style="position:relative;top:0;left:0;">
+      <swiper class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" bindchange="swiperChange" circular="true" autoplay="true" interval="5000" duration="500" current="0">
+        <swiper-item wx:for="{{storeInfo.slider_image}}" wx:key>
+          <!--<image src="{{url}}{{item}}" mode="aspectFill"></image>-->
+          <view style='background-image:url({{url}}{{item}});width:100%;height:100%;background-size:cover;background-position:center;box-shadow: 0 0 5rpx #ccc;'> </view>
+        </swiper-item>
+      </swiper>
+      <!--重置小圆点的样式  -->
+      <view class="dots">  
+          <block wx:for="{{storeInfo.slider_image.length}}" wx:key>  
+              <view class="dot{{index == currentSwiper ? ' active' : ''}}"></view>  
+          </block>  
+      </view>  
+</view>
+
+<view class='pro-wrapper'>
+  <view class='pro-infos'>
+    <view class='title text-xl'>
+    {{storeInfo.store_name}}
+    </view>
+    <view class='price-wrapper flex justify-between'>
+      <view class='price'><text>￥</text>{{storeInfo.price}}</view>
+    </view>
+  </view>
+</view>

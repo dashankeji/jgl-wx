@@ -1,16 +1,9 @@
 <view id="wrap">
-<!--游园指南标题加图标返回-->
-<view class="wrap_title bg-white">
-  <view class="cu-custom" style="height:{{CustomBar}}px;">
-    <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
-      <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
-        <text class='icon-iconfontback' style="font-size:20px"></text>  <text class='text-xxl text-bold'>走入农场</text>
-      </navigator>
-    </view>
-  </view>
-</view>
+<!--标题-->
+<import src ="../GB_topHeader/index.wxml" />
+<template is="headContent" data="{{CustomBar: CustomBar, StatusBar: StatusBar, text: '走入农场', iconFlag: true }}" />
 <!--轮播-->
-<view class="wrap_swiper" style="position:relative;top:0;left:0;margin-top:{{StatusBar}}px;">
+<view class="wrap_swiper" style="position:relative;top:0;left:0;">
       <swiper class="screen-swiper" bindchange="swiperChange" circular="true" autoplay="true" interval="5000" duration="500" current="0">
         <swiper-item wx:for="{{bannerList}}" wx:key>
             <image src="{{item.image}}"></image>

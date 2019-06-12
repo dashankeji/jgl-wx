@@ -8,6 +8,8 @@ Page({
   data: {
     orderId:'',
     url: app.globalData.urlImages,
+    StatusBar: app.globalData.StatusBar,
+    CustomBar: app.globalData.CustomBar,
     ordercon:[]
   },
 
@@ -42,14 +44,19 @@ Page({
       success: function (res) {
         wx.hideLoading();
         if(res.data.code == 200){
-          res.data.data.refund_reason_time = that.setTime(res.data.data.refund_reason_time);
+         /* res.data.data.refund_reason_time = that.setTime(res.data.data.refund_reason_time);*/
+          if (res.data.data.refund_reason_time) {
+            res.data.data.refund_reason_time = that.setTime(res.data.data.refund_reason_time);
+          } else {
+            res.data.data.refund_reason_time = res.data.data.add_time || "时间未知";
+          };
           that.setData({
             ordercon: res.data.data
           });
         }else{
           that.isBool();
         }
-        console.log(that.data.ordercon);
+        //console.log(that.data.ordercon);
       },
       fail: function (res) {
         console.log('submit fail');

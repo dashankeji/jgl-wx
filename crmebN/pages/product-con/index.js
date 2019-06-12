@@ -48,6 +48,7 @@ Page({
         prostatus: false,
         CartCount:0,
         status:0,
+        offset: 1,
         actionSheetHidden:true,
         IconBack: false
     },
@@ -60,6 +61,11 @@ Page({
       });
 
       var where_from_scene_id = decodeURIComponent(options.query.scene)*/
+    },
+    navitorGo: function () {
+      wx.switchTab({
+        url: '/pages/index/index'
+      });
     },
     shangPinCodeClick: function () {
       wx.navigateTo({
@@ -961,7 +967,43 @@ Page({
      * 页面上拉触底事件的处理函数
      */
     onReachBottom: function () {
+      var that = this;
+      var limit = 8;
+      var offset = limit * that.data.offset++;
 
+      var header = {
+        'content-type': 'application/x-www-form-urlencoded',
+      };
+      wx.request({
+        url: app.globalData.url + '/routine/auth_api/getProductFootprint?uid=' + app.globalData.uid,
+        data: { limit: limit, offset: offset },
+        method: 'POST',
+        header: header,
+        success: function (res) {
+          var len = res.data.data.length;
+
+          if (len < 1) {
+            --that.data.offset;
+            wx.showToast({
+              title: '数据已经加载到尽头了',
+              icon: 'none',
+              duration: 2000
+            });
+            return false;
+          };
+          that.data.likeData = that.data.likeData.concat(res.data.data);
+          that.setData({
+            likeData: that.data.likeData
+          });
+
+        },
+        fail: function (res) {
+          console.log('submit fail');
+        },
+        complete: function (res) {
+          console.log('submit complete');
+        }
+      });
     },
 
     /**

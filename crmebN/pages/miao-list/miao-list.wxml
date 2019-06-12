@@ -1,21 +1,16 @@
 <view id="wrap">
-<!--餐饮标题加图标返回-->
-<view class="wrap_title bg-white">
-    <view class="cu-custom" style="height:{{CustomBar}}px;">
-      <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
-        <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
-          <text class='icon-iconfontback' style="font-size:20px"></text>  <text class='text-xxl text-bold'>餐饮</text>
-        </navigator>
-      </view>
-    </view>
-</view>
+<!--标题-->
+<import src ="../GB_topHeader/index.wxml" />
+<template is="headContent" data="{{CustomBar: CustomBar, StatusBar: StatusBar, text: '餐饮', iconFlag: true }}" />
 <!--店家店名-->
-<view class="padding solid-top text-center text-xl text-bold bg-white" style="margin-top:{{StatusBar}}px;">{{Title}}</view>
+<view class="padding solid-top text-center text-xl text-bold bg-white">{{Title}}</view>
 <!--轮播-->
 <view class="wrap_swiper" style="position:relative;top:0;left:0;">
       <swiper class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" bindchange="swiperChange" circular="true" autoplay="true" interval="5000" duration="500" current="0">
         <swiper-item wx:for="{{imgUrls}}" wx:key>
-          <image src="{{item.image}}" mode='aspectFill'></image>
+          <navigator class="screen-swiperTwo" url="{{item.wx_page}}" open-type="navigate" hover-class="none">
+             <image src="{{item.image}}" mode='aspectFill'></image>
+          </navigator>
         </swiper-item>
       </swiper>
       <!--重置小圆点的样式  -->
@@ -52,8 +47,13 @@
                                   <view class="flex justify-between" style='flex-wrap: wrap'>
                                      <block wx:for="{{menuSwitcnDate[menuSwitcnDateIndex]}}" wx:key>
                                           <view style='width:48%;padding:10rpx 0 30rpx 0'>
-                                              <image src="{{item.image}}" style="width:100%" mode="widthFix"></image>
-                                              <view>{{item.store_name}}</view>
+                                              <navigator url="/pages/menu-product-con/index?id={{item.id}}" open-type="navigate"  hover-class="none" style="width:100%;">
+                                                  <image src="{{item.image}}" style="width:100%" mode="widthFix"></image>
+                                              </navigator>
+                                              <view class="flex justify-between">
+                                                  <view class="my_text_1">{{item.store_name}}</view>
+                                                  <block wx:if="{{item.menu_price_flag == 1}}"><view class="text-red">{{item.price}}</view></block>
+                                              </view>                                            
                                           </view>
                                       </block>
                                   </view>

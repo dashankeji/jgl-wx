@@ -9,7 +9,7 @@
   </view>
 </view>
 <!--搜索-->
-<view style="margin-top:{{StatusBar}}px;">
+<view style="">
     <view class="cu-bar search bg-white">
         <view class='search-form round'>
           <text class="icon-search"></text>

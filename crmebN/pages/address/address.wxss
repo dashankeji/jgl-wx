@@ -13,7 +13,7 @@ page{
 }
 
 .top {
-  margin-top: 30rpx;
+  margin-top: 10rpx;
 }
 
 .cu-list-two.menu::after {

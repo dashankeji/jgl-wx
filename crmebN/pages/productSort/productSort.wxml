@@ -1,18 +1,15 @@
 <!--pages/fenlei/fenlei.wxml-->
 <view id="wrap">
-<!--分类标题加图标返回-->
-<view class="cu-custom" style="height:{{CustomBar}}px;">
-  <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
-    <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
-         <text class='text-xxl text-bold'>产品销售</text>
-    </navigator>
-  </view>
-</view>
+<!--标题-->
+<import src ="../GB_topHeader/index.wxml" />
+<template is="headContent" data="{{CustomBar: CustomBar, StatusBar: StatusBar, text: '产品销售', iconFlag: false }}" />
 <!--轮播-->
-<view class="wrap_swiper" style="position:relative;top:0;left:0;margin-top:{{StatusBar}}px;">
+<view class="wrap_swiper" style="position:relative;top:0;left:0;">
       <swiper class="screen-swiper" bindchange="swiperChange" circular="true" autoplay="true" interval="5000" duration="500" current="0">
         <swiper-item wx:for="{{bannerImgData}}" wx:key>
-           <image src="{{item.image}}" mode='scaleToFill'></image>
+          <navigator class="screen-swiperTwo" url="{{item.wx_page}}" open-type="navigate" hover-class="none">
+              <image src="{{item.image}}" mode='scaleToFill'></image>
+          </navigator>
         </swiper-item>
       </swiper>
       <!--重置小圆点的样式  -->
@@ -75,8 +72,8 @@
 </view>
 <!--当前页面数据金额统计-->
 <view class="wrap_dataPrice" style="position:fixed;bottom:0;left:0;background-color:black;width:100%;color:#fff;display:flex;text-align:center;line-height:50px;justify-content:space-between">
-     <view style="width:40%;position:relative;">
-             <view class="my_text_1 {{ SettlementShoppingMessage['num'] > 0 ? 'pL-Num'  : 'pL-Text' }}" style='width:91%;'>{{ SettlementShoppingMessage['num'] > 0 ? '￥' + SettlementShoppingMessage['price']  : '未选中商品' }}</view>
+     <view style="width:41%;position:relative;">
+             <view class="my_text_1 {{ SettlementShoppingMessage['num'] > 0 ? 'pL-Num'  : 'pL-Text' }}" style='width:95%;margin-left:40rpx'>{{ SettlementShoppingMessage['num'] > 0 ? '￥' + SettlementShoppingMessage['price']  : '未选中商品' }}</view>
 
               <image class="image-css" src="../../images/express_icon.jpg" mode='aspectFill' style="position:absolute;bottom:10px;left:30rpx;width:120rpx;height:120rpx;border-radius:50%"></image>
                    <!--<text style="position:absolute;top:-17rpx;left:78rpx;background-color:red;border-radius:50%;line-height:48rpx;height:55rpx;min-width:55rpx">0</text>-->

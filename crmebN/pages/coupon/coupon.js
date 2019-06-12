@@ -4,6 +4,7 @@ var app = getApp();
 Page({
   data: {
     CustomBar: app.globalData.CustomBar,
+    StatusBar: app.globalData.StatusBar,
     url: app.globalData.urlImages,
     _active:0,
     headerArray: ['全部', '未使用', '已使用','已过期'],

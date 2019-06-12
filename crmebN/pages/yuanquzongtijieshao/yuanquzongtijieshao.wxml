@@ -1,3 +1,24 @@
-<import src ="../yuanquzongtijieshaoTemplate/yuanquzongtijieshaoTemplate.wxml"/>
+<import src ="../GB_topHeader/index.wxml" />
+<template is="headContent" data="{{CustomBar: CustomBar, StatusBar: StatusBar, text: backNavTitle, iconFlag: true }}" />
 
-<template is="content" data="{{CustomBar: CustomBar, StatusBar: StatusBar, backNavTitle: backNavTitle, Title: Title, bgImagesUrl: bgImagesUrl, desc: desc, oneImagesList: oneImagesList,  positionImgJson: positionImgJson }}" />
+<view style="width:100%">
+    <view class="" style="width:90%;margin: 0 auto;">
+        <!--<block wx:for="{{positionImgJson}}" wx:key>
+            <block wx:for="{{positionImgJson[index]['img']}}" wx:key>
+                  <view class="" style="width:100%;margin-top:8rpx">
+                      <image src="{{item}}" style="width:100%" mode="widthFix"></image>
+                  </view>
+            </block>
+            <block wx:if="{{positionImgJson[index]['title'][0].length>2}}">
+                <view style="width:100%;margin:30rpx 0 25rpx 0;">
+                  <template is="wxParse" data="{{wxParseData:htmlAry[index].nodes}}" />
+                </view>
+            </block>
+        </block>-->
+        <template is="wxParse" data="{{wxParseData:content.nodes}}"/>
+      
+    </view>
+</view>
+
+
+<import src="/wxParse/wxParse.wxml"/>

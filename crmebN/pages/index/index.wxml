@@ -1,9 +1,6 @@
 <!--标题-->
-<view class="wrap_title" style="height:{{CustomBar}}px;line-height:{{CustomBar}}px;">
-    <view class='text-xxl padding'>
-        <text class='text-black text-bold'>金龟岭休闲农庄欢迎您</text>
-    </view>
-</view>
+<import src ="../GB_topHeader/index.wxml" />
+<template is="headContent" data="{{CustomBar: CustomBar, StatusBar: StatusBar, text: '金龟岭休闲农场欢迎您', iconFlag: false }}" />
 
  <!--<video
     id="myVideo"
@@ -20,7 +17,6 @@
   </view>
 </view>-->
 
-
 <!--搜索-->
 <view class="wrap_search">
     <navigator class="none" url="/pages/home-search/home-search" open-type="navigate" hover-class="none">
@@ -36,7 +32,9 @@
 <view class="wrap_swiper" style="position:relative;top:0;left:0;">
       <swiper class="screen-swiper" bindchange="swiperChange" circular="true" autoplay="true" interval="5000" duration="500" current="0">
         <swiper-item wx:for="{{imgUrls}}" wx:key>
-           <image src="{{item.pic}}" mode='scaleToFill'></image>
+           <navigator class="screen-swiperTwo" url="{{item.url}}" open-type="navigate" hover-class="none">
+              <image src="{{item.pic}}" mode='scaleToFill'></image>
+           </navigator>
         </swiper-item>
       </swiper>
       <!--重置小圆点的样式  -->

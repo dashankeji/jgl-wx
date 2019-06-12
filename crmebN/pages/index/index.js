@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
     currentSwiper: 0,   //轮播焦点
     currentSwiperTwo: 0, //商品轮播焦点
@@ -77,6 +78,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    /*wx.openLocation({
+      latitude: 21.46471,
+      longitude: 110.254362,
+      name: '金龟岭休闲农场',
+      address: '广东省湛江市遂溪县遂城镇草塘村 ',
+      success: function(res){
+         console.log(res);
+      },
+      fail: function(err){
+         console.log(err);
+      },
+    });*/
+
     app.setBarColor();
     var that = this;
     if (options.spid){
@@ -100,12 +114,20 @@ Page({
       method: 'POST',
       header: header,
       success: function (res) {
+        var bannerData = res.data.data.banner;
+        for (var i = 0; i < bannerData.length; i++){
+          if (bannerData[i].url){
+            bannerData[i].url = bannerData[i].url.split('—')[1];
+          };
+        };
+
         that.setData({
-          imgUrls: res.data.data.banner,
+          imgUrls: bannerData,
           newList: res.data.data.leisureRecreation,//首发新品
           menus: res.data.data.menus,//导航
           hotList: res.data.data.seasonalGoods,//热卖单品
-        })
+        });
+
       }
     })
   },

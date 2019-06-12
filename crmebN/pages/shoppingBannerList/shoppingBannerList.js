@@ -1,5 +1,6 @@
 const app = getApp();
-var WxParse = require('../../wxParse/html2json.js');
+//var WxParse = require('../../wxParse/html2json.js');
+var WxParse = require('../../wxParse/wxParse.js');
 Page({
 
   /**
@@ -15,6 +16,7 @@ Page({
     oneImagesList: [],
     positionImgJson: {},
     desc: '',
+    url: '',
     htmlAry: []
   },
 
@@ -41,6 +43,11 @@ Page({
       }, 1500)
     }
   },
+  navigatorClick: function(){    //跳转链接按钮
+    wx.navigateTo({
+      url: this.data.url
+    });
+  },
   getContent: function () {    //根据id请求园区总体信息
     var that = this;
     wx.request({
@@ -50,7 +57,7 @@ Page({
         id: that.data.newId,
       },
       success: function (res) {
-        var content = res.data.data.content;
+       /* var content = res.data.data.content;
         var desc = '';
         content = content.split(/<.+">|<\/[a-z]+>|<[a-zA-Z]+>/);
 
@@ -99,8 +106,12 @@ Page({
           htmlAry: htmlAry,
           oneImagesList: positionOneArr,
           positionImgJson: positionImgJson
+        });*/
+        that.setData({
+          backNavTitle: res.data.data.author,
+          url: res.data.data.url
         });
-
+        WxParse.wxParse('content', 'html', res.data.data.image_inputstwo_title, that, 0);
       }
     })
   },

@@ -37,11 +37,11 @@
 }
 
 .pL-Text{
-  padding-left: 88rpx;
+  padding-left: 115rpx;
 }
 
 .pL-Num{
-  padding-left: 65rpx;
+  padding-left: 115rpx;
 }
 
 .justify-between {
@@ -53,6 +53,18 @@
 }
 
 .screen-swiper image {
+  width: 100%;
+  display: block;
+  height: 100%;
+  margin: 0;
+}
+
+.screen-swiperTwo{
+  width: 100%;
+  height: 100%;
+}
+
+.screen-swiperTwo image {
   width: 100%;
   display: block;
   height: 100%;

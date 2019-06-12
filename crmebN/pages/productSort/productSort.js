@@ -412,6 +412,7 @@ Page({
           var price = "productSelect.price";
 
           that.setData({
+            PriceDisabled: false,
             shoppingMessage: that.data.shoppingMessage,
             [price]: that.data.productValue[index]['price'],
             TabDate: that.data.TabDate,

@@ -1,13 +1,7 @@
 <!--<view class="header"></view>-->
-<view class="wrap_title bg-white">
-    <view class="cu-custom" style="height:{{CustomBar}}px;">
-      <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
-        <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
-          <text class='icon-iconfontback' style="font-size:20px"></text>  <text class='text-xxl text-bold'>收货地址</text>
-        </navigator>
-      </view>
-    </view>
-</view>
+<!--标题-->
+<import src ="../GB_topHeader/index.wxml" />
+<template is="headContent" data="{{CustomBar: CustomBar, StatusBar: StatusBar, text: '收货地址', iconFlag: true }}" />
 <!--<view class='system-address' bindtap='addAddress'>新增地址</view>
 <view class='weixin-address' bindtap='getWxAddress'>微信地址</view>-->
 <!--收货人信息-->

@@ -5,10 +5,10 @@ App({
   onLaunch: function () {
     // 展示本地存储能力
     var that = this;
-    var logs = wx.getStorageSync('logs') || []
+    var logs = wx.getStorageSync('logs') || [];
     logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-    that.getRoutineStyle();
+    wx.setStorageSync('logs', logs);
+    //that.getRoutineStyle();
     wx.getSystemInfo({
       success: e => {
         this.globalData.StatusBar = e.statusBarHeight - 6;

@@ -1,17 +1,9 @@
 <template name="content">
 <view id="wrap" class="bg-white">
-<!--园区总体介绍标题加图标返回-->
-<view class="wrap_title bg-white">
-  <view class="cu-custom" style="height:{{CustomBar}}px;">
-    <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
-      <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
-        <text class='icon-iconfontback' style="font-size:20px"></text>  <text class='text-xxl text-bold'>{{backNavTitle}}</text>
-      </navigator>
-    </view>
-  </view>
-</view>
+<!--标题-->
+<import src ="../GB_topHeader/index.wxml" />
+<template is="headContent" data="{{CustomBar: CustomBar, StatusBar: StatusBar, text: backNavTitle, iconFlag: true }}" />
 <!--金龟岭各园区介绍-->
-<view style="margin-top:{{StatusBar}}px;"></view>
 <!--<view class="padding solid-top text-center text-xxl text-bold bg-white" style="margin-top:{{StatusBar}}px;">{{Title}}</view>-->
 <!--背景图片-->
 <!--<view class="" style="background-image:url({{bgImagesUrl}});width:100%;height:500rpx;background-size:100% 100%"></view>-->

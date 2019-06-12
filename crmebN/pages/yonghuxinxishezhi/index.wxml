@@ -1,14 +1,9 @@
 <!--pages/yonghuxinxishezhi/index.wxml-->
 <view class="bg-white">
-<view class="wrap_title">
-    <view class="cu-custom " style="height:{{CustomBar}}px;">
-      <view class="cu-bar fixed bg-white solid-bottom" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
-        <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
-          <text class='icon-iconfontback' style="font-size:20px"></text>  <text class='text-xxl text-bold'>基本资料</text>
-        </navigator>
-      </view>
-    </view>
-</view>
+
+<!--标题-->
+<import src ="../GB_topHeader/index.wxml" />
+<template is="headContent" data="{{CustomBar: CustomBar, StatusBar: StatusBar, text: '基本资料', iconFlag: true }}" />
 
 <form bindsubmit="formSubmit" bindreset="formReset">
 <view class="wrap_search" style="margin-top:{{StatusBar}}px">

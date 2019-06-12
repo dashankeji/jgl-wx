@@ -170,7 +170,7 @@ Page({
     var startpage = limit * offset;
     wx.request({
       url: app.globalData.url + '/routine/auth_api/get_cid_article?uid=' + app.globalData.uid,
-      data: { cid:0,limit: limit, first: startpage },
+      data: { cid:1,limit: limit, first: startpage },
       method: 'GET',
       success: function (res) {
         var len = res.data.data.length; 

@@ -4,6 +4,7 @@ var app = getApp();
 Page({
   data: {
     CustomBar: app.globalData.CustomBar,
+    StatusBar: app.globalData.StatusBar,
     _active:0,
     headerArray: ['可领取'],
     couponArray:"",

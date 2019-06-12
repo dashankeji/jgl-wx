@@ -2,6 +2,12 @@
 
 /**app.wxss**/
 page{font-size: 28rpx; background-color: #f7f7f7; color: #333;}
+
+view, text, scroll-view, swiper, button, form, input, textarea, label, navigator,
+image {
+  box-sizing: border-box;
+}
+
 .flex{display: flex;}
 
 /* 星星 */
@@ -53,6 +59,7 @@ page{font-size: 28rpx; background-color: #f7f7f7; color: #333;}
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   align-content: center;
+  word-wrap:break-word;
 }
 
 /*文字换到第二行时显示省略号*/
@@ -64,6 +71,7 @@ page{font-size: 28rpx; background-color: #f7f7f7; color: #333;}
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   align-content: center;
+  word-wrap:break-word;
 }
 
 /* ==================
