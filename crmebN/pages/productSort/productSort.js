@@ -79,7 +79,6 @@ Page({
       offset: {},
       TabDate: {}
     });
-    app.setUserInfo();
     this.ClassificationListReq();
 
   },
@@ -546,9 +545,8 @@ Page({
   onLoad: function (e) {
     app.setBarColor();
     app.setUserInfo();
-    var that = this;
 
-    that.ClassificationListReq();
+    //this.ClassificationListReq();
   },
   ClassificationListReqID: function (arr, arrName) {    //获取分类id
     for (var i = 0; i < arr.length; i++) {

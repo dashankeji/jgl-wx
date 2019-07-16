@@ -25,11 +25,20 @@ Page({
   //获取用户信息并且授权
   getUserInfo: function(e){
     var userInfo = e.detail.userInfo;
-   
+
+    if (!userInfo) {
+      wx.showToast({
+        title: "获取用户授权信息失败",
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    };
+       
     userInfo.spid = app.globalData.spid;
     wx.login({
       success: function (res) {
-        console.log(res.code);
+        //console.log(res.code);
         if (res.code) {
           userInfo.code = res.code;
           wx.request({
@@ -63,7 +72,14 @@ Page({
         } else {
           console.log('登录失败！' + res.errMsg)
         }
-      }
+      },
+      fail: function () {
+        wx.showToast({
+          title: "获取code失败",
+          icon: 'none',
+          duration: 2000
+        });
+      },
     })
   },
 })

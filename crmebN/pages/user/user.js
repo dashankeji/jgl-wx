@@ -125,23 +125,8 @@ Page({
   onLoad: function (options) {
     app.setBarColor();
     app.setUserInfo();
-    var header = {
-      'content-type': 'application/x-www-form-urlencoded',
-    };
-    var that = this;
-    wx.request({
-      url: app.globalData.url + '/routine/auth_api/my?uid=' + app.globalData.uid,
-      method: 'POST',
-      header: header,
-      success: function (res) {
-        if (res.data.data.fill_in_nickname != '请输入昵称') res.data.data.nickname = res.data.data.fill_in_nickname;
-        that.setData({
-          userinfo: res.data.data,
-          orderStatusNum: res.data.data.orderStatusNum
-        })
-      }
-    });
-    that.ClassificationListReq();
+   
+    this.ClassificationListReq();
   },
   goNotification:function(){
       wx.navigateTo({
@@ -160,9 +145,15 @@ Page({
       success: function (res) {
         if (res.data.data.fill_in_nickname != '请输入昵称') res.data.data.nickname = res.data.data.fill_in_nickname;
         that.setData({
-          userinfo: res.data.data
+          userinfo: res.data.data,
+          orderStatusNum: res.data.data.orderStatusNum
         })
       }
+    });
+  },
+  wodecaifuClick: function(){
+    wx.navigateTo({
+      url: '/pages/wodecaifu/wodecaifu'
     });
   },
    /**
@@ -171,7 +162,7 @@ Page({
   wodeerweimaClick:function(){
       wx.navigateTo({
         url: '/pages/promotion-card/promotion-card'
-      })
+      });
   },
    /**
    * 生命周期函数--我的余额

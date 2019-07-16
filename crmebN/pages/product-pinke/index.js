@@ -7,6 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    CustomBar: app.globalData.CustomBar,
+    StatusBar: app.globalData.StatusBar,
     url: app.globalData.urlImages,
     num: 1,
     description:"",

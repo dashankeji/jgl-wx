@@ -295,7 +295,7 @@ image {
 }
 
 .margin-right-xl {
-  margin-right: 50rpx;
+  margin-right: 48rpx;
 }
 
 .margin-bottom-xs {

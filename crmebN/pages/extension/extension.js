@@ -2,9 +2,11 @@ var app = getApp();
 Page({
   data: {
     url: app.globalData.urlImages,
+    StatusBar: app.globalData.StatusBar,
+    CustomBar: app.globalData.CustomBar,
     userinfo: [],
-    yearsum:'',
-    extractsum:''
+    yearsum: '',
+    extractsum: ''
   },
   onLoad: function (options) {
     app.setBarColor();
@@ -27,7 +29,7 @@ Page({
           that.setData({
             userinfo: res.data.data
           })
-        }else{
+        } else {
           that.setData({
             userinfo: []
           })
@@ -38,7 +40,7 @@ Page({
   cash: function () {
     var that = this;
     wx.navigateTo({
-      url: '/pages/cash/cash?uid='+ app.globalData.uid,
+      url: '/pages/cash/cash?uid=' + app.globalData.uid,
     })
   },
   Yesterday_commission: function (header) {
@@ -49,10 +51,10 @@ Page({
       header: header,
       success: function (res) {
         if (res.data.code == 200) {
-        that.setData({
-          yearsum: res.data.data
-        })
-        }else{
+          that.setData({
+            yearsum: res.data.data
+          })
+        } else {
           that.setData({
             yearsum: ''
           })
@@ -68,10 +70,10 @@ Page({
       header: header,
       success: function (res) {
         if (res.data.code == 200) {
-        that.setData({
-          extractsum: res.data.data
-        })
-        }else{
+          that.setData({
+            extractsum: res.data.data
+          })
+        } else {
           that.setData({
             extractsum: ''
           })

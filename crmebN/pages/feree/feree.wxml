@@ -1,3 +1,7 @@
+<!--标题-->
+<import src ="../GB_topHeader/index.wxml" />
+<template is="headContent" data="{{CustomBar: CustomBar, StatusBar: StatusBar, text: '我的推广人', iconFlag: true }}" />
+
 <view class="header">
     <text class='tuipic'></text>
     粉丝统计：{{count}}
@@ -9,8 +13,8 @@
            <view class='feree-conter'>
                <view class='feree-name'>{{item.nickname}}</view>
                <view class='feree-text'>
-               <text>关注时间: {{item.add_time}}</text>\r\n\r\n\r\n\r\n
-                <text>消费金额: {{item.price}}</text>
+                <text>关注时间: {{item.add_time}}　　</text>
+                <text>消费金额: 5555555</text>
                </view>
            </view>
            <view class="next"><text class='iconfont icon-xiala'></text></view>

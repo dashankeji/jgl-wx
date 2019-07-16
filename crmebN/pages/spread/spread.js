@@ -8,13 +8,15 @@ Page({
    */
   data: {
     url: app.globalData.urlImages,
-    code:'',
-    userinfo:[],
-    cont:'',
-    first:0,
-    limit:8,
-    mainArray:[],
-    hiddens:true
+    StatusBar: app.globalData.StatusBar,
+    CustomBar: app.globalData.CustomBar,
+    code: '',
+    userinfo: [],
+    cont: '',
+    first: 0,
+    limit: 8,
+    mainArray: [],
+    hiddens: true
   },
 
   setTouchMove: function (e) {
@@ -35,26 +37,26 @@ Page({
     this.spread(header);
     this.userbill(header);
   },
-  money: function (header){
+  money: function (header) {
     var that = this;
-  wx.request({
-    url: app.globalData.url + '/routine/auth_api/my?uid=' + app.globalData.uid,
-    method: 'POST',
-    header: header,
-    success: function (res) {
-      if (res.data.code==200){
-        that.setData({
-          userinfo: res.data.data
-        })
-      }else{
-      that.setData({
-        userinfo: []
-      })
+    wx.request({
+      url: app.globalData.url + '/routine/auth_api/my?uid=' + app.globalData.uid,
+      method: 'POST',
+      header: header,
+      success: function (res) {
+        if (res.data.code == 200) {
+          that.setData({
+            userinfo: res.data.data
+          })
+        } else {
+          that.setData({
+            userinfo: []
+          })
+        }
       }
-    }
-  });
-},
-  getCode:function(){
+    });
+  },
+  getCode: function () {
     var that = this;
     wx.request({
       url: app.globalData.url + '/routine/auth_api/get_code?uid=' + app.globalData.uid,
@@ -62,7 +64,7 @@ Page({
       success: function (res) {
         if (res.data.code == 200) {
           that.setData({
-            code:res.data.msg
+            code: res.data.msg
           })
         } else {
           wx.showToast({
@@ -78,60 +80,60 @@ Page({
       }
     });
   },
-  spread: function (header){
-  var that = this;
-  wx.request({
-    url: app.globalData.url + '/routine/auth_api/get_spread_list?uid=' + app.globalData.uid,
-    method: 'POST',
-    header: header,
-    success: function (res) {
-      if (res.data.code == 200) {
-      that.setData({
-        cont: res.data.data.count       
-      })
-      }else{
-        that.setData({
-          cont: 0
-        })
+  spread: function (header) {
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/routine/auth_api/get_spread_list?uid=' + app.globalData.uid,
+      method: 'POST',
+      header: header,
+      success: function (res) {
+        if (res.data.code == 200) {
+          that.setData({
+            cont: res.data.data.count
+          })
+        } else {
+          that.setData({
+            cont: 0
+          })
+        }
       }
-    }
-  });
-},
-  userbill: function (header){
+    });
+  },
+  userbill: function (header) {
     var that = this;
     that.setData({
-      first:0
+      first: 0
     });
     wx.request({
       url: app.globalData.url + '/routine/auth_api/user_balance_list?uid=' + app.globalData.uid,
       method: 'GET',
-      data:{
+      data: {
         first: that.data.first,
         limit: that.data.limit,
       },
       success: function (res) {
         // console.log(res.data.data);
         if (res.data.code == 200) {
-        that.setData({
-          mainArray: res.data.data
-        })
-        }else{
           that.setData({
-            mainArray:[]
+            mainArray: res.data.data
+          })
+        } else {
+          that.setData({
+            mainArray: []
           })
         }
       }
     })
-},
-  cash:function(){
+  },
+  cash: function () {
     wx.navigateTo({
-      url: '../../pages/cash/cash?money='+this.data.userinfo.now_money,
+      url: '../../pages/cash/cash?money=' + this.data.userinfo.now_money,
       success: function (res) { },
       fail: function (res) { },
       complete: function (res) { },
     })
   },
-  porder:function(){
+  porder: function () {
     wx.navigateTo({
       url: '../../pages/promotion-order/promotion-order',
       success: function (res) { },
@@ -143,15 +145,15 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
-  erm:function(e){
-      this.setData({
-        hiddens:false
-      })
-      this.getCode();
+  erm: function (e) {
+    this.setData({
+      hiddens: false
+    })
+    this.getCode();
   },
-  tanguan:function(e){
+  tanguan: function (e) {
     this.setData({
       hiddens: true
     })
@@ -160,7 +162,7 @@ Page({
     var that = this;
     var limit = that.data.limit;
     var first = that.data.first;
-    if (!first) first = first+1;
+    if (!first) first = first + 1;
     var firstS = first * limit;
     var mainArray = that.data.mainArray;
     wx.request({

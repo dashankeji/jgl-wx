@@ -74,9 +74,9 @@ Page({
   onLoad: function (options) {
     app.setBarColor();
     app.setUserInfo();
-    this.carnum();
+    /*this.carnum();
     this.countmoney();
-    this.getList();
+    this.getList();*/
   },
   btntap: function (e) {
     this.data.foothidden = !this.data.foothidden;

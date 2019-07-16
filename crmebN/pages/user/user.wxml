@@ -82,6 +82,15 @@
         </button>
 </view>
 <view class="cu-list menu">
+         <view class="cu-item {{menuArrow?'arrow':''}}" bindtap='wodecaifuClick'> 
+          <view class="content">
+              <image class="image-css" src="../../images/1755.png" mode='aspectFill'></image>
+              <text class=''>我的分销</text>
+          </view>
+          <view class='action'>
+              <text class='icon-right'></text>
+          </view> 
+        </view>
         <view class="cu-item {{menuArrow?'arrow':''}}" bindtap='wodeerweimaClick'> 
           <view class="content">
               <image class="image-css" src="../../images/172_04.png" mode='aspectFill'></image>

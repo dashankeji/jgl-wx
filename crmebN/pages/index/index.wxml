@@ -64,6 +64,35 @@
         </view>
     </view>
 </view>-->
+<!--拼团列表-->
+<view class="" style="padding:20rpx;background-color:#fadbd9">
+   <view class="bg-white" style="box-shadow:0 2px 4px 0 rgba(0,0,0,.12);border:1px solid #dcdfe6">
+      <view class="cu-bar">
+          <view class='action text-bold'>
+              <text class='icon-ziyuan1 text-orange'></text> 好货拼团更超值
+          </view>
+          <view>
+              <navigator class="none" url="/pages/pintuan/pintuan" open-type="navigate" hover-class="none" style='display:flex;color:#ccc;'>
+                  <text>更多好物推荐</text>
+                  <text class="icon-right"></text>
+              </navigator>
+          </view>
+     </view>
+     <view class="padding-lr-xs" style="display:flex;">
+        <view class="margin-right-xl" wx:for="{{CombinationList}}" data-id="{{item.id}}">
+            <navigator class="none" url="/pages/product-pinke/index?id={{item.id}}" open-type="navigate" hover-class="none">
+                <image src="{{item.image}}" mode='scaleToFill' style="width:200rpx;height:200rpx;border-radius:50%"></image>
+            </navigator>
+            <view style='text-align:center;width:200rpx;'>
+                <text class="my_text_1">{{item.title}}</text>
+                <view>
+                   <text class="text-red">￥{{item.price}}</text>
+                </view>
+            </view>
+        </view>
+     </view>
+   </view>
+</view>
 
 <!--休闲娱乐-->
 <view class="wrap_recreationEntertainment">
@@ -81,42 +110,6 @@
       </block>
     </view>
 </view>
-<!--<view class="wrap_recreationEntertainment">
-    <view class='text-xl padding text-center'>
-          <text class='text-black text-bold'>休/闲/娱/乐</text>
-    </view>
-    <view class="flex justify-between" style="padding:0rpx 30rpx">
-       <view style="width:49%">
-          <navigator class="none" url="../yuanquzongtijieshao/yuanquzongtijieshao?id={{newList[0].stock}}" open-type="navigate" hover-class="none">
-                <view class="wrap_imageOne" style="background-image:url({{newList[0].image}});background-size:100% 100%"></view>
-          </navigator>   
-       </view>
-       
-      <view style="width:49%">
-          <navigator class="none" url="../yuanquzongtijieshao/yuanquzongtijieshao?id={{newList[1].stock}}" open-type="navigate" hover-class="none">
-                 <view class="wrap_image wrap_image-maTop" style="background-image:url({{newList[1].image}});background-size:100% 100%"></view>
-          </navigator>
-          <navigator class="none" url="../yuanquzongtijieshao/yuanquzongtijieshao?id={{newList[2].stock}}" open-type="navigate" hover-class="none" style='margin-top:9rpx'>
-                 <view class="wrap_image wrap_image-maTop" style="background-image:url({{newList[2].image}});background-size:100% 100%"></view>
-          </navigator>
-          </view>
-    </view>
-    <view class="flex justify-between margin-top-xs" style="padding:0rpx 30rpx">
-        <view style="width:49%">
-            <navigator class="none" url="../yuanquzongtijieshao/yuanquzongtijieshao?id={{newList[3].stock}}" open-type="navigate" hover-class="none">
-                <view class="wrap_image wrap_image-maTop" style="background-image:url({{newList[3].image}});background-size:100% 100%"></view>
-            </navigator>
-            <navigator class="none" url="../yuanquzongtijieshao/yuanquzongtijieshao?id={{newList[4].stock}}" open-type="navigate" hover-class="none" style='margin-top:9rpx'>
-                <view class="wrap_image wrap_image-maTop" style="background-image:url({{newList[4].image}});background-size:100% 100%"></view>
-            </navigator>
-        </view>
-        <view style="width:49%">          
-            <navigator class="none" url="../yuanquzongtijieshao/yuanquzongtijieshao?id={{newList[5].stock}}" open-type="navigate" hover-class="none">
-              <view class="wrap_imageOne" style="background-image:url({{newList[5].image}});background-size:100% 100%"></view>
-            </navigator>
-        </view>
-    </view>
-</view>-->
 
 <!--应季商品-->
 <view class="wrap_seasonalMerchandise">

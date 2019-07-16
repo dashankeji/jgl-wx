@@ -177,4 +177,15 @@ margin-top:10rpx;text-align:center;}
 .new-pro-wrapper2 .item .text-box .price .dailyPrice{text-decoration:line-through;}
 .new-pro-wrapper2 .item .text-box .price text{font-size: 28rpx;}
 .new-pro-wrapper2 .item .img-box image{width:188rpx; height:188rpx;border-radius:10rpx;}
+.navs .cu-items {
+display:inline-block;
+margin:0 10rpx;
+padding:0 20rpx;
+}
+::-webkit-scrollbar{
+width: 0;
+height: 0;
+color: transparent;
+}
+
 

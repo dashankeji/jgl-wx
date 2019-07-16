@@ -6,6 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    StatusBar: app.globalData.StatusBar,
+    CustomBar: app.globalData.CustomBar,
     pinkKId:0,
     pinkId:0,
     count:0,

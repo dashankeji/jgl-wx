@@ -1,3 +1,7 @@
+<!--标题-->
+<import src ="../GB_topHeader/index.wxml" />
+<template is="headContent" data="{{CustomBar: CustomBar, StatusBar: StatusBar, text: '账号余额', iconFlag: true }}" />
+
 <view class="header">
    <view class='header-bg'>
       <view class="header-yu">当前余额（元）</view>
@@ -5,10 +9,10 @@
       <!-- <view class='header-tip'>会员用户充值可享受9折优惠~</view> -->
    </view>
 </view>
-<view class='main-li flex' bindtap='goPayment'>
+<!--<view class='main-li flex' bindtap='goPayment'>
    <view><text class='main-pic main-pic1'></text>立即充值</view>
    <view class='iconfont icon-xiala main-xia'></view>
-</view>
+</view>-->
 <view class='main-li flex' bindtap='indexs'>
    <view bindtap='indexs'><text class='main-pic main-pic2'></text>进入商城</view>
    <view class='iconfont icon-xiala main-xia'></view>

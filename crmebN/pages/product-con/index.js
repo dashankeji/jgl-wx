@@ -183,7 +183,7 @@ Page({
                         productValue: res.data.data.productValue,
                         reply: res.data.data.reply,
                         replyCount: res.data.data.replyCount,
-                        description: res.data.data.storeInfo.description.match(/http[0-9a-z\-\_\.\:\/\\\?\~\@]+\.[a-z]+g/g),
+                        //description: res.data.data.storeInfo.description.match(/http[0-9a-z\-\_\.\:\/\\\?\~\@]+\.[a-z]+g/g),
                         collect:res.data.data.storeInfo.userCollect,
                         [image]: res.data.data.storeInfo.image,
                         [stock]: res.data.data.storeInfo.stock,
@@ -193,16 +193,14 @@ Page({
                     })
                   
                     that.likeDataFun();
-                    //WxParse.wxParse('description', 'html', that.data.description, that, 0);
+                    WxParse.wxParse('content', 'html', res.data.data.storeInfo.description, that, 0);
                 }else{
                     wx.showToast({
                         title: res.data.msg,
                         icon: 'none',
                         duration: 1000
-                    })
-                    setTimeout(function(){
-                        wx.navigateBack({});
-                    },1200)
+                    });
+
                 }
             }
         });

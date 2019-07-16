@@ -1,3 +1,6 @@
+<import src ="../GB_topHeader/index.wxml" />
+<template is="headContent" data="{{CustomBar: CustomBar, StatusBar: StatusBar, text: '查看拼团', iconFlag: true }}" />
+
 <view class='pro-info flex'>
   <image src='{{url}}{{storeCombination.image}}'></image>
   <view class='txt-box flex'>
@@ -18,7 +21,7 @@
       </view>
     </block>
   </view>
-  <view class='tips flex'>仅剩<text class='number'>{{count}}</text>个名额 <navigator class='out' hover-class='none' url="/pages/index/index">退出</navigator></view>
+  <view class='tips flex'>仅剩<text class='number'>{{count}}</text>个名额      </view>
   <view class='cound-time flex'>
     剩余
     <view class='time'>{{countDownHour}}:{{countDownMinute}}:{{countDownSecond}}</view>
@@ -33,7 +36,7 @@
     <view class='error flex' wx:elif="{{count}}"><view class='icon'></view>拼团失败</view>
   </view>
 </view>
-<view class='like-pro'>
+<!--<view class='like-pro'>
   <view class='title-bar flex'>
     <view class='line'></view>
     <view class='text'><text class='iconfont icon-cainixihuan'></text>猜你喜欢</view>
@@ -47,18 +50,18 @@
         <view class='text-bar'>
           <view class='title'>{{item.title}}</view>
           <view class='count'>已售{{item.sales}}</view>
-          <view class='price flex'><text>￥</text>{{item.price}} 
-          <!-- <view class='small-txt jing'>精</view> -->
+          <view class='price flex'><text>￥</text>{{item.price}}
+             <view class='small-txt jing'>精</view>
           </view>
         </view>
       </navigator>
-       <!-- <view class='buy-car'>
+        <view class='buy-car'>
         <view class='iconfont icon-102'></view> 
-       </view> -->
+       </view>
     </view>
     </block>
   </view>
-</view>
+</view>-->
 <include src="/pages/home/home.wxml"/>
 
 

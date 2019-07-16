@@ -27,3 +27,17 @@
     </view>
   </view>
 </view>
+
+<view class="padding-top">
+    <view class="bg-white">
+          <view class="padding-sm">
+              <view class="text-xl padding-bottom">图文详情</view>
+              <!--<view wx:for="{{description}}" wx:key>
+                  <image src="{{item}}" mode='widthFix' style="width:100%"></image>
+              </view>-->
+              <template is="wxParse" data="{{wxParseData:content.nodes}}"/>
+          </view>
+    </view>
+</view>
+
+<import src="/wxParse/wxParse.wxml"/>

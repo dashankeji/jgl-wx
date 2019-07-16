@@ -1,3 +1,8 @@
+.wxParse-img{
+  width: 100% !important;
+  display: block !important;
+}
+
 .justify-between {
   justify-content: space-between;
 }

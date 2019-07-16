@@ -2,9 +2,11 @@ var app = getApp();
 // pages/main/main.js
 Page({
   data: {
+    StatusBar: app.globalData.StatusBar,
+    CustomBar: app.globalData.CustomBar,
     url: app.globalData.urlImages,
-    now_money:'',
-    mainArray:[]
+    now_money: '',
+    mainArray: []
   },
 
   /**
@@ -27,62 +29,62 @@ Page({
       }
     })
   },
-  indexs:function(){
+  indexs: function () {
     wx.switchTab({
       url: '/pages/index/index',
     })
   },
-  goPayment:function(){
-       wx.navigateTo({
-         url: '/pages/payment/payment',
-       })
+  goPayment: function () {
+    wx.navigateTo({
+      url: '/pages/payment/payment',
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+
   }
 })

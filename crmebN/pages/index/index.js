@@ -43,7 +43,16 @@ Page({
     marquee2_margin: 60,
     size: 14,
     orientation: 'left', //滚动方向
-    intervalTwo: 20 // 时间间隔
+    intervalTwo: 20, // 时间间隔
+    scrollLeft: 0,     //拼团列表left
+    TabCur: 0,          //拼团列表选择了那个
+    CombinationList: []      //拼团数据
+  },
+  tabSelect(e) {     //拼团列表点击事件
+    this.setData({
+      TabCur: e.currentTarget.dataset.id,
+      scrollLeft: (e.currentTarget.dataset.id - 1) * 60
+    })
   },
   swiperChange: function (e) {    //轮播监听变化事件
     this.setData({
@@ -99,6 +108,28 @@ Page({
     app.setUserInfo();
     that.getArticleBanner();
     that.ClassificationListReq();
+    that.getCombinationList();
+  },
+  getCombinationList: function(){
+    var header = {
+      'content-type': 'application/x-www-form-urlencoded',
+    };
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/routine/auth_api/get_combination_list?uid=' + app.globalData.uid,
+      data: {
+        offset: 0,
+        limit: 3
+      },
+      method: 'GET',
+      header: header,
+      success: function (res) {
+          that.setData({
+            CombinationList: res.data.data
+          });
+      }
+    });
+
   },
   getIndexInfo: function (cateIdOne, cateIdTwo, cateIdThree){
     var cateIdOne = cateIdOne ||  -1;
@@ -121,10 +152,17 @@ Page({
           };
         };
 
+        var menusData = res.data.data.menus;
+        for (var j = 0; j < menusData.length; j++) {
+          if (menusData[j].url) {
+            menusData[j].url = menusData[j].url.split('—')[1];
+          };
+        };
+
         that.setData({
           imgUrls: bannerData,
           newList: res.data.data.leisureRecreation,//首发新品
-          menus: res.data.data.menus,//导航
+          menus: menusData,//导航
           hotList: res.data.data.seasonalGoods,//热卖单品
         });
 

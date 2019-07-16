@@ -1,3 +1,7 @@
+<!--标题-->
+<import src ="../GB_topHeader/index.wxml" />
+<template is="headContent" data="{{CustomBar: CustomBar, StatusBar: StatusBar, text: '拼团详情', iconFlag: true }}" />
+
 <view class='swiper_banner'>
   <swiper class="swiper-box" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-color="{{indicatorColor}}" indicator-active-color="{{indicatorActivecolor}}">
     <block wx:for="{{storeInfo.images}}">
@@ -20,7 +24,7 @@
 </view>
 <view class='pink-list'>
   <view class='title-bar flex'>
-    <view class='left-wrapper'>{{pinking.length}}人在拼单，可直接参与</view>
+    <view class='left-wrapper'>{{pinking.length}}人在拼单，每单人数为:{{storeInfo.people}}人即可开团</view>
     <view class='right-wrapper' bindtap="showList">查看更多</view>
   </view>
   <view class='list-item'>
@@ -81,18 +85,23 @@
 <view class='foot flex'>
   <view  class='fn-btns flex'>
     <view class='item'>
-      <view class='iconfont icon-kefu'></view>
+      <button open-type="contact" style="width:36rpx;height:36rpx;padding:0;">
+          <image src="/images/4_03.png" style="display:block;width:100%;height:100%"></image>
+      </button>
       <text>客服</text>
     </view>
     <view class='item' bindtap='getCar'>
-      <view class='iconfont icon-gouwuche'><span class='item-span'>{{CartCount}}</span></view>
+      <!--<view class='iconfont icon-gouwuche'><span class='item-span'>{{CartCount}}</span></view>-->
+      <button style="width:36rpx;height:36rpx;padding:0;">
+          <image src="/images/3_03.png" style="display:block;width:100%;height:100%"></image>
+      </button>
       <text>购物车</text>
     </view>
   </view>
   <view class='btns-wrapper flex'>
     <form class="form-btn" bindsubmit="parameterShow" report-submit='true'> 
     <input type='text' style="display:none" name="pinkId" value='0'></input>
-      <button class='payment-btn' form-type='submit'>确认下单</button>  
+      <button class='payment-btn' form-type='submit'>确认开团</button>  
     </form> 
   </view>
 </view>

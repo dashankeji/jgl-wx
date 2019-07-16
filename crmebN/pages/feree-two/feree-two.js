@@ -2,37 +2,39 @@
 var app = getApp();
 Page({
   data: {
+    StatusBar: app.globalData.StatusBar,
+    CustomBar: app.globalData.CustomBar,
     url: app.globalData.urlImages,
     fereeArray: [],
     page: 1,
     count: '',
-    first:0,
-    limit:20,
+    first: 0,
+    limit: 20,
     title: "",
     loadinghidden: false
   },
   onLoad: function (options) {
     app.setBarColor();
     app.setUserInfo();
-    if (options.uid){
+    if (options.uid) {
       this.setData({
         uid: options.uid
       })
       this.getSpreadListTwo();
-    }else{
+    } else {
       wx.showToast({
         title: '参数错误',
         icon: 'none',
         duration: 1000,
       })
-      setTimeout(function(){
-         wx.navigateTo({
-           url: '/pages/feree/feree'
-         })
-      },1200);
+      setTimeout(function () {
+        wx.navigateTo({
+          url: '/pages/feree/feree'
+        })
+      }, 1200);
     }
   },
-  getSpreadListTwo:function(){
+  getSpreadListTwo: function () {
     var that = this;
     wx.request({
       url: app.globalData.url + '/routine/auth_api/get_spread_list_two?uid=' + app.globalData.uid,
@@ -64,8 +66,8 @@ Page({
       url: app.globalData.url + '/routine/auth_api/get_spread_list_two?uid=' + app.globalData.uid,
       data: {
         two_uid: that.data.uid,
-        limit: limit, 
-        first: startpage 
+        limit: limit,
+        first: startpage
       },
       method: 'GET',
       success: function (res) {
@@ -77,7 +79,7 @@ Page({
           fereeArray: array,
           loadinghidden: true,
           title: '加载完成'
-        })      
+        })
       }
     })
   }

@@ -1,6 +1,7 @@
-<view class='banner'>
-  <image src='{{banner.img}}'></image>
-</view>
+<!--标题-->
+<import src ="../GB_topHeader/index.wxml" />
+<template is="headContent" data="{{CustomBar: CustomBar, StatusBar: StatusBar, text: '拼团列表', iconFlag: true }}" />
+
 <view class='pink-list-wrapper'>
   <block wx:for="{{CombinationList}}">
     <view class='item flex'>
@@ -25,6 +26,13 @@
       </navigator>
     </view>
   </block>
+  <block wx:if="{{hidden}}">
+       <view class='loading flex'><icon class='iconfont icon-jiazaizhong loadingpic'></icon>加载中</view>
+  </block>
+  <block wx:else>
+       <view class='loading flex'>已显示完毕</view>
+  </block>
 </view>
 <include src="/pages/home/home.wxml"/>
+
 

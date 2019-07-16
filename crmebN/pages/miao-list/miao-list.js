@@ -197,7 +197,7 @@ Page({
     console.log(e)
   },*/
   onLoad: function () {
-    app.setUserInfo();
+    //app.setUserInfo();
     var that = this;
 
     that.ClassificationListReq();
