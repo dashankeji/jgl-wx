@@ -75,6 +75,12 @@ page{
 }
 
 
+.align-center {
+  align-items: center;
+}
+
+
+
 .round {
   border-radius: 5000rpx;
 }

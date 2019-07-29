@@ -30,8 +30,14 @@
     {{storeInfo.store_name}}
     <!--<view class="iconfont icon-fenxiang screen-shot" type="primary"  bindtap='listenerActionSheet'></view>-->
     </view>
-    <view class='price-wrapper flex justify-between'>
-      <view class='price'><text>￥</text>{{storeInfo.price}}</view>
+    <view class='margin-top flex justify-between align-center'>
+      <view>
+          <view class="flex align-center">
+             <view class='text-red' style='font-size:48rpx'>￥{{storeInfo.price}}</view>
+             <view class="text-gray" style="margin:10rpx 0 0 10rpx;text-decoration:line-through;font-size:26rpx">￥{{storeInfo.ot_price}}</view>
+          </view> 
+      </view>
+      
       <view class='' bindtap='shangPinCodeClick'><text class="icon-erweima" style="font-size:28rpx">商品码</text></view>
      <!-- <block wx:for="{{storeKeyWord}}" wx:if="{{index < 4}}">
         <view class='small-txt red' wx:if="{{!index && item != ''}}">{{item}}</view>

@@ -7,6 +7,14 @@
   justify-content: space-between;
 }
 
+.align-end {
+  align-items: flex-end;
+}
+
+.align-center {
+  align-items: center;
+}
+
 .wrap_imageTwo{
   width: 350rpx;
   height: 350rpx;

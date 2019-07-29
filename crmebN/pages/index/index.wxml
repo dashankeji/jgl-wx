@@ -143,10 +143,9 @@
                       <view class='text-df my_text_2 margin-top-xs margin-left-sm'>
                           <text class='text-gray'>{{item.store_info}}</text>
                       </view>
-                        <view class="flex margin-top-xs margin-left-sm" style='margin-bottom:15rpx'>
-                            <view class='basis-df text-xl text-end'>
-                                  <text class='text-red text-bold'>￥{{item.price}}</text>
-                            </view>
+                        <view class="margin-top-xs margin-left-sm" style='margin-bottom:15rpx'>
+                                  <text class='text-xl text-red text-bold' style="vertical-align: middle;">￥{{item.price}}</text>
+                                  <text class="text-gray text-lg" style="margin-left:10rpx;text-decoration:line-through; vertical-align: middle;">￥{{item.ot_price}}</text>
                       </view>
                   </navigator>
               </view>
