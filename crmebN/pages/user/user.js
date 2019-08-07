@@ -9,12 +9,14 @@ Page({
   data: {
   CustomBar: app.globalData.CustomBar,
   StatusBar: app.globalData.StatusBar,
+  uid: app.globalData.uid,
   url: app.globalData.urlImages,
   userinfo:[],
   orderStatusNum:[],
   bannerImgData:[],
   coupon:'',
   collect:'',
+  show: false,
   ListTitleData: {               //个人中心显示数据
       0:[
         { title: '待付款', link: '/pages/orders-list/orders-list?nowstatus=1', imgUrl: '' },
@@ -52,7 +54,7 @@ Page({
     };
     var that = this;
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/get_product_category?uid=' + app.globalData.uid,
+      url: app.globalData.url + '/routine/auth_api/get_product_category?uid=' + app.globalData.uid + '&xiaoben=true',
       method: 'POST',
       header: header,
       success: function (res) {
@@ -68,7 +70,7 @@ Page({
         'content-type': 'application/x-www-form-urlencoded',
       };
       wx.request({
-        url: app.globalData.url + '/routine/auth_api/indexXiaoben?uid=' + app.globalData.uid + '&cate_id=' + id,
+        url: app.globalData.url + '/routine/auth_api/indexXiaoben?uid=' + app.globalData.uid + '&cate_id=' + id + '&xiaoben=true',
         method: 'GET',
         header: header,
         success: function (res) {
@@ -86,7 +88,7 @@ Page({
       'content-type': 'application/x-www-form-urlencoded',
     };
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/indexXiaoben?uid=' + app.globalData.uid + '&cate_id=' + id,
+      url: app.globalData.url + '/routine/auth_api/indexXiaoben?uid=' + app.globalData.uid + '&cate_id=' + id + '&xiaoben=true',
       method: 'GET',
       header: header,
       success: function (res) {
@@ -108,7 +110,7 @@ Page({
       'content-type': 'application/x-www-form-urlencoded',
     };
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/indexXiaoben?uid=' + app.globalData.uid + '&cate_id=' + id,
+      url: app.globalData.url + '/routine/auth_api/indexXiaoben?uid=' + app.globalData.uid + '&cate_id=' + id + '&xiaoben=true',
       method: 'GET',
       header: header,
       success: function (res) {
@@ -119,12 +121,20 @@ Page({
       }
     });
   },
+  goToLogin: function () {
+    wx.navigateTo({
+      url: '/pages/load/load',
+    })
+  },
+  hiddenShow: function() {
+      this.setData({ show: false });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    app.setBarColor();
-    app.setUserInfo();
+    // app.setBarColor();
+    // app.setUserInfo();
    
     this.ClassificationListReq();
   },
@@ -138,6 +148,16 @@ Page({
       'content-type': 'application/x-www-form-urlencoded',
     };
     var that = this;
+        that.data.uid = null;
+        that.setData({
+          uid: app.globalData.uid
+        });
+
+        if (that.data.uid == null) {
+          that.setData({ show: true });
+          return;
+        }
+
     wx.request({
       url: app.globalData.url + '/routine/auth_api/my?uid=' + app.globalData.uid,
       method: 'POST',

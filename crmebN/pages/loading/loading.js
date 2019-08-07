@@ -17,11 +17,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
+   if (options.scene) app.globalData.spid = options.scene;
+   /* var that = this;
     that.data.flag = false;
     app.setBarColor();
-    if (options.scene) app.globalData.spid = options.scene;
-    that.setSetting();
+    that.setSetting(); */
   },
   onClickGoHelpPage: function () {
     wx.navigateTo({
@@ -133,8 +133,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (this.data.flag) {
+  /*  if (this.data.flag) {
       this.setSetting();
-    };
+    };  */
+
+    setTimeout(function(){
+
+       wx.reLaunch({
+         url: '/pages/index/index',
+       });
+    },1000);
   },
 })

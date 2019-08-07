@@ -197,8 +197,9 @@ Page({
     console.log(e)
   },*/
   onLoad: function () {
-    //app.setUserInfo();
     var that = this;
+    
+    if(app.globalData.uid == null) return;
 
     that.ClassificationListReq();
     that.getEbStoreEstaurantAddress();   //店家地址

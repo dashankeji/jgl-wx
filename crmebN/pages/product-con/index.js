@@ -154,6 +154,9 @@ Page({
         var that = this;
 
         app.setUserInfo();
+        
+        if(app.globalData.uid == null) return;
+
         that.getCartCount();
         that.setData({
           id: store_id

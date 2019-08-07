@@ -43,7 +43,7 @@ Page({
     };
     var that = this;
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/get_product_category?uid=' + app.globalData.uid,
+      url: app.globalData.url + '/routine/auth_api/get_product_category?uid=' + app.globalData.uid + '&xiaoben=true',
       method: 'POST',
       header: header,
       success: function (res) {
@@ -58,7 +58,7 @@ Page({
       'content-type': 'application/x-www-form-urlencoded',
     };
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/indexXiaoben?uid=' + app.globalData.uid + '&cate_id=' + id,
+      url: app.globalData.url + '/routine/auth_api/indexXiaoben?uid=' + app.globalData.uid + '&cate_id=' + id + '&xiaoben=true',
       method: 'GET',
       header: header,
       success: function (res) {
@@ -73,7 +73,7 @@ Page({
    */
   onLoad: function (options) {
     app.setBarColor();
-    app.setUserInfo();
+
     this.getNewList();
     //this.getArticleBanner();
     //this.getArticleHot();
@@ -96,7 +96,7 @@ Page({
   getArticleBanner: function () {
     var that = this;
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/get_article_banner?uid=' + app.globalData.uid,
+      url: app.globalData.url + '/routine/auth_api/get_article_banner?uid=' + app.globalData.uid + '&xiaoben=true',
       method: 'GET',
       success: function (res) {
         that.setData({
@@ -108,7 +108,7 @@ Page({
   getArticleHot:function(){
     var that = this;
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/get_article_hot?uid=' + app.globalData.uid,
+      url: app.globalData.url + '/routine/auth_api/get_article_hot?uid=' + app.globalData.uid + '&xiaoben=true',
       method: 'GET',
       success: function (res) {
         that.setData({
@@ -120,7 +120,7 @@ Page({
   getNewList:function(){
     var that = this;
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/get_cid_article?uid=' + app.globalData.uid,
+      url: app.globalData.url + '/routine/auth_api/get_cid_article?uid=' + app.globalData.uid + '&xiaoben=true',
       method: 'GET',
       data: {
         cid : 1,
@@ -169,7 +169,7 @@ Page({
     if (!offset) offset = 1;
     var startpage = limit * offset;
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/get_cid_article?uid=' + app.globalData.uid,
+      url: app.globalData.url + '/routine/auth_api/get_cid_article?uid=' + app.globalData.uid + '&xiaoben=true',
       data: { cid:1,limit: limit, first: startpage },
       method: 'GET',
       success: function (res) {

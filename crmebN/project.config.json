@@ -12,6 +12,8 @@
 	"libVersion": "2.2.0",
 	"appid": "wx026b2235018edcb5",
 	"projectname": "shopcrmeb",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,

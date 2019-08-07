@@ -130,5 +130,6 @@
         "pages/storage/storage"
       ]
     }
-  ]
+  ],
+  "sitemapLocation": "sitemap.json"
 }

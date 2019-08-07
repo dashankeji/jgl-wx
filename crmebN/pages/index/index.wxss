@@ -11,6 +11,7 @@ page{
   padding: 4%;
   position: relative;
   background-color: #1d1819;
+  overflow: hidden;
 }
 
 .marquee_text {

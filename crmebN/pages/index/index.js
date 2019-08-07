@@ -26,7 +26,7 @@ Page({
     hotList:[],
     benefitList:[],
     likeList:[],
-    offset: 0,
+    offset: 1,
     title: "玩命加载中...",
     hidden: false,
     cateIdOne: -1,
@@ -35,7 +35,7 @@ Page({
     /**
      * 走马灯
      */
-    text: '这是一条会滚动的文字滚来滚去的文字跑马灯，哈哈哈哈哈哈哈哈',
+    text: '应召小程序内用户帐号登录规范调整和优化建议,需要把用户登录改为引导方式，望见谅下',
     marqueePace: .5, //滚动速度
     marqueeDistance: 0, //初始滚动距离
     marqueeDistance2: 0,
@@ -74,7 +74,7 @@ Page({
   getArticleBanner: function () {
     var that = this;
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/get_article_banner?uid=' + app.globalData.uid + '&cid=2',
+      url: app.globalData.url + '/routine/auth_api/get_article_banner?uid=' + app.globalData.uid + '&cid=2&xiaoben=true',
       method: 'GET',
       success: function (res) {
         that.setData({
@@ -100,12 +100,14 @@ Page({
       },
     });*/
 
-    app.setBarColor();
+    //  app.setBarColor();
     var that = this;
     if (options.spid){
       app.globalData.spid = options.spid
     }
-    app.setUserInfo();
+
+
+    //  app.setUserInfo();
     that.getArticleBanner();
     that.ClassificationListReq();
     that.getCombinationList();
@@ -116,7 +118,7 @@ Page({
     };
     var that = this;
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/get_combination_list?uid=' + app.globalData.uid,
+      url: app.globalData.url + '/routine/auth_api/get_combination_list?uid=' + app.globalData.uid + '&xiaoben=true',
       data: {
         offset: 0,
         limit: 3
@@ -141,7 +143,7 @@ Page({
     };
     var that = this;
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/index?uid=' + app.globalData.uid + '&cateId_one=' + cateIdOne + '&cateId_two=' + cateIdTwo + '&cateId_Three=' + cateIdThree,
+      url: app.globalData.url + '/routine/auth_api/index?uid=' + app.globalData.uid + '&cateId_one=' + cateIdOne + '&cateId_two=' + cateIdTwo + '&cateId_Three=' + cateIdThree + '&xiaoben=true',
       method: 'POST',
       header: header,
       success: function (res) {
@@ -200,7 +202,7 @@ Page({
     };
     var that = this;
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/get_product_category?uid=' + app.globalData.uid,
+      url: app.globalData.url + '/routine/auth_api/get_product_category?uid=' + app.globalData.uid + '&xiaoben=true',
       method: 'POST',
       header: header,
       success: function (res) {
@@ -218,37 +220,45 @@ Page({
   },
   onReachBottom: function (p) {
     var that = this;
-    var offset = that.data.offset;
-    if (!offset) offset = 1;
 
     var limit =  10;
-    var startpage = 10 * offset;
+    
+    if (that.data.hidden) return;
+
+    var offset = that.data.offset++ * limit;
+
+    that.setData({
+      hidden: true,
+    });
 
     var header = {
       'content-type': 'application/x-www-form-urlencoded',
     };
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/yingJiShangPingOffset?uid=' + app.globalData.uid + '&cateId_one=' + that.data.cateIdOne + '&cateId_two=' + that.data.cateIdTwo,
-      data: { limit: limit, offset: startpage },
+      url: app.globalData.url + '/routine/auth_api/yingJiShangPingOffset?uid=' + app.globalData.uid + '&cateId_one=' + that.data.cateIdOne + '&cateId_two=' + that.data.cateIdTwo + '&xiaoben=true',
+      data: { limit: limit, offset: offset },
       method: 'POST',
       header: header,
       success: function (res) {
         var len = res.data.data.length;
-        for (var i = 0; i < len; i++) {
-          that.data.hotList.push(res.data.data[i])
-        };
-        that.setData({
-          offset: offset + 1,
-          hotList: that.data.hotList
-        });
-        if (len < limit) {
+
+        if (len < 1) {
+          --that.data.offset;
           wx.showToast({
             title: '数据已经加载到尽头了',
             icon: 'none',
             duration: 2000
           });
-          return false;
-        }
+
+        }else{
+          console.log(res.data.data);
+          that.data.hotList = that.data.hotList.concat(res.data.data);
+        };
+
+        that.setData({
+          hotList: that.data.hotList,
+          hidden: false
+        });
 
       },
       fail: function (res) {
@@ -270,7 +280,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    /*let vm = this;
+    let vm = this;
     let length = vm.data.text.length * vm.data.size; //文字长度
     let windowWidth = wx.getSystemInfoSync().windowWidth; // 屏幕宽度
     vm.setData({
@@ -278,7 +288,7 @@ Page({
       windowWidth: windowWidth,
       marquee2_margin: length < windowWidth ? windowWidth - length : vm.data.marquee2_margin //当文字长度小于屏幕长度时，需要增加补白
     });
-    vm.run(); // 水平一行字滚动完了再按照原来的方向滚动*/
+    vm.run(); // 水平一行字滚动完了再按照原来的方向滚动
   },
   run: function () {
     let vm = this;

@@ -73,7 +73,7 @@ Page({
   },
   onLoad: function (options) {
     app.setBarColor();
-    app.setUserInfo();
+
     /*this.carnum();
     this.countmoney();
     this.getList();*/
@@ -469,6 +469,11 @@ Page({
       cartInvalid: [],
       cartIdsStr: ''
     });
+    
+    app.setUserInfo();
+
+    if (app.globalData.uid == null) return;
+
     this.carnum();
     this.countmoney();
     this.getList();

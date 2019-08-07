@@ -45,7 +45,7 @@ Page({
   getContent: function () {    //根据id请求园区总体信息
     var that = this;
     wx.request({
-      url: app.globalData.url + '/routine/auth_api/visit?uid=' + app.globalData.uid,
+      url: app.globalData.url + '/routine/auth_api/visit?uid=' + app.globalData.uid + '&xiaoben=true',
       method: 'GET',
       data: {
         id: that.data.newId,

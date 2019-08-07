@@ -11,11 +11,11 @@
     style="width:100%"
  ></video>-->
 
-<!--<view class='loop-text'>
+<view class='loop-text'>
    <view class="marquee_text" style="{{orientation}}:{{marqueeDistance}}px;font-size: {{size}}px;">
      {{text}}
   </view>
-</view>-->
+</view>
 
 <!--搜索-->
 <view class="wrap_search">

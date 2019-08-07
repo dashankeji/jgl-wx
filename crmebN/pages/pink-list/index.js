@@ -79,7 +79,9 @@ Page({
       offset: {},
       TabDate: {}
     });
+    app.setUserInfo();
 
+    if(app.globalData.uid == null) return;
     this.ClassificationListReq();
 
   },
@@ -545,7 +547,6 @@ Page({
   },
   onLoad: function (e) {
     app.setBarColor();
-    app.setUserInfo();
 
     //this.ClassificationListReq();
   },
