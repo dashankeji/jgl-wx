@@ -19,6 +19,32 @@ Page({
     cartInvalid:[],
     cartIdsStr:''
   },
+  subOrder: function(e){
+    var that = this;
+    var cartIdsStr = that.data.cartIdsStr;
+
+    if (cartIdsStr) {
+        wx.request({     /*保存表单id（作用: 发送模板），好像一个表单id只能使用一次，如果好像成立，那么创建订单（提交订单）那里如果使用了创建订单成功通知，那么支付成功就没有表单id使用了*/
+          url: app.globalData.url + '/routine/auth_api/get_form_id?uid=' + app.globalData.uid,
+          method: 'GET',
+          data: {
+            formId: e.detail.formId
+          },
+          success: function (res) { }
+        });
+
+      wx.navigateTo({
+        url: '/pages/order-confirm/order-confirm?id=' + cartIdsStr,
+      })
+    }else{
+      wx.showToast({
+        title: '请先选择商品',
+        icon: 'none',
+        duration: 2000
+      });
+    };
+
+  },
 
   setNumber: function (e) {
     var that = this;

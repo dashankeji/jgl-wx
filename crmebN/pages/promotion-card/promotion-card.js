@@ -182,6 +182,8 @@ Page({
     app.setBarColor();
     app.setUserInfo();
 
+    if (app.globalData.uid == null) return;
+
     var that = this;
     var header = {
       'content-type': 'application/x-www-form-urlencoded',

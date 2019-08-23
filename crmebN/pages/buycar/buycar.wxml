@@ -76,9 +76,15 @@
           <text></text>￥{{countmoney}}
         </view>
       </view>
-      <navigator class='flex' hover-class="none" url="/pages/order-confirm/order-confirm?id={{cartIdsStr}}">
+      <!--<navigator class='flex' hover-class="none" url="/pages/order-confirm/order-confirm?id={{cartIdsStr}}">
            <view class='pay-btn'>结算</view>
-      </navigator>
+      </navigator>-->
+
+      
+      <form class='flex' bindsubmit="subOrder" report-submit='true'>
+          <button class='pay-btn' form-type='submit' style="font-size:30rpx;border-radius:0">结算</button>  
+      </form>
+      
     </view>
     <view class='delete-wrapper flex'>
       <view class='left-wrapper flex'>

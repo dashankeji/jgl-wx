@@ -17,11 +17,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+   //  如果之前创建二维码时，scene对应的值为中文才需要decodeURIComponent（options.scene）,数字和英文不需要
    if (options.scene) app.globalData.spid = options.scene;
-   /* var that = this;
-    that.data.flag = false;
-    app.setBarColor();
-    that.setSetting(); */
+
   },
   onClickGoHelpPage: function () {
     wx.navigateTo({

@@ -38,6 +38,9 @@ Page({
   onLoad: function (options) {
     app.setBarColor();
     app.setUserInfo();
+    
+    if(app.globalData.uid == null) return;
+    
     var header = {
       'content-type': 'application/x-www-form-urlencoded',
     };
@@ -95,6 +98,9 @@ Page({
     })
   },
   onShow: function () {
+    
+    if (app.globalData.uid == null) return;
+
     var header = {
       'content-type': 'application/x-www-form-urlencoded',
     };

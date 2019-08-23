@@ -140,11 +140,15 @@ Page({
         // console.log(options);
         // return ;
         var store_id = 0;
-        if(options.id){
+
+        if (options.id) {
           store_id = options.id;
-        }else{
-          store_id = decodeURIComponent(options.scene);
-        }
+        } else {
+          var scene = decodeURIComponent(options.scene);
+          scene = scene.split(',');
+          app.globalData.spid = scene[0];
+          store_id = scene[1];
+        };
 
         /*当前页面因为没有用户信息跳转到获取用户信息时，当获取完后，获取用户信息页面会判断是否有app.globalData.openPages这个值，
           有的话就跳转到设置的页面*/
