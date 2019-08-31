@@ -87,27 +87,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    /*wx.openLocation({
-      latitude: 21.46471,
-      longitude: 110.254362,
-      name: '金龟岭休闲农场',
-      address: '广东省湛江市遂溪县遂城镇草塘村 ',
-      success: function(res){
-         console.log(res);
-      },
-      fail: function(err){
-         console.log(err);
-      },
-    });*/
-
     //  app.setBarColor();
     var that = this;
     if (options.spid){
       app.globalData.spid = options.spid
     }
 
-
-    //  app.setUserInfo();
     that.getArticleBanner();
     that.ClassificationListReq();
     that.getCombinationList();

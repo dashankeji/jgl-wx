@@ -42,7 +42,7 @@ Page({
     sortyi: [],
     offset: {},
     title: "玩命加载中...",
-    hidden: false,
+    hidden: true,
     show: false,
     prostatus: false,
     sorter: [],

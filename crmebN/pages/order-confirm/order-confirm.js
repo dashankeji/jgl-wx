@@ -42,7 +42,7 @@ Page({
    */
   onLoad: function (options) {
     app.setBarColor();
-    app.setUserInfo();
+
     var that = this;
     if (options.pinkId){
       that.setData({
@@ -71,7 +71,7 @@ Page({
     }else{
       this.getConfirm(options.id);
     } 
-    that.getaddressInfo();
+ 
     that.getCouponRope();
    
   },

@@ -38,10 +38,8 @@ Component({
   methods: {
 
     onLoad: function () {
-      this.ClassificationListReq();
-    },
-
-    onShow: function(){
+      app.setUserInfo();
+      if(app.globalData.uid == null) return;
       this.ClassificationListReq();
     },
 

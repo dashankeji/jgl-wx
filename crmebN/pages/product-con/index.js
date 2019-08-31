@@ -63,9 +63,18 @@ Page({
       var where_from_scene_id = decodeURIComponent(options.query.scene)*/
     },
     navitorGo: function () {
-      wx.switchTab({
-        url: '/pages/index/index'
-      });
+      var routerArr = getCurrentPages();
+      var len = routerArr.length;
+    
+      if (routerArr[len - 2].route == 'pages/load/load' || routerArr[len - 2].route == 'pages/loading/loading') {
+        wx.switchTab({
+          url: '/pages/index/index'
+        });
+      } else {
+        wx.navigateBack({
+          delta: 1
+        });
+      };
     },
     shangPinCodeClick: function () {
       wx.navigateTo({
