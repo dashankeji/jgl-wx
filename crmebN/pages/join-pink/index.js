@@ -108,12 +108,69 @@ Page({
             userBool: res.data.data.userBool
           })
           var timeStamp = that.data.pinkT.stop_time;
-          wxh.time(timeStamp, that);
-          console.log(that.data.pinkId);
-          console.log(that.data.storeCombinationHost);
+          that.time(timeStamp);
+         // console.log(that.data.pinkId);
+         // console.log(that.data.storeCombinationHost);
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            complete: function () {
+              setTimeout(function () {
+                wx.navigateBack({
+                  delta: 1
+                });
+              }, 1200);
+            }
+          });
         }
       },
     })
+  },
+  time: function (timeStamp) {
+    var that = this;
+    var totalSecond = timeStamp - Date.parse(new Date()) / 1000;
+    that.data.interval = setInterval(function () {
+      // 秒数  
+      var second = totalSecond;
+      // // 天数位  
+      // var day = Math.floor(second / 3600 / 24);
+      // var dayStr = day.toString();
+      // if (dayStr.length == 1) dayStr = '0' + dayStr;
+      // 小时位  
+      var hr = Math.floor(second / 3600);
+      var hrStr = hr.toString();
+      if (hrStr.length == 1) hrStr = '0' + hrStr;
+
+      // 分钟位  
+      var min = Math.floor((second - hr * 3600) / 60);
+      var minStr = min.toString();
+      if (minStr.length == 1) minStr = '0' + minStr;
+
+      // 秒位  
+      var sec = second - hr * 3600 - min * 60;
+      var secStr = sec.toString();
+      if (secStr.length == 1) secStr = '0' + secStr;
+
+      that.setData({
+        // countDownDay: dayStr,
+        countDownHour: hrStr,
+        countDownMinute: minStr,
+        countDownSecond: secStr,
+      });
+      totalSecond--;
+      if (totalSecond <= 0) {
+        clearInterval(that.data.interval);
+        wx.showToast({
+          title: '活动已结束',
+        });
+        that.setData({
+          // countDownDay: '00',
+          countDownHour: '00',
+          countDownMinute: '00',
+          countDownSecond: '00',
+        });
+      }
+    }, 1000);
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -140,7 +197,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+    clearInterval(this.data.interval);
   },
 
   /**
