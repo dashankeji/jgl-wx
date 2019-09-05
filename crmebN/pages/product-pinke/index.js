@@ -99,6 +99,9 @@ Page({
   timeFormat(param) {//小于10的格式化函数
     return param < 10 ? '0' + param : param;
   },
+  onUnload: function () {
+    clearTimeout(this.data.timeer);
+  },
   getCombinationDetail:function(){
      var that = this;
      if (!that.data.combinationId){

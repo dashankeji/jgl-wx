@@ -2,11 +2,11 @@
 <import src ="../GB_topHeader/index.wxml" />
 <template is="headContent" data="{{CustomBar: CustomBar, StatusBar: StatusBar, text: '金龟岭休闲农场欢迎您', iconFlag: false }}" />
 
-<view class='loop-text'>
+<!--<view class='loop-text'>
    <view class="marquee_text" style="{{orientation}}:{{marqueeDistance}}px;font-size: {{size}}px;">
      {{text}}
   </view>
-</view>
+</view>-->
 
 <!--搜索-->
 <view class="wrap_search">
