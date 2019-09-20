@@ -236,7 +236,6 @@ Page({
           });
 
         }else{
-          console.log(res.data.data);
           that.data.hotList = that.data.hotList.concat(res.data.data);
         };
 

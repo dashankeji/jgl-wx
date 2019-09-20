@@ -29,7 +29,7 @@ App({
     openPages:'',
     spid:0,
     urlImages: '',
-    url: 'https://jgl.largehill.net'
+    url: 'https://jgl.largehill.net/'
   },
   getRoutineStyle:function(){
     var that = this;

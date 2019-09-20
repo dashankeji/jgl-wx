@@ -28,7 +28,7 @@
     <view class='right-wrapper' bindtap="showList">查看更多</view>
   </view>
   <view class='list-item'>
-  <block wx:for="{{pinking}}" wx:if="{{index < 2}}">
+  <block wx:for="{{pinking}}" wx:if="{{index < 2 && item.count > 0 }}" wx:key>
     <navigator class='item flex' hover-class='none'>
       <view class='left-wrapper flex' bindtap='goPink' data-id="{{item.id}}">
         <image src='{{item.avatar}}'></image>
@@ -108,7 +108,7 @@
 <view class="pinklist-model {{show==true ? 'show':''}}">
   <view class='tit-bar'>正在拼单</view>
   <scroll-view scroll-y style="max-height:635rpx;">
-     <block wx:for="{{pinking}}" wx:if="{{index < 10}}">
+     <block wx:for="{{pinking}}" wx:if="{{index < 10 && item.count > 0}}" wx:key>
           <view class='item flex'>
               <view class='left-wrapper' bindtap='goPink' data-id="{{item.id}}">
                 <image src='{{item.avatar}}'></image>

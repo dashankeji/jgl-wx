@@ -150,6 +150,9 @@ Page({
       success: function (res) {
         if (res.data.code == 200) {
           that.data.ShoppingData.data = res.data.data;
+          that.data.allCheckNum = [];
+          that.data.ShoppingAllPid = [];
+          
           for (var i = 0; i < res.data.data.length; i++){
               that.data.allCheckNum[i] = 0;
               that.data.ShoppingAllPid[i] = res.data.data[i].pid;

@@ -12,8 +12,7 @@ Page({
     editAddressFlag: true
   },
   onLoad: function (options) {
-    app.setBarColor();
-    app.setUserInfo();
+
     if (options.cartId) {
       this.setData({
         cartId: options.cartId,
@@ -21,7 +20,7 @@ Page({
         couponId: options.couponId,
       })
     }
-    this.getAddress();
+
   },
   onShow: function(){
     app.setUserInfo();

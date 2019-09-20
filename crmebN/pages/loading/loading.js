@@ -94,6 +94,7 @@ Page({
                 success: function (res) {
                   that.data.flag = true;
                   app.globalData.uid = res.data.data.uid;
+  
                   if (app.globalData.openPages != undefined && app.globalData.openPages.indexOf("/pages/product-con/index") != -1) {//跳转到指定页面
                     wx.navigateTo({
                       url: app.globalData.openPages

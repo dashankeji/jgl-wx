@@ -317,6 +317,7 @@ Page({
     var key = e.currentTarget.dataset.key;
     var attrValues = [];
     var attrName = that.data.attrName;
+
     var attrNameArr = attrName.split(",");
     var array = productAttr;
     for (var i in productAttr) {
@@ -331,6 +332,7 @@ Page({
         attrNameArr.splice(ii, 1);
       }
     }
+
     attrName = attrNameArr.join(',');
     if (attrName) var eName = e.currentTarget.dataset.key + ',' + attrName;
     else var eName = e.currentTarget.dataset.key;
@@ -369,6 +371,7 @@ Page({
           }
         }
       };
+
       for (var jj in array) {
         for (var jjj in array[jj]['attr_values']) {
           if (that.in_array(array[jj]['attr_values'][jjj], attrNameArr)) {
@@ -386,6 +389,8 @@ Page({
       that.setData({
         attrName: attrNameArrSortArr.join(',')
       })
+      that.data.shoppingMessage[that.data.GbCateId][that.data.GB_Index].attrName = that.data.attrName;
+      
       var arrAttrName = that.data.attrName.split(",");
       for (var index in productValue) {
         var strValue = productValue[index]['suk'];
@@ -465,6 +470,7 @@ Page({
       that.data.shoppingMessage[GbCateId][index]['num'] = that.data.TabDate[GbCateId][index]['care_num'];
       that.data.shoppingMessage[GbCateId][index]['stock'] = that.data.TabDate[GbCateId][index]['stock'];
       that.data.shoppingMessage[GbCateId][index]['price'] = 0;
+      that.data.shoppingMessage[GbCateId][index]['attrName'] = '';
       var price = "productSelect.price";
       that.setData({
         shoppingMessage: that.data.shoppingMessage,
@@ -477,6 +483,7 @@ Page({
       GB_Index:  index,
       productAttr: that.data.TabDate[GbCateId][index].productAttr,
       productValue: that.data.TabDate[GbCateId][index].productValue,
+      attrName: that.data.shoppingMessage[GbCateId][index]['attrName']
     })
   },
   PriceDisabled() {       //结算Flag
@@ -585,7 +592,7 @@ Page({
       header: header,
       success: function (res) {
 
-        var child = that.ClassificationListReqChild(res.data.data, ['产品销售', '数据分类']);
+        var child = that.ClassificationListReqChild(res.data.data, ['产品销售','数据分类']);
         that.bannerImgDataReq(res.data.data);
 
         if (child != -1 && child.length > 0) {
